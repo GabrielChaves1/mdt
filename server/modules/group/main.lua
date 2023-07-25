@@ -1,8 +1,8 @@
+mdt.groups = {}
+
 mdt.groups.createGroup = function()
   local userId = vRP.getUserId(source) or 1
   if not userId then return end
-
-  print(GetCurrentServerEndpoint())
 
   local group = {
     name = "Comandante Geral",
@@ -24,4 +24,4 @@ mdt.groups.createGroup = function()
     name = group.name,
     permissions = json.encode(group.permissions)
   })
-end)
+end

@@ -13,10 +13,13 @@ client_scripts {
 server_scripts {
   '@oxmysql/lib/MySQL.lua',
   '@vrp/lib/utils.lua',
+  
   "server/*",
   "server/services/*",
   "server/config/*",
   "server/repositories/*",
+
+  "server/modules/**/main.lua",
   "server/modules/**/*",
   "server/modules/**/**/*",
 }
