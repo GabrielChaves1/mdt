@@ -1,8 +1,7 @@
 import Card from '@/components/Card';
 import * as S from './styles';
-import Button from '@/components/Button';
 import { PlusIcon } from '@radix-ui/react-icons';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+// import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useTheme } from 'styled-components';
 import moment from 'moment';
 import { transparentize } from 'polished';
@@ -57,10 +56,6 @@ const data = [
 export default function Home() {
   const { text, colors } = useTheme();
 
-  const formatXAxis = (tickFormat: any) => {
-    return moment.unix(tickFormat).format("DD/MM/YYYY");
-  };
-
   return (
     <S.Wrapper>
       <Banner.Root>
@@ -88,7 +83,7 @@ export default function Home() {
               <Card.Title>Avisos</Card.Title>
               <Card.Subtitle>Resumo de avisos da guarnição</Card.Subtitle>
             </Card.Column>
-            <Card.Action icon={PlusIcon} />
+            <Card.Action label='Criar novo aviso' icon={PlusIcon} />
           </Card.Header>
           <Card.Separator />
           <Card.Content>
@@ -106,7 +101,7 @@ export default function Home() {
             </Card.Column>
           </Card.Header>
           <Card.Content>
-            <ResponsiveContainer width="100%" height="100%">
+            {/* <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 width={500}
                 height={600}
@@ -123,7 +118,7 @@ export default function Home() {
                 <Tooltip />
                 <Area type="monotone" dataKey="uv" stroke={colors.primary} fill={colors.primary} />
               </AreaChart>
-            </ResponsiveContainer>
+            </ResponsiveContainer> */}
           </Card.Content>
         </Card.Root>
       </S.Graphic>
