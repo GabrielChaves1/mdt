@@ -1,7 +1,8 @@
 import { shade } from "polished";
 import styled, { css } from "styled-components";
+import { ButtonVariant } from ".";
 
-export const Container = styled.button<{fill: boolean}>`
+export const Container = styled.button<{fill: boolean, variant: ButtonVariant}>`
   display: flex;
   align-items: center;
   gap: 1.6rem;
@@ -9,18 +10,29 @@ export const Container = styled.button<{fill: boolean}>`
   color: #FFF;
   font-weight: 400;
   padding: 1.2rem 1.6rem;
-  background: ${props => props.theme.bg.button.primary};
   border-radius: .6rem;
+  width: max-content;
+  position: relative;
   
   border: none;
   outline: none;
   transition: all .2s ease-in-out;
+  overflow: hidden;
 
   ${props => props.fill && css`
-    flex: 1;
+    width: 100%;
   `}
 
-  &:hover {
-    background: ${props => shade(0.1, props.theme.bg.button.primary)}
-  }
+  ${props => props.variant === 'primary' && css`
+    background: ${props => props.theme.colors.primary};
+
+    &:hover {
+      background: ${props => shade(0.1, props.theme.colors.primary)}
+    }
+  `}
+
+  ${props => props.variant === 'secondary' && css`
+    background: none;
+    color: ${props => props.theme.text.title};
+  `}
 `

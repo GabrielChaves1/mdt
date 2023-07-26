@@ -6,9 +6,6 @@ declare module 'styled-components' {
 
         bg: {
             primary: string,
-            button: {
-                primary: string
-            }
         },
 
         border: {
@@ -17,7 +14,13 @@ declare module 'styled-components' {
     
         text: {
             title: string,
-            primary: string
+            subtitle: string,
+        },
+
+        colors: {
+            primary: string,
+            icon: string,
+            ripple: string
         }
     }
 }

@@ -34,12 +34,8 @@ export const Wrapper = styled.main`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2rem;
   padding: 2.5rem 7.4rem;
   flex: 1;
-`
-
-export const Header = styled.header`
-  width: 100%;
-  background: red;
 `

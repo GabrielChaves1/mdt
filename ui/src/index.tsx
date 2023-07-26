@@ -2,7 +2,6 @@ import React from "react";
 import { debugData } from "@/utils/debugData";
 import { useVisibility } from "@/contexts/VisibilityContext";
 import * as S from "./styles";
-import RoutesList from "./routes";
 import { AnimatePresence, motion } from "framer-motion";
 import { GlobalStyles } from "./styles/global";
 import { ThemeProvider } from "styled-components";
@@ -10,7 +9,8 @@ import { ThemeManager, useThemeManager } from "./contexts/ThemeContext";
 import Aside from "./components/Aside";
 import dark from "./styles/themes/dark";
 import light from "./styles/themes/light";
-import SelectMenu from "./components/SelectMenu";
+import Header from "./components/Header";
+import RoutesList from "./routes";
 
 debugData([
 	{
@@ -38,16 +38,11 @@ const App: React.FC = () => {
 								<S.Wrapper>
 									<Aside />
 									<S.Content>
-										<S.Header>
-											<SelectMenu.Root>
-												<SelectMenu.Trigger>
-													<SelectMenu.Value placeholder="Selecione uma guarnição..."/>
-												</SelectMenu.Trigger>
-											</SelectMenu.Root>
-										</S.Header>
-
+										<Header />
+										<AnimatePresence>
+											<RoutesList />
+										</AnimatePresence>
 									</S.Content>
-									{/* <RoutesList /> */}
 								</S.Wrapper>
 							</motion.div>
 						)}

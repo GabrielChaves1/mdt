@@ -3,9 +3,6 @@ export default {
 
   bg: {
     primary: "#2a3547",
-    button: {
-      primary: "#5D87FF"
-    }
   },
 
   border: {
@@ -14,6 +11,12 @@ export default {
 
   text: {
     title: "#eaeff4",
-    primary: "#7c8fac"
+    subtitle: "#7c8fac",
+  },
+
+  colors: {
+    primary: "#5D87FF",
+    icon: "#7c8fac",
+    ripple: "#fff"
   }
 }

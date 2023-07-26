@@ -1,14 +1,13 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import Home from '@/page/Home';
+import Arrest from '@/page/Arrest';
+
 
 const routeConfig = [
     { path: "/", element: <Home /> },
-    { path: "/user", element: <User /> },
     { path: "/arrest", element: <Arrest /> },
-    { path: "/detain", element: <Detain /> },
-    { path: "/home", element: <Navigate to="/"/> },
-    { path: "/members", element: <Members /> },
 ];
 
 const RoutesList: React.FC = () => {
