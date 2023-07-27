@@ -30,7 +30,7 @@ export const StatsBox = styled.div`
   border: solid .1rem ${props => props.theme.border.primary};
   box-shadow: 0 .4rem .8rem 0 rgba(0, 0, 0, 0.025);
 
-  h5 {
+  h1 {
     font-size: 1.8rem;
     font-weight: 500;
     color: ${props => props.theme.colors.primary};

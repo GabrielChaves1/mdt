@@ -7,14 +7,15 @@ export type ButtonVariant = 'primary' | 'secondary'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant
+  position?: 'flex-start' | 'center' | 'flex-end'
   fill?: boolean
 }
 
-export default function Button({children, fill = false, variant = 'primary', ...props}: ButtonProps) {
+export default function Button({children, fill = false, position = 'flex-start', variant = 'primary', ...props}: ButtonProps) {
   const { colors } = useTheme();
   
   return (
-    <S.Container fill={fill} variant={variant} {...props}>
+    <S.Container aria-label='Botão' position={position} fill={fill} variant={variant} {...props}>
       {children}
       <Ripple color={colors.ripple}/>
     </S.Container>

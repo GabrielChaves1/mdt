@@ -6,6 +6,6 @@ type TextfieldProps = InputHTMLAttributes<HTMLInputElement>
 
 export const TextField = forwardRef((props: TextfieldProps, ref: ForwardedRef<HTMLInputElement>) => {
   return (
-    <S.Text ref={ref} {...props}/>
+    <S.Text ref={ref} {...props} />
   )
 })

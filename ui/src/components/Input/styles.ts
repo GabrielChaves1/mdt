@@ -17,8 +17,8 @@ export const Label = styled.p`
   font-weight: 400;
 `
 
-export const Content = styled.div`
+export const Content = styled.div<{direction: 'row' | 'column'}>`
   display: flex;
-  flex-direction: column;
-  gap: .5rem;
+  flex-direction: ${props => props.direction};
+  gap: 1rem;
 `

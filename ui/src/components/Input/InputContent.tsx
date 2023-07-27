@@ -2,12 +2,13 @@ import { ReactNode } from "react"
 import * as S from './styles'
 
 interface InputContentProps {
-  children: ReactNode
+  children: ReactNode,
+  direction?: 'row' | 'column'
 }
 
-export default function InputContent({ children }: InputContentProps) {
+export default function InputContent({ children, direction = 'column' }: InputContentProps) {
   return (
-    <S.Content>
+    <S.Content direction={direction}>
       {children}
     </S.Content>
   )

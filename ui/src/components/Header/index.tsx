@@ -1,6 +1,6 @@
-import { ChevronDownIcon, ChevronUpIcon, PlusIcon } from '@radix-ui/react-icons';
 import SelectMenu from '@/components/SelectMenu';
 import * as S from './styles';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function Header() {
   return (
@@ -10,14 +10,14 @@ export default function Header() {
           <SelectMenu.Trigger>
             <SelectMenu.Value placeholder="Selecione..." />
             <SelectMenu.Icon>
-              <ChevronDownIcon />
+              <ChevronDown size={16}/>
             </SelectMenu.Icon>
           </SelectMenu.Trigger>
 
           <SelectMenu.Portal>
             <SelectMenu.Content position='popper' sideOffset={5}>
               <SelectMenu.ScrollUpButton>
-                <ChevronUpIcon />
+                <ChevronUp size={16}/>
               </SelectMenu.ScrollUpButton>
               <SelectMenu.Viewport>
                 <SelectMenu.Group>

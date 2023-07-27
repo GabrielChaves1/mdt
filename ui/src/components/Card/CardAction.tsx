@@ -18,7 +18,7 @@ export default function CardHeaderAction({ children, icon: Icon, label, ...props
         <Tooltip.Root delayDuration={100}>
           <Tooltip.Trigger>
             <S.HeaderAction {...props}>
-              <Icon />
+              <Icon size={16} color={colors.icon}/>
               <Ripple duration={1000} color={colors.ripple} />
             </S.HeaderAction>
           </Tooltip.Trigger>

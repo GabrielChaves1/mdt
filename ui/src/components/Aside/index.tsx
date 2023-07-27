@@ -1,9 +1,11 @@
-import { HomeIcon, TokensIcon } from '@radix-ui/react-icons';
 import Button from '../Button';
 import * as S from './styles';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { StickyNote, Tv2, User } from 'lucide-react';
+import { memo } from 'react';
 
-export default function Aside() {
+
+function Aside() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,18 +18,29 @@ export default function Aside() {
             variant={location.pathname == "/" ? 'primary' : 'secondary'} 
             onClick={() => navigate('/')} 
             fill>
-            <HomeIcon />
+            <Tv2 size={18}/>
             Página Inicial
           </Button>
+          
           <Button 
             variant={location.pathname == "/arrest" ? 'primary' : 'secondary'} 
             onClick={() => navigate('/arrest')} 
             fill>
-            <TokensIcon />
+            <StickyNote size={18}/>
             Registro de prisão
+          </Button>
+          
+          <Button 
+            variant={location.pathname == "/user" ? 'primary' : 'secondary'} 
+            onClick={() => navigate('/user')} 
+            fill>
+            <User size={18} />
+            Buscar Cidadão
           </Button>
         </S.NavigationAreaContent>
       </S.NavigationArea>
     </S.Container>
   )
 }
+
+export default memo(Aside);

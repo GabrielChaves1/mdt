@@ -2,8 +2,13 @@ import { shade } from "polished";
 import styled, { css } from "styled-components";
 import { ButtonVariant } from ".";
 
-export const Container = styled.button<{fill: boolean, variant: ButtonVariant}>`
+export const Container = styled.button<{
+  fill: boolean, 
+  position: 'flex-start' | 'center' | 'flex-end',
+  variant: ButtonVariant
+}>`
   display: flex;
+  justify-content: ${props => props.position};
   align-items: center;
   gap: 1.6rem;
   font-size: 1.6rem;

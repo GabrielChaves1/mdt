@@ -10,7 +10,7 @@ export const Wrapper = styled(Container)`
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: 44.2rem 55.9rem;
-  grid-template-rows: auto 14.6rem 32.9rem;
+  grid-template-rows: auto auto 32.9rem;
   grid-template-areas:
   'violator policers'
   'violator crimeSelector'
