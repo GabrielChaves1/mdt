@@ -33,6 +33,12 @@ export default function User() {
           </Card.Column>
         </Card.Root>
       </S.SearchBarContainer>
+
+      <Banner.Root>
+        <Banner.Header>
+          <Banner.Title>Procurados</Banner.Title>
+        </Banner.Header>
+      </Banner.Root>
     </S.Wrapper>
   )
 }

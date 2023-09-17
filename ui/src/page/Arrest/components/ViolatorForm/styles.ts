@@ -21,7 +21,7 @@ export const SelectImageArea = styled.div`
 
 export const SelectImage = styled.button`
   flex: 1;
-  height: 9.6rem;
+  height: 10rem;
   display: grid;
   place-items: center;
   border: solid .1rem ${props => props.theme.border.primary};

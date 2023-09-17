@@ -4,11 +4,12 @@ import styled from "styled-components";
 export const Wrapper = styled(Container)`
   display: grid;
   grid-template-areas: 
-  'banner stats'
-  'warns players'
-  'graphic players';
+  'banner  stats'
+  'warns   players'
+  'warns   chat'
+  'graphic chat';
   grid-template-columns: 65.6rem 34.5rem;
-  grid-template-rows: 16.5rem auto 24.5rem;
+  grid-template-rows: 16.5rem 8.9rem auto 24.5rem;
   gap: 2rem;
 `
 
@@ -45,6 +46,7 @@ export const StatsBox = styled.div`
 
 export const Warns = styled.div`
   grid-area: warns;
+  position: relative;
 `
 
 export const Graphic = styled.div`
@@ -54,15 +56,6 @@ export const Graphic = styled.div`
 export const PlayerListWrapper = styled.div`
   grid-area: players;
   position: relative;
-`
-
-export const PlayerList = styled.div`
-  gap: .9rem;
-  padding: 2rem 2rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
 `
 
 export const PlayerItem = styled.div`
@@ -86,4 +79,14 @@ export const PlayerItem = styled.div`
     border-radius: 50%;
     background: ${props => props.theme.colors.primary};
   }
+`
+
+export const PostsArea = styled.div`
+  padding: 1.5rem;
+  flex: 1;
+  height: 26.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `

@@ -9,6 +9,7 @@ export const Wrapper = styled(Container)`
 
 export const Grid = styled.div`
   display: grid;
+  flex: 1;
   grid-template-columns: 44.2rem 55.9rem;
   grid-template-rows: auto auto 32.9rem;
   grid-template-areas:

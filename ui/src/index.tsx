@@ -9,7 +9,6 @@ import { ThemeManager, useThemeManager } from "./contexts/ThemeContext";
 import Aside from "./components/Aside";
 import dark from "./styles/themes/dark";
 import light from "./styles/themes/light";
-import Header from "./components/Header";
 import RoutesList from "./routes";
 import { ClipLoader } from "react-spinners";
 
@@ -39,9 +38,8 @@ const App: React.FC = () => {
 								<S.Wrapper>
 									<Aside />
 									<S.Content>
-										<Header />
 										<AnimatePresence>
-											<Suspense fallback={<ClipLoader color={colors.primary}/>}>
+											<Suspense fallback={<ClipLoader color={colors.primary} />}>
 												<RoutesList />
 											</Suspense>
 										</AnimatePresence>

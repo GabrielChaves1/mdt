@@ -2,7 +2,7 @@ export default {
 	title: 'light',
 
 	bg: {
-		primary: "rgba(253, 253, 254)",
+		primary: "rgb(253, 253, 254)",
 	},
 
 	border: {

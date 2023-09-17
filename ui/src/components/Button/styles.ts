@@ -1,10 +1,11 @@
 import { shade } from "polished";
 import styled, { css } from "styled-components";
-import { ButtonVariant } from ".";
+import { ButtonSize, ButtonVariant } from ".";
 
 export const Container = styled.button<{
   fill: boolean, 
   position: 'flex-start' | 'center' | 'flex-end',
+  size?: ButtonSize,
   variant: ButtonVariant
 }>`
   display: flex;
@@ -39,5 +40,10 @@ export const Container = styled.button<{
   ${props => props.variant === 'secondary' && css`
     background: none;
     color: ${props => props.theme.text.title};
+  `}
+
+  ${props => props.size === 'sm' && css`
+    font-size: 1.2rem;
+    padding: .8rem 1.2rem;
   `}
 `

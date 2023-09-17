@@ -1,3 +1,4 @@
+import { darken, lighten } from "polished";
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
@@ -50,5 +51,26 @@ export const GlobalStyles = createGlobalStyle`
 
     input[type=number] {
     -moz-appearance: textfield;
+    }
+
+    ::-webkit-scrollbar {
+        width: .5rem;
+    }
+
+        /* Track */
+    ::-webkit-scrollbar-track {
+        background: ${props => darken(.02, props.theme.bg.primary)};
+        border-radius: .5rem;
+    }
+
+        /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: ${props => props.theme.colors.primary};
+        border-radius: .5rem;
+    }
+
+        /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: ${props => lighten(.03, props.theme.colors.primary)};
     }
 `
