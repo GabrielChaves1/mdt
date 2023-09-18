@@ -7,14 +7,15 @@ export const Wrapper = styled(Container)`
   'banner  stats'
   'warns   players'
   'warns   chat'
-  'graphic chat';
+  'widget  chat';
   grid-template-columns: 65.6rem 34.5rem;
-  grid-template-rows: 16.5rem 8.9rem auto 24.5rem;
+  grid-template-rows: 16.5rem 8.5rem auto 24.5rem;
   gap: 2rem;
 `
 
 export const Stats = styled.div`
   display: flex;
+  grid-area: stats;
   gap: 2rem;
 `
 
@@ -53,11 +54,6 @@ export const Graphic = styled.div`
   grid-area: graphic;
 `
 
-export const PlayerListWrapper = styled.div`
-  grid-area: players;
-  position: relative;
-`
-
 export const PlayerItem = styled.div`
   width: 100%;
   border: solid .1rem ${props => props.theme.border.primary};
@@ -83,8 +79,8 @@ export const PlayerItem = styled.div`
 
 export const PostsArea = styled.div`
   padding: 1.5rem;
+  max-height: 26.55rem;
   flex: 1;
-  height: 26.5rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
