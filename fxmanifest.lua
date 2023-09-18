@@ -5,6 +5,8 @@ lua54 "yes"
 
 dependency "oxmysql"
 
+ui_page "ui/build/index.html"
+
 client_scripts {
   "client/*",
   "client/**/*"
@@ -22,4 +24,9 @@ server_scripts {
   "server/modules/**/main.lua",
   "server/modules/**/*",
   "server/modules/**/**/*",
+}
+
+files {
+  "ui/build/*",
+  "ui/build/**/*",
 }
