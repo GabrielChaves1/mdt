@@ -1,13 +1,13 @@
-import { ReactNode } from "react"
+import { HTMLAttributes, ReactNode } from "react"
 import * as S from './styles'
 
-interface BannerRootProps {
+interface BannerRootProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
 }
 
-export default function BannerRoot({ children }: BannerRootProps) {
+export default function BannerRoot({ children, ...props }: BannerRootProps) {
   return (
-    <S.Root>
+    <S.Root {...props}>
      {children} 
     </S.Root>
   )

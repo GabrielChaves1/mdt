@@ -22,7 +22,7 @@ export default function Home() {
       <OnlinePolicersModal ref={viewPolicersModalRef} />
 
       <div style={{gridArea: "banner"}}>
-        <Banner.Root>
+        <Banner.Root style={{ height: '100%' }}>
           <Banner.Header>
             <Banner.Title>Bem-vindo <b>John Doe</b>!</Banner.Title>
             <Banner.Action>Entrar em serviço</Banner.Action>
