@@ -24,7 +24,7 @@ export default function Button({
   const { colors } = useTheme();
   
   return (
-    <S.Container aria-label='Botão' size={size} position={position} fill={fill} variant={variant} {...props}>
+    <S.Container size={size} position={position} fill={fill} variant={variant} {...props}>
       {children}
       <Ripple color={colors.ripple}/>
     </S.Container>
