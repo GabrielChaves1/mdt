@@ -1,5 +1,4 @@
 import CardHeader from "./CardHeader";
-import CardHeaderAction from "./CardAction";
 import CardColumn from "./CardColumn";
 import CardHeaderSubtitle from "./CardHeaderSubtitle";
 import CardHeaderTitle from "./CardHeaderTitle";
@@ -13,7 +12,6 @@ export default {
   Header: CardHeader,
   Title: CardHeaderTitle,
   Subtitle: CardHeaderSubtitle,
-  Action: CardHeaderAction,
   Separator: CardSeparator,
   Content: CardContent
 }

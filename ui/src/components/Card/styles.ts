@@ -13,7 +13,7 @@ export const Root = styled.section`
 `
 
 export const Header = styled.header`
-  padding: 2.5rem;
+  padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
