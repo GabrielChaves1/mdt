@@ -4,6 +4,7 @@ import Card from '@/components/Card';
 import Input from '@/components/Input';
 import { TextField } from '@/components/TextField';
 import Button from '@/components/Button';
+import Chat from '@/components/Chat';
 
 export default function User() {
   return (
