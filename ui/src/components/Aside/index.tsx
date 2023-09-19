@@ -1,7 +1,7 @@
 import Button from '../Button';
 import * as S from './styles';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { StickyNote, Tv2, User } from 'lucide-react';
+import { FileText, Settings, StickyNote, Tv2, User } from 'lucide-react';
 import { memo } from 'react';
 
 
@@ -36,6 +36,22 @@ function Aside() {
             fill>
             <User size={18} />
             Buscar Cidadão
+          </Button>
+
+          <Button 
+            variant={location.pathname == "/roles-hierarchy" ? 'primary' : 'secondary'} 
+            onClick={() => navigate('/roles-hierarchy')} 
+            fill>
+            <FileText size={18} />
+            Hierarquia de Cargos
+          </Button>
+          
+          <Button 
+            variant={location.pathname == "/config" ? 'primary' : 'secondary'} 
+            onClick={() => navigate('/config')} 
+            fill>
+            <Settings size={18} />
+            Configurações
           </Button>
         </S.NavigationAreaContent>
       </S.NavigationArea>
