@@ -22,11 +22,7 @@ local registerNUICallbacks = {
 }
 
 Citizen.CreateThread(function()
-  registerNUICallbacks["close"]()
-
-  for i, f in pairs(registerNUICallbacks) do
-      RegisterNUICallback(i, function(data, cb)
-          f(data, cb)
-      end)
+  for i, handler in pairs(registerNUICallbacks) do
+      RegisterNUICallback(i, handler)
   end
 end)

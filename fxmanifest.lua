@@ -6,6 +6,7 @@ lua54 "yes"
 ui_page "ui/build/index.html"
 
 client_scripts {
+  "@vrp/lib/utils.lua",
   "_config/*",
   "code/client/*",
 }
