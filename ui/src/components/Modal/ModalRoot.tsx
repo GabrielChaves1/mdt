@@ -4,12 +4,12 @@ import { XCircle } from 'lucide-react';
 import { useTheme } from 'styled-components';
 
 export interface ModalRootHandles {
-  openModal: (data: any) => void
+  openModal: (data?: any) => void
   closeModal: () => void
 }
 
 interface ModalRootProps {
-  onOpen?: (data: any) => void
+  onOpen?: (data?: any) => void
   children: ReactNode
 }
 
