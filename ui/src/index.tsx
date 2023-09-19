@@ -4,13 +4,12 @@ import { useVisibility } from "@/contexts/VisibilityContext";
 import * as S from "./styles";
 import { AnimatePresence, motion } from "framer-motion";
 import { GlobalStyles } from "./styles/global";
-import { ThemeProvider, useTheme } from "styled-components";
-import { ThemeManager, useThemeManager } from "./contexts/ThemeContext";
+import { ThemeProvider, useTheme,  } from "styled-components";
+import { useThemeManager } from "./contexts/ThemeContext";
 import Aside from "./components/Aside";
-import dark from "./styles/themes/dark";
-import light from "./styles/themes/light";
 import RoutesList from "./routes";
 import { ClipLoader } from "react-spinners";
+import Container from "./components/Container";
 
 debugData([
 	{
@@ -21,34 +20,35 @@ debugData([
 
 const App: React.FC = () => {
 	const { visible } = useVisibility();
-	const { theme, updateTheme } = useThemeManager();
+	const { theme } = useThemeManager();
 	const { colors } = useTheme();
 
 	return (
 		<>
 			<ThemeProvider theme={theme}>
-				<ThemeManager>
-					<GlobalStyles />
-					<AnimatePresence>
-						{visible && (
-							<motion.div
-								initial={{ opacity: 0, y: '100%' }}
-								animate={{ opacity: 1, y: '0%', transition: {duration: .4} }}>
-								<button onClick={() => updateTheme(theme.title === "light" ? dark : light)}>Switch</button>
-								<S.Wrapper>
-									<Aside />
-									<S.Content>
-										<AnimatePresence>
-											<Suspense fallback={<ClipLoader color={colors.primary} />}>
-												<RoutesList />
-											</Suspense>
-										</AnimatePresence>
-									</S.Content>
-								</S.Wrapper>
-							</motion.div>
-						)}
-					</AnimatePresence>
-				</ThemeManager>
+				<GlobalStyles />
+				<AnimatePresence>
+					{visible && (
+						<motion.div
+							initial={{ opacity: 0, y: '100%' }}
+							animate={{ opacity: 1, y: '0%', transition: { duration: .4 } }}>
+							<S.Wrapper>
+								<Aside />
+								<S.Content>
+									<AnimatePresence>
+										<Suspense fallback={
+											<Container>
+												<ClipLoader color={colors.primary} />
+											</Container>
+										}>
+											<RoutesList />
+										</Suspense>
+									</AnimatePresence>
+								</S.Content>
+							</S.Wrapper>
+						</motion.div>
+					)}
+				</AnimatePresence>
 			</ThemeProvider>
 		</>
 	);
