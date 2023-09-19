@@ -16,3 +16,29 @@ export const Text = styled.input`
     color: ${props => transparentize(.7, props.theme.text.title)};
   }
 `
+
+export const Area = styled.div`
+  width: 100%;
+  border: solid .1rem ${props => props.theme.border.primary};
+  border-radius: .6rem;
+  background: none;
+  padding-right: 1rem;
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+
+  input {
+    flex: 1;
+    height: 100%;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: ${props => props.theme.text.title};
+    border: none;
+
+    &::placeholder {
+      color: ${props => transparentize(.7, props.theme.text.title)};
+    }
+  }
+`
