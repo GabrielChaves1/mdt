@@ -1,15 +1,16 @@
-import { ReactNode } from 'react';
 import * as S from './styles';
 
 interface ModalHeaderProps {
-  children: ReactNode
+  title: string
+  subtitle?: string
 }
 
-export default function ModalHeader({ children }: ModalHeaderProps) {
+export default function ModalHeader({ title, subtitle }: ModalHeaderProps) {
   return (
     <S.Header>
       <S.TitleArea>
-        {children}
+        <S.Title>{title}</S.Title>
+        <S.Subtitle>{subtitle}</S.Subtitle>
       </S.TitleArea>
     </S.Header>
   )

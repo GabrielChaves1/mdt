@@ -10,10 +10,7 @@ const OnlinePolicersModal = forwardRef<ModalRootHandles>((_, ref) => {
 
   return (
     <Modal.Root onOpen={onOpen} ref={ref}>
-      <Modal.Header>
-        <Modal.Title>Policiais On-line</Modal.Title>
-        <Modal.Subtitle>Atualmente há 5 policiais em serviço</Modal.Subtitle>
-      </Modal.Header>
+      <Modal.Header title="Policiais On-line" subtitle="Atualmente há 5 policiais em serviço" />
       <Modal.Content>
         <S.List>
           <S.Item>

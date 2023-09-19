@@ -4,12 +4,12 @@ import { XCircle } from 'lucide-react';
 import { useTheme } from 'styled-components';
 
 export interface ModalRootHandles {
-  openModal: () => void
+  openModal: (data: any) => void
   closeModal: () => void
 }
 
 interface ModalRootProps {
-  onOpen: () => void
+  onOpen?: (data: any) => void
   children: ReactNode
 }
 
@@ -17,8 +17,8 @@ const ModalRoot: ForwardRefRenderFunction<ModalRootHandles, ModalRootProps> = ({
   const { colors } = useTheme()
   const [visible, setVisible] = useState<boolean>(false);
   
-  const openModal = useCallback(() => {
-    if(onOpen) onOpen();
+  const openModal = useCallback((props: any) => {
+    if(onOpen) onOpen({...props});
     setVisible(true);
   },[])
   
@@ -37,17 +37,13 @@ const ModalRoot: ForwardRefRenderFunction<ModalRootHandles, ModalRootProps> = ({
 
   return (
     <S.Root
-      transition={{ duration: .2 }}
+      transition={{ duration: .15 }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <S.Wrapper
-        transition={{ duration: .2, delay: .1 }}
-        initial={{ opacity: 0, scale: .6 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: .6}}
-      >
+      <S.CloseTrigger onClick={closeModal}></S.CloseTrigger>
+      <S.Wrapper>
         <S.CloseButton onClick={closeModal}>
           <XCircle size={'2rem'} color={colors.icon} />
         </S.CloseButton>

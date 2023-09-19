@@ -6,8 +6,8 @@ export const Root = styled(motion.div)`
   width: 100%;
   height: 100%;
   position: absolute;
+  background-color: ${({theme}) => transparentize(.1, theme.bg.primary)};
   z-index: 5;
-  background: ${({theme}) =>  transparentize(.4,theme.bg.primary)};
   left: 0;
   top: 0;
   
@@ -18,14 +18,15 @@ export const Root = styled(motion.div)`
 export const Wrapper = styled(motion.div)`
   width: 64.2rem;
   padding: 2rem;
-  background: ${({theme}) => darken(0.015, theme.bg.primary)};
+  background: ${({theme}) => darken(.01,theme.bg.primary)};
   border-radius: .6rem;
   border: solid .1rem ${({theme}) => theme.border.primary};
-  box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.05);
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
+  z-index: 6;
 `
 
 export const Header = styled.header`
@@ -70,4 +71,12 @@ export const Subtitle = styled.p`
   font-size: 1.2rem;
   font-weight: 400;
   color: ${({theme}) => theme.text.subtitle};
+`
+
+export const CloseTrigger = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
 `
