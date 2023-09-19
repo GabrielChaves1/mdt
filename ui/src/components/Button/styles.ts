@@ -20,7 +20,7 @@ export const Container = styled.button<{
   width: max-content;
   position: relative;
   
-  border: none;
+  border: solid .1rem transparent;
   outline: none;
   transition: all .2s ease-in-out;
   overflow: hidden;
@@ -40,6 +40,7 @@ export const Container = styled.button<{
   ${props => props.variant === 'secondary' && css`
     background: none;
     color: ${props => props.theme.text.title};
+    border: solid .1rem ${({theme}) => theme.border.primary};
   `}
 
   ${props => props.size === 'sm' && css`
