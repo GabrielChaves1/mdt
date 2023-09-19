@@ -6,7 +6,7 @@ export default {
 	},
 
 	border: {
-		primary: 'rgba(70, 70, 70, 0.10)'
+		primary: 'rgba(70, 70, 70, 0.12)'
 	},
 
 	text: {

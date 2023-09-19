@@ -2,11 +2,11 @@ export default {
   title: 'dark',
 
   bg: {
-    primary: "#2a3547",
+    primary: "rgb(42, 53, 71)",
   },
 
   border: {
-    primary: "rgba(255, 255, 255, .07)"
+    primary: "rgba(255, 255, 255, .075)"
   },
 
   text: {
