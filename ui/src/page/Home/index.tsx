@@ -9,23 +9,30 @@ import { ModalRootHandles } from '@/components/Modal/ModalRoot';
 
 import OnlinePolicersModal from './components/OnlinePolicersModal';
 import Action from '@/components/Action';
+import CreateNoticeModal from './components/CreateNoticeModal';
 
 export default function Home() {
   const viewPolicersModalRef = useRef<ModalRootHandles>(null);
+  const createNoticeModalRef = useRef<ModalRootHandles>(null);
   
   const handleOpenOnlinePolicersList = () => {
     viewPolicersModalRef.current?.openModal();
   }
 
+  const handleOpenNoticeCreator = () => {
+    createNoticeModalRef.current?.openModal();
+  }
+
   return (
     <S.Wrapper>
       <OnlinePolicersModal ref={viewPolicersModalRef} />
+      <CreateNoticeModal ref={createNoticeModalRef} />
 
       <div style={{gridArea: "banner"}}>
         <Banner.Root style={{ height: '100%' }}>
           <Banner.Header>
             <Banner.Title>Bem-vindo <b>John Doe</b>!</Banner.Title>
-            <Banner.Action>Entrar em serviço</Banner.Action>
+            <Banner.Action>Iniciar Patrulha</Banner.Action>
           </Banner.Header>
         </Banner.Root>
       </div>
@@ -48,7 +55,7 @@ export default function Home() {
               <Card.Title>Avisos</Card.Title>
               <Card.Subtitle>Resumo de avisos da guarnição</Card.Subtitle>
             </Card.Column>
-            <Action label='Criar aviso' icon={Plus} />
+            <Action onClick={handleOpenNoticeCreator} label='Criar aviso' icon={Plus} />
           </Card.Header>
           <Card.Separator />
           <Card.Content>
