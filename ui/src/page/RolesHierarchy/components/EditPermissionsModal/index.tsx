@@ -1,16 +1,22 @@
 import * as S from './styles';
 import { Search } from 'lucide-react';
 import Modal from '@/components/Modal';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import { ModalRootHandles } from '@/components/Modal/ModalRoot';
 import { TextField } from '@/components/TextField';
 import Switch from '@/components/Switch';
 import Button from '@/components/Button';
 
-const EditPermissionsModal = forwardRef<ModalRootHandles>((props, ref) => {
+const EditPermissionsModal = forwardRef<ModalRootHandles>((_, ref) => {
+  const [ role, setRole ] = useState<string>("");
+  
+  function onOpen(data: { role: string }) {
+    setRole(data.role);
+  }
+
   return (
-    <Modal.Root ref={ref}>
-      <Modal.Header title='Editar Permissões' subtitle='Aqui você poderá editar as permissões do cargo selecionado' />
+    <Modal.Root onOpen={onOpen} ref={ref}>
+      <Modal.Header title={`Editar Permissões | ${role}`} subtitle='Aqui você poderá editar as permissões do cargo selecionado' />
       <Modal.Content>
         <S.Column>
           <TextField placeholder='Pesquisar...' icon={Search} />

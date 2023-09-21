@@ -1,36 +1,48 @@
 import Banner from '@/components/Banner';
 import * as S from './styles';
 import Table from '@/components/Table';
-import Action from '@/components/Action';
-import { FileEdit, Search } from 'lucide-react';
-import Modal from '@/components/Modal';
 import { useRef } from 'react';
 import { ModalRootHandles } from '@/components/Modal/ModalRoot';
 import EditPermissionsModal from './components/EditPermissionsModal';
+import { Eye } from 'lucide-react';
+import ShowPolicersModal from './components/ShowPolicersModal';
+import Action from '@/components/Action';
+
+interface Role {
+  id: number,
+  name: string,
+  index: string
+}
 
 export default function RolesHierarchy() {
   const editPermissionsModalRef = useRef<ModalRootHandles>(null);
+  const showPolicersModalRef = useRef<ModalRootHandles>(null);
 
-  const handleEditPermissions = () => {
-    editPermissionsModalRef.current?.openModal();
+  const handleEditPermissions = (role: string) => {
+    editPermissionsModalRef.current?.openModal({ role });
   }
-  
+
+  const handleShowPolicers = (role: string) => {
+    showPolicersModalRef.current?.openModal({ role });
+  }
+
   return (
     <S.Wrapper>
-      <EditPermissionsModal ref={editPermissionsModalRef}/>
-    
+      <ShowPolicersModal ref={showPolicersModalRef} />
+      <EditPermissionsModal ref={editPermissionsModalRef} />
+
       <Banner.Root>
         <Banner.Header>
           <Banner.Title>Hierarquia de Cargos</Banner.Title>
         </Banner.Header>
       </Banner.Root>
-    
+
       <Table.Root headColumns={["ID", "Cargo", "Ações"]}>
         <Table.Row>
           <Table.Item>#1</Table.Item>
           <Table.Item>Comandante Geral</Table.Item>
           <Table.Item>
-            <Action onClick={handleEditPermissions} size='sm' icon={FileEdit} label='Editar Permissões' />
+            <Action icon={Eye} size='sm' label='Ver detalhes' onClick={() => handleEditPermissions("Comandante Geral")} />
           </Table.Item>
         </Table.Row>
       </Table.Root>
