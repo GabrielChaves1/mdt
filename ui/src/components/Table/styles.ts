@@ -36,11 +36,12 @@ export const Body = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  margin-bottom: .7rem;
 `
 
 export const Row = styled.div`
   width: 100%;
-  height: 4.4rem;
+  height: 4.5rem;
   display: grid;
   place-items: center;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));

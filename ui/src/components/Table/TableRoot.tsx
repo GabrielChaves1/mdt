@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
 import * as S from "./styles";
+import { ReactNode } from "react";
 
 interface TableRootProps {
-  headColumns: string[]
   children: ReactNode
+  headColumns: string[]
 }
 
 export default function TableRoot({ headColumns, children }: TableRootProps) {
