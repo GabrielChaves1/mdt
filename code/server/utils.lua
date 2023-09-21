@@ -10,6 +10,7 @@ Citizen.CreateThread(function()
 
         CREATE TABLE IF NOT EXISTS mdt_hierarquia(
             user_id INT,
+            nome VARCHAR(100),
             cargo VARCHAR(100),
             org VARCHAR(100),
             unidade VARCHAR(100),
@@ -109,6 +110,11 @@ Citizen.CreateThread(function()
         DROP TABLE IF EXISTS mdt_unidades;
         DROP TABLE IF EXISTS mdt_avisos;
     ]])
+
+    zof.prepare("mdt/mdt_hierarquia/getFromOrg", [[ SELECT * FROM mdt_hierarquia WHERE org = @org ]])
+    zof.prepare("mdt/mdt_hierarquia/getPlayer", [[ SELECT * FROM mdt_hierarquia WHERE user_id = @user_id ]])
+    zof.prepare("mdt/mdt_hierarquia/insert", [[ INSERT INTO mdt_hierarquia(user_id, nome, cargo, org, unidade, cursos, pontos, time_ptr, dt_entrada) VALUES(@user_id, @nome, @cargo, @org, @unidade, @cursos, @pontos, @time_ptr, @dt_entrada)) ]])
+    zof.prepare("mdt/mdt_hierarquia/deletePlayer", [[ DELETE FROM mdt_hierarquia WHERE user_id = @user_id ]])
     
     -- zof.execute("mdt/drop_all_tables")
     zof.execute("mdt/create_all_tables")
