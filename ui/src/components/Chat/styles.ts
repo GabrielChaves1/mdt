@@ -13,7 +13,7 @@ export const Container = styled.section`
   flex-direction: column;
   gap: 1.2rem;
   padding: 2.5rem;
-  height: 31.5rem;
+  height: 100%;
   overflow-y: auto;
   position: relative;
 `

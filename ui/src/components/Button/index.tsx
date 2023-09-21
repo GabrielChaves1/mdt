@@ -14,11 +14,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export default function Button({
-  children, 
   fill = false, 
   position = 'flex-start', 
   variant = 'primary', 
   size,
+  children,
   ...props
 }: ButtonProps){
   const { colors } = useTheme();
