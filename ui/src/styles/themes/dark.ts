@@ -2,7 +2,7 @@ export default {
   title: 'dark',
 
   bg: {
-    primary: "rgb(42, 53, 71)",
+    primary: "rgb(35, 43, 65)",
   },
 
   border: {
