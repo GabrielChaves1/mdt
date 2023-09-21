@@ -1,5 +1,6 @@
+import { motion } from "framer-motion";
 import { darken, lighten } from "polished";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
     * {
@@ -11,12 +12,14 @@ export const GlobalStyles = createGlobalStyle`
         font-family: 'Outfit';
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        text-decoration: none;
     }
 
     html {
         font-size: 62.5%;
         overflow: hidden;
     }
+
 
     body {
         width: 100vw;
@@ -72,5 +75,59 @@ export const GlobalStyles = createGlobalStyle`
         /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
         background: ${props => lighten(.03, props.theme.colors.primary)};
+    }
+
+    @media (min-width: 3840px) {
+        html {
+            font-size: 100% !important;
+        }
+    }
+
+    @media (max-height: 1440px) and (min-width: 2560px) {
+        html {
+            font-size: 85% !important;
+        }
+    }
+
+    @media (min-width: 2560px) and (min-height: 1080px) {
+        html {
+            font-size: 67% !important;
+        }
+    }
+
+    @media (max-width: 1920px) {
+        html {
+            font-size: 62.5% !important;
+        }
+    }
+
+    @media (max-width: 1660px) {
+        html {
+            font-size: 56% !important;
+        }
+    }
+
+    @media (max-width: 1440px) {
+        html {
+            font-size: 53% !important;
+        }
+    }
+
+    @media (max-width: 1368px) {
+        html {
+            font-size: 49% !important;
+        }
+    }
+
+    @media (max-width: 1280px) {
+        html {
+            font-size: 45.7% !important;
+        }
+    }
+
+    @media (max-width: 800px) {
+        html {
+            font-size: 29% !important;
+        }
     }
 `
