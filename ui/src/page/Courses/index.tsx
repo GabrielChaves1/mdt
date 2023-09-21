@@ -1,14 +1,10 @@
-import Banner from '@/components/Banner';
 import * as S from './styles';
+import { Outlet } from 'react-router-dom';
 
-export default function RolesHierarchy() {
+export default function Courses() {
   return (
     <S.Wrapper>
-      <Banner.Root>
-        <Banner.Header>
-          <Banner.Title>Cursos Disponíveis</Banner.Title>
-        </Banner.Header>
-      </Banner.Root>
+      <Outlet />
     </S.Wrapper>
   )
 }
