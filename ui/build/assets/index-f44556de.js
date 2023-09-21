@@ -1,4 +1,4 @@
-import{c as g,s as t,C as y,r as a,j as i,a as e,B as b,b as p,Z as v,d as o,M as l,A as h,T as w,e as m,E as $,S as C}from"./index-77893275.js";const M=g("MapPin",[["path",{d:"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z",key:"2oe9fu"}],["circle",{cx:"12",cy:"10",r:"3",key:"ilqhr7"}]]),P=g("Plus",[["path",{d:"M5 12h14",key:"1ays0h"}],["path",{d:"M12 5v14",key:"s699le"}]]),R=g("SendHorizonal",[["path",{d:"m3 3 3 9-3 9 19-9Z",key:"1aobqy"}],["path",{d:"M6 12h16",key:"s4cdu5"}]]),z=t(y)`
+import{C as o}from"./index-40c82328.js";import{c as g,s as t,C as y,r as l,j as i,a as e,B as b,b as p,Z as w,d as m,S as v}from"./index-2e6b3bed.js";import{M as d,A as h,E as $}from"./index-ec06df8f.js";import{T as C}from"./index-82102e7f.js";import"./index-1cb2d457.js";const M=g("MapPin",[["path",{d:"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z",key:"2oe9fu"}],["circle",{cx:"12",cy:"10",r:"3",key:"ilqhr7"}]]),P=g("Plus",[["path",{d:"M5 12h14",key:"1ays0h"}],["path",{d:"M12 5v14",key:"s699le"}]]),R=g("SendHorizonal",[["path",{d:"m3 3 3 9-3 9 19-9Z",key:"1aobqy"}],["path",{d:"M6 12h16",key:"s4cdu5"}]]),z=t(y)`
   display: grid;
   grid-template-areas: 
   'banner  stats'
@@ -12,7 +12,7 @@ import{c as g,s as t,C as y,r as a,j as i,a as e,B as b,b as p,Z as v,d as o,M a
   display: flex;
   grid-area: stats;
   gap: 2rem;
-`,f=t.div`
+`,x=t.div`
   display: flex;
 
   flex-direction: column;
@@ -62,7 +62,7 @@ import{c as g,s as t,C as y,r as a,j as i,a as e,B as b,b as p,Z as v,d as o,M a
     border-radius: 50%;
     background: ${r=>r.theme.colors.primary};
   }
-`;const k=t.div`
+`;const S=t.div`
   padding: 1.5rem;
   max-height: 26.55rem;
   flex: 1;
@@ -70,7 +70,7 @@ import{c as g,s as t,C as y,r as a,j as i,a as e,B as b,b as p,Z as v,d as o,M a
   display: flex;
   flex-direction: column;
   gap: 1rem;
-`,S=t.div`
+`,k=t.div`
   width: 100%;
   border: solid .1rem ${r=>r.theme.border.primary};
   border-radius: .6rem;
@@ -89,11 +89,11 @@ import{c as g,s as t,C as y,r as a,j as i,a as e,B as b,b as p,Z as v,d as o,M a
 `,T=t.div`
   display: flex;
   flex-direction: column;
-`;function B(){return i(S,{children:[i(T,{children:[e(j,{children:"Não se esqueçam de aplicar multa na prisão!"}),e(H,{children:"Autor: John Doe"})]}),e(b,{size:"sm",children:"Ver mais"})]})}const c=a.memo(B),O=t.div`
+`;function B(){return i(k,{children:[i(T,{children:[e(j,{children:"Não se esqueçam de aplicar multa na prisão!"}),e(H,{children:"Autor: John Doe"})]}),e(b,{size:"sm",children:"Ver mais"})]})}const s=l.memo(B),O=t.div`
   display: flex;
   flex-direction: column;
   gap: .4rem;
-`,I=t.div`
+`,D=t.div`
   display: flex;
   flex-direction: column;
   gap: .2rem;
@@ -101,12 +101,12 @@ import{c as g,s as t,C as y,r as a,j as i,a as e,B as b,b as p,Z as v,d as o,M a
   width: max-content;
   border-radius: .7rem .7rem .7rem 0;
   background: ${({theme:r})=>p(.85,r.colors.primary)};
-`,N=t.p`
+`,I=t.p`
   font-size: 1.2rem;
   font-weight: 300;
   color: ${({theme:r})=>r.text.subtitle};
   user-select: text;
-`,D=t.p`
+`,N=t.p`
   font-size: 1.4rem;
   font-weight: 300;
   color: ${({theme:r})=>r.text.title};
@@ -116,7 +116,7 @@ import{c as g,s as t,C as y,r as a,j as i,a as e,B as b,b as p,Z as v,d as o,M a
   font-weight: 300;
   color: ${({theme:r})=>r.text.subtitle};
   user-select: text;
-`;function E(){return i(O,{children:[i(I,{children:[e(N,{children:"John Doe"}),e(D,{children:"Boa tarde pessoal!"})]}),e(J,{children:"Hoje ás 16:35"})]})}const u=a.memo(E),Z=t.div`
+`;function E(){return i(O,{children:[i(D,{children:[e(I,{children:"John Doe"}),e(N,{children:"Boa tarde pessoal!"})]}),e(J,{children:"Hoje ás 16:35"})]})}const f=l.memo(E),Z=t.div`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -164,7 +164,7 @@ import{c as g,s as t,C as y,r as a,j as i,a as e,B as b,b as p,Z as v,d as o,M a
   background: none;
   border: none;
   outline: none;
-`;function _(){const{colors:r}=v();return i(o.Root,{children:[e(o.Header,{children:i(o.Column,{children:[e(o.Title,{children:"Chat Geral"}),e(o.Subtitle,{children:"Bate-papo geral da policia"})]})}),e(o.Separator,{}),e(o.Content,{children:i(Z,{children:[i(q,{children:[e(u,{}),e(u,{}),e(u,{})]}),e(o.Separator,{}),e(L,{children:i(W,{children:[e(F,{placeholder:"Mensagem..."}),e(V,{children:e(R,{color:r.primary})})]})})]})})]})}const G=t.div`
+`;function _(){const{colors:r}=w();return i(o.Root,{children:[e(o.Header,{children:i(o.Column,{children:[e(o.Title,{children:"Chat Geral"}),e(o.Subtitle,{children:"Bate-papo geral da policia"})]})}),e(o.Separator,{}),e(o.Content,{children:i(Z,{children:[i(q,{children:[e(f,{}),e(f,{}),e(f,{})]}),e(o.Separator,{}),e(L,{children:i(W,{children:[e(F,{placeholder:"Mensagem..."}),e(V,{children:e(R,{color:r.primary})})]})})]})})]})}const G=t.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -208,7 +208,7 @@ import{c as g,s as t,C as y,r as a,j as i,a as e,B as b,b as p,Z as v,d as o,M a
   background: none;
   position: relative;
   overflow: hidden;
-`;const Y=a.forwardRef((r,n)=>{function d(){}return i(l.Root,{onOpen:d,ref:n,children:[e(l.Header,{title:"Policiais On-line",subtitle:"Atualmente há 5 policiais em serviço"}),e(l.Content,{children:e(G,{children:i(Q,{children:[i(K,{children:[e(U,{children:"John Doe"}),e(X,{children:"Coronel | PMERJ"})]}),e(h,{icon:M,label:"Marcar no Mapa"})]})})})]})}),ee=Y,re=t.textarea`
+`;const Y=l.forwardRef((r,a)=>{function c(){}return i(d.Root,{onOpen:c,ref:a,children:[e(d.Header,{title:"Policiais On-line",subtitle:"Atualmente há 5 policiais em serviço"}),e(d.Content,{children:e(G,{children:i(Q,{children:[i(K,{children:[e(U,{children:"John Doe"}),e(X,{children:"Coronel | PMERJ"})]}),e(h,{icon:M,label:"Marcar no Mapa"})]})})})]})}),ee=Y,re=t.textarea`
   resize: none;
   width: 100%;
   height: 11.6rem;
@@ -236,4 +236,4 @@ import{c as g,s as t,C as y,r as a,j as i,a as e,B as b,b as p,Z as v,d as o,M a
   width: 100%;
   display: flex;
   justify-content: flex-end;
-`,oe=a.forwardRef((r,n)=>{function d(){}return i(l.Root,{onOpen:d,ref:n,children:[e(l.Header,{title:"Criar Aviso",subtitle:"Complete o campo abaixo antes de publicar o aviso"}),i(l.Content,{children:[i(te,{children:[e(w,{autoFocus:!0,placeholder:"Título do aviso"}),e(re,{placeholder:"Descrição do aviso"})]}),e(ie,{children:e(b,{children:"Publicar"})})]})]})}),ne=oe;function ae(){const r=a.useRef(null),n=a.useRef(null),d=()=>{var s;(s=r.current)==null||s.openModal()},x=()=>{var s;(s=n.current)==null||s.openModal()};return i(z,{children:[e(ee,{ref:r}),e(ne,{ref:n}),e("div",{style:{gridArea:"banner"},children:e(m.Root,{style:{height:"100%"},children:i(m.Header,{children:[i(m.Title,{children:["Bem-vindo ",e("b",{children:"John Doe"}),"!"]}),e(m.Action,{children:"Iniciar Patrulha"})]})})}),i(A,{children:[i(f,{children:[e("h1",{children:"Prisões"}),e("span",{children:"2.541"})]}),i(f,{children:[e("h1",{children:"Multas"}),e("span",{children:"256"})]})]}),e("div",{style:{gridArea:"warns"},children:i(o.Root,{children:[i(o.Header,{children:[i(o.Column,{children:[e(o.Title,{children:"Avisos"}),e(o.Subtitle,{children:"Resumo de avisos da guarnição"})]}),e(h,{onClick:x,label:"Criar aviso",icon:P})]}),e(o.Separator,{}),e(o.Content,{children:i(k,{children:[e(c,{}),e(c,{}),e(c,{}),e(c,{}),e(c,{})]})})]})}),e("div",{style:{gridArea:"players"},children:e(o.Root,{children:i(o.Header,{children:[i(o.Column,{children:[e(o.Title,{children:"Policiais On-line"}),e(o.Subtitle,{children:"Policiais ativos no momento (11)"})]}),e(h,{onClick:d,label:"Ver Policiais",icon:$})]})})}),e("div",{style:{gridArea:"widget"},children:i(o.Root,{children:[i(o.Header,{children:[e(o.Column,{children:e(o.Title,{children:"Mural de Procurados"})}),e(h,{label:"Selecionar Widget",icon:C})]}),e(o.Separator,{}),e(o.Content,{})]})}),e("div",{style:{gridArea:"chat"},children:e(_,{})})]})}export{ae as default};
+`,oe=l.forwardRef((r,a)=>{const[c,u]=l.useState();function n(){u(Date.now())}return i(d.Root,{onOpen:n,ref:a,children:[e(d.Header,{title:"Criar Aviso",subtitle:"Complete o campo abaixo antes de publicar o aviso"}),i(d.Content,{children:[i(te,{children:[e(C,{max:60,autoFocus:!0,placeholder:"Título do aviso"}),e(re,{placeholder:"Descrição do aviso"})]}),e(ie,{children:e(b,{children:"Publicar"})})]})]})}),ne=oe;function me(){const r=l.useRef(null),a=l.useRef(null),c=()=>{var n;(n=r.current)==null||n.openModal()},u=()=>{var n;(n=a.current)==null||n.openModal()};return i(z,{children:[e(ee,{ref:r}),e(ne,{ref:a}),e("div",{style:{gridArea:"banner"},children:e(m.Root,{style:{height:"100%"},children:i(m.Header,{children:[i(m.Title,{children:["Bem-vindo ",e("b",{children:"John Doe"}),"!"]}),e(m.Action,{children:"Iniciar Patrulha"})]})})}),i(A,{children:[i(x,{children:[e("h1",{children:"Prisões"}),e("span",{children:"2.541"})]}),i(x,{children:[e("h1",{children:"Multas"}),e("span",{children:"256"})]})]}),e("div",{style:{gridArea:"warns"},children:i(o.Root,{children:[i(o.Header,{children:[i(o.Column,{children:[e(o.Title,{children:"Avisos"}),e(o.Subtitle,{children:"Resumo de avisos da guarnição"})]}),e(h,{onClick:u,label:"Criar aviso",icon:P})]}),e(o.Separator,{}),e(o.Content,{children:i(S,{children:[e(s,{}),e(s,{}),e(s,{}),e(s,{}),e(s,{})]})})]})}),e("div",{style:{gridArea:"players"},children:e(o.Root,{children:i(o.Header,{children:[i(o.Column,{children:[e(o.Title,{children:"Policiais On-line"}),e(o.Subtitle,{children:"Policiais ativos no momento (11)"})]}),e(h,{onClick:c,label:"Ver Policiais",icon:$})]})})}),e("div",{style:{gridArea:"widget"},children:i(o.Root,{children:[i(o.Header,{children:[e(o.Column,{children:e(o.Title,{children:"Mural de Procurados"})}),e(h,{label:"Selecionar Widget",icon:v})]}),e(o.Separator,{}),e(o.Content,{})]})}),e("div",{style:{gridArea:"chat"},children:e(_,{})})]})}export{me as default};
