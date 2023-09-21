@@ -8,7 +8,6 @@ export const Wrapper = styled.main`
   background: ${props => props.theme.bg.primary};
   position: relative;
   display: flex;
-  /* transition: all .2s ease-in-out; */
 
   &::before, &::after {
     content: '';
