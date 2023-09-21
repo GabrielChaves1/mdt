@@ -62,7 +62,7 @@ export const Row = styled.div`
 export const RowItem = styled.p`
   font-size: 1.6rem;
   color: ${({theme}) => theme.text.subtitle};
-  font-weight: 400;
+  font-weight: 300;
   display: flex;
   width: max-content;
   max-width: 35rem;

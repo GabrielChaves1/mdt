@@ -42,3 +42,10 @@ export const Area = styled.div`
     }
   }
 `
+
+export const Max = styled.p` 
+  height: 100%;
+  color: ${({theme}) => theme.text.title};
+  font-size: 1.2rem;
+  font-weight: 400;
+`

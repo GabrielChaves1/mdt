@@ -5,6 +5,9 @@ import { Eye } from 'lucide-react';
 import Action from '@/components/Action';
 import Pagination from '@/components/Pagination';
 import usePaginate from '@/hooks/usePaginate';
+import ViewDetailModal from './components/ViewDetailModal';
+import { useRef } from 'react';
+import { ModalRootHandles } from '@/components/Modal/ModalRoot';
 
 export default function Arrest() {
   const { amountOfPages, currentPage, items, totalOfItems, viewedItems, paginate } = usePaginate(12, 1, [
@@ -112,8 +115,16 @@ export default function Arrest() {
     },
   ]);
 
+  const viewDetailModalRef = useRef<ModalRootHandles>(null);
+  
+  const handleViewDetails = () => {
+    viewDetailModalRef.current?.openModal();
+  }
+
   return (
     <S.Wrapper>
+      <ViewDetailModal ref={viewDetailModalRef}/>
+
       <Banner.Root>
         <Banner.Header>
           <Banner.Title>Últimas prisões</Banner.Title>
@@ -122,15 +133,15 @@ export default function Arrest() {
       </Banner.Root>
 
       <S.TableArea>
-        <Table.Root headColumns={["ID", "Prisioneiro", "Tempo", "Multa", "Ações"]}>
+        <Table.Root headColumns={["Prisioneiro", "Tempo", "Multa", "Data", "Ações"]}>
           {items.map((item) => (
-            <Table.Row>
-              <Table.Item>#{item.id}</Table.Item>
+            <Table.Row key={item.id}>
               <Table.Item>{item.name}</Table.Item>
               <Table.Item>{item.time} meses</Table.Item>
               <Table.Item>R$ {item.fine.toLocaleString('pt-br')}</Table.Item>
+              <Table.Item>20/09/2023</Table.Item>
               <Table.Item>
-                <Action icon={Eye} size='sm' label='Ver detalhes' />
+                <Action icon={Eye} size='sm' onClick={handleViewDetails} label='Ver detalhes' />
               </Table.Item>
             </Table.Row>
           ))}

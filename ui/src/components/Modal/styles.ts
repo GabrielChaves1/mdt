@@ -20,8 +20,8 @@ export const Wrapper = styled(motion.div)`
   padding: 2rem;
   background: ${({theme}) => darken(.01,theme.bg.primary)};
   border-radius: .6rem;
-  border: solid .1rem ${({theme}) => theme.border.primary};
-  box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.05);
+  border: solid .2rem ${({theme}) => theme.border.primary};
+  box-shadow: 0 0rem 1rem 0 ${({theme}) => transparentize(.965, theme.colors.ripple)};
   position: relative;
   display: flex;
   flex-direction: column;

@@ -18,7 +18,7 @@ export default function Action({ children, icon: Icon, label, size = "lg", ...pr
         <Tooltip.Root delayDuration={100}>
           <Tooltip.Trigger>
             <S.HeaderAction size={size} {...props}>
-              <Icon size={16} color={colors.icon}/>
+              <Icon size={'1.6rem'} color={colors.icon}/>
             </S.HeaderAction>
           </Tooltip.Trigger>
           <Tooltip.Portal>

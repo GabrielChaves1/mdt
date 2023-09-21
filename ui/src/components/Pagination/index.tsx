@@ -18,7 +18,7 @@ export default function Pagination({ totalOfItems, currentPage, itemsBeingViewed
       <S.Text>Mostrando {itemsBeingViewed} de {totalOfItems} registros</S.Text>
       <S.PaginationContainer>
         <S.NavigateButton disabled={currentPage <= 1} onClick={() => onPaginate(currentPage - 1)}>
-          <ChevronLeft size={16} color={colors.icon} />
+          <ChevronLeft size={'1.6rem'} color={colors.icon} />
         </S.NavigateButton>
         <S.Pages>
           {[...new Array(amountOfPages)]?.map((_, i) => (
@@ -28,7 +28,7 @@ export default function Pagination({ totalOfItems, currentPage, itemsBeingViewed
           ))}
         </S.Pages>
         <S.NavigateButton disabled={currentPage >= amountOfPages} onClick={() => onPaginate(currentPage + 1)}>
-          <ChevronRight size={16} color={colors.icon} />
+          <ChevronRight size={'1.6rem'} color={colors.icon} />
         </S.NavigateButton>
       </S.PaginationContainer>
     </S.Wrapper>

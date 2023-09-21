@@ -1,11 +1,10 @@
 import Button from '../Button';
 import * as S from './styles';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { BookOpen, Crown, Settings, StickyNote, Tv2, Users } from 'lucide-react';
 import { memo } from 'react';
 
 function Aside() {
-  const navigate = useNavigate();
   const location = useLocation();
 
   const paths = [
@@ -41,25 +40,20 @@ function Aside() {
     },
   ]
 
-  const handleNavigate = (url: string) => {
-    if(location.pathname == url) return;
-    navigate(url);
-  }
-
   return (
     <S.Container>
       <S.NavigationArea>
         <S.NavigationAreaTitle>Navegação</S.NavigationAreaTitle>
         <S.NavigationAreaContent>
           {paths.map(({ url, text, icon: Icon }) => (
-            <Button 
-              key={url}
-              variant={location.pathname == url ? 'primary' : 'secondary'} 
-              onClick={() => handleNavigate(url)} 
-              fill>
-              <Icon size={18}/>
-              {text}
-            </Button>
+            <Link key={url} to={url}>
+              <Button
+                variant={location.pathname === url ? 'primary' : 'secondary'} 
+                fill>
+                <Icon size={'1.8rem'}/>
+                {text}
+              </Button>
+            </Link>
           ))}
         </S.NavigationAreaContent>
       </S.NavigationArea>

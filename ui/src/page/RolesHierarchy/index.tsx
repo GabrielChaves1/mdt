@@ -4,7 +4,7 @@ import Table from '@/components/Table';
 import { useRef } from 'react';
 import { ModalRootHandles } from '@/components/Modal/ModalRoot';
 import EditPermissionsModal from './components/EditPermissionsModal';
-import { Eye } from 'lucide-react';
+import { FileEdit, Users } from 'lucide-react';
 import ShowPolicersModal from './components/ShowPolicersModal';
 import Action from '@/components/Action';
 
@@ -42,7 +42,8 @@ export default function RolesHierarchy() {
           <Table.Item>#1</Table.Item>
           <Table.Item>Comandante Geral</Table.Item>
           <Table.Item>
-            <Action icon={Eye} size='sm' label='Ver detalhes' onClick={() => handleEditPermissions("Comandante Geral")} />
+            <Action icon={FileEdit} size='sm' label='Editar Permissões' onClick={() => handleEditPermissions("Comandante Geral")} />
+            <Action icon={Users} size='sm' label='Visualizar Oficiais' onClick={() => handleShowPolicers("Comandante Geral")} />
           </Table.Item>
         </Table.Row>
       </Table.Root>
