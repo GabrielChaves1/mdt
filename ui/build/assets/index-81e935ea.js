@@ -1,4 +1,4 @@
-import{h as t,j as o,l as r}from"./index-42cf2d40.js";const n=t.section`
+import{s as t,a as o,b as r}from"./index-bfdf8dd9.js";const n=t.section`
   width: 100%;
   height: 100%;
 
@@ -49,4 +49,4 @@ import{h as t,j as o,l as r}from"./index-42cf2d40.js";const n=t.section`
   width: 100%;
   flex: 1;
   position: relative;
-`;function u({children:e}){return r(i,{children:e})}function m({children:e}){return r(s,{children:e})}function f({children:e}){return r(d,{children:e})}function h({children:e}){return r(a,{children:e})}function p({children:e}){return r(n,{children:e})}function b(){return r(l,{})}function C({children:e}){return r(c,{children:e})}const x={Root:p,Column:m,Header:u,Title:h,Subtitle:f,Separator:b,Content:C};export{x as C};
+`;function u({children:e}){return r(i,{children:e})}function m({children:e}){return r(s,{children:e})}function f({children:e}){return r(d,{children:e})}function p({children:e}){return r(a,{children:e})}function h({children:e}){return r(n,{children:e})}function b(){return r(l,{})}function C({children:e}){return r(c,{children:e})}const x={Root:h,Column:m,Header:u,Title:p,Subtitle:f,Separator:b,Content:C};export{x as C};
