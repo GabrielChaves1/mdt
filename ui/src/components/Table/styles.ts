@@ -7,6 +7,8 @@ export const Root = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 `
 
 export const Head = styled.div`
@@ -37,6 +39,7 @@ export const Body = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: .7rem;
+  justify-content: flex-start;
 `
 
 export const Row = styled.div`

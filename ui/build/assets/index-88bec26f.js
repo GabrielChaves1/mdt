@@ -1,4 +1,4 @@
-import{c as x,s as o,C as y,r as c,j as i,a as e,B as b,b as w,d as u,i as P}from"./index-2e6b3bed.js";import{T as m}from"./index-97cb2b98.js";import{M as a,A as g,E as v}from"./index-ec06df8f.js";import{T as C}from"./index-82102e7f.js";import{S as p}from"./index-f5239b35.js";import"./index-1cb2d457.js";const M=x("FileEdit",[["path",{d:"M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5",key:"1bg6eb"}],["polyline",{points:"14 2 14 8 20 8",key:"1ew0cm"}],["path",{d:"M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z",key:"1rgxu8"}]]),R=x("Search",[["circle",{cx:"11",cy:"11",r:"8",key:"4ej97u"}],["path",{d:"m21 21-4.3-4.3",key:"1qie3q"}]]),$=o(y)`
+import{c as x,h as o,C as y,g as c,k as i,l as e,B as b,j as w,m as u,z as P}from"./index-42cf2d40.js";import{T as m}from"./index-e2fbd0e9.js";import{M as a,A as g,E as v}from"./index-dfe5cd39.js";import{T as C}from"./index-bdc69d45.js";import{S as p}from"./index-c8122db3.js";import"./index-4b38e630.js";const M=x("FileEdit",[["path",{d:"M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5",key:"1bg6eb"}],["polyline",{points:"14 2 14 8 20 8",key:"1ew0cm"}],["path",{d:"M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z",key:"1rgxu8"}]]),R=x("Search",[["circle",{cx:"11",cy:"11",r:"8",key:"4ej97u"}],["path",{d:"m21 21-4.3-4.3",key:"1qie3q"}]]),$=o(y)`
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -6,7 +6,7 @@ import{c as x,s as o,C as y,r as c,j as i,a as e,B as b,b as w,d as u,i as P}fro
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
-`,S=o.div`
+`,z=o.div`
   display: flex;
   flex-direction: column;
 `,h=o.div`
@@ -31,13 +31,13 @@ import{c as x,s as o,C as y,r as c,j as i,a as e,B as b,b as w,d as u,i as P}fro
     color: ${({theme:r})=>r.text.subtitle};
     font-weight: 400;
   }
-`,j=o.div`
+`,S=o.div`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   margin-top: 1rem;
-`,z=c.forwardRef((r,t)=>{const[l,d]=c.useState("");function n(s){d(s.role)}return i(a.Root,{onOpen:n,ref:t,children:[e(a.Header,{title:`Editar Permissões | ${l}`,subtitle:"Aqui você poderá editar as permissões do cargo selecionado"}),e(a.Content,{children:i(E,{children:[e(C,{placeholder:"Pesquisar...",icon:R}),i(S,{children:[i(h,{children:[i(f,{children:[e("p",{children:"Prender"}),e("span",{children:"Os oficiais com essa permissão poderão prender cidadãos"})]}),e(p,{})]}),i(h,{children:[i(f,{children:[e("p",{children:"Multar"}),e("span",{children:"Os oficiais com essa permissão poderão multar cidadãos"})]}),e(p,{})]}),i(h,{children:[i(f,{children:[e("p",{children:"Criar Operações"}),e("span",{children:"Os oficiais com essa permissão poderão criar operações"})]}),e(p,{})]}),i(h,{children:[i(f,{children:[e("p",{children:"Exonerar Membros"}),e("span",{children:"Os oficiais com essa permissão poderão exonerar oficiais"})]}),e(p,{})]}),i(h,{children:[i(f,{children:[e("p",{children:"Promover Membros"}),e("span",{children:"Os oficiais com essa permissão poderão promover oficiais"})]}),e(p,{})]})]}),e(j,{children:e(b,{children:"Salvar Alterações"})})]})})]})}),k=z,A=o.div`
+`,j=c.forwardRef((r,t)=>{const[l,d]=c.useState("");function n(s){d(s.role)}return i(a.Root,{onOpen:n,ref:t,children:[e(a.Header,{title:`Editar Permissões | ${l}`,subtitle:"Aqui você poderá editar as permissões do cargo selecionado"}),e(a.Content,{children:i(E,{children:[e(C,{placeholder:"Pesquisar...",icon:R}),i(z,{children:[i(h,{children:[i(f,{children:[e("p",{children:"Prender"}),e("span",{children:"Os oficiais com essa permissão poderão prender cidadãos"})]}),e(p,{})]}),i(h,{children:[i(f,{children:[e("p",{children:"Multar"}),e("span",{children:"Os oficiais com essa permissão poderão multar cidadãos"})]}),e(p,{})]}),i(h,{children:[i(f,{children:[e("p",{children:"Criar Operações"}),e("span",{children:"Os oficiais com essa permissão poderão criar operações"})]}),e(p,{})]}),i(h,{children:[i(f,{children:[e("p",{children:"Exonerar Membros"}),e("span",{children:"Os oficiais com essa permissão poderão exonerar oficiais"})]}),e(p,{})]}),i(h,{children:[i(f,{children:[e("p",{children:"Promover Membros"}),e("span",{children:"Os oficiais com essa permissão poderão promover oficiais"})]}),e(p,{})]})]}),e(S,{children:e(b,{children:"Salvar Alterações"})})]})})]})}),k=j,A=o.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;

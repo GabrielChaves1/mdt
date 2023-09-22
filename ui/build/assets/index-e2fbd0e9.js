@@ -1,4 +1,4 @@
-import{s as t,e as d,j as a,a as r}from"./index-2e6b3bed.js";const m=t.section`
+import{h as t,v as d,k as m,l as r}from"./index-42cf2d40.js";const a=t.section`
   width: 100%;
   flex: 1;
   position: relative;
@@ -55,4 +55,4 @@ import{s as t,e as d,j as a,a as r}from"./index-2e6b3bed.js";const m=t.section`
   max-width: 35rem;
   display: flex;
   gap: .5rem;
-`;function b({headColumns:e,children:o}){return a(m,{children:[r(l,{children:e.map((i,n)=>r(s,{children:i},n))}),r(c,{children:o})]})}function h({children:e}){return r(p,{children:e})}function x({children:e}){return r(f,{children:e})}const g={Root:b,Row:h,Item:x};export{g as T};
+`;function b({headColumns:e,children:o}){return m(a,{children:[r(l,{children:e.map((i,n)=>r(s,{children:i},n))}),r(c,{children:o})]})}function h({children:e}){return r(p,{children:e})}function x({children:e}){return r(f,{children:e})}const g={Root:b,Row:h,Item:x};export{g as T};

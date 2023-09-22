@@ -4,6 +4,7 @@ import { ModalRootHandles } from '@/components/Modal/ModalRoot';
 import * as S from './styles';
 import Action from '@/components/Action';
 import { Eye } from 'lucide-react';
+import Avatar from '@/components/Avatar';
 
 const ShowPolicersModal = forwardRef<ModalRootHandles>((_, ref) => {
   const [ role, setRole ] = useState<string>("");
@@ -19,7 +20,7 @@ const ShowPolicersModal = forwardRef<ModalRootHandles>((_, ref) => {
         <S.List>
           <S.User>
             <S.Header>
-              <S.Image src='https://cdn.ome.lt/XmNgZkW2CggS6RGXiEz55spbmQs=/970x360/smart/uploads/conteudo/fotos/gta-franklin-selfie-topo.jpg' />
+              <Avatar />
               <S.TextArea>
                 <p>Gabriel Droyen</p>
                 <span>{role}</span>
