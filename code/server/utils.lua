@@ -93,7 +93,9 @@ Citizen.CreateThread(function()
             titulo VARCHAR(100),
             descricao VARCHAR(255),
             data INT,
-            oficial INT,
+            autor VARCHAR(100),
+            id_autor INT,
+            org VARCHAR(100),
             PRIMARY KEY (id)
         );
     ]])
@@ -115,7 +117,16 @@ Citizen.CreateThread(function()
     zof.prepare("mdt/mdt_hierarquia/getPlayer", [[ SELECT * FROM mdt_hierarquia WHERE user_id = @user_id ]])
     zof.prepare("mdt/mdt_hierarquia/insert", [[ INSERT INTO mdt_hierarquia(user_id, nome, cargo, org, unidade, cursos, pontos, time_ptr, dt_entrada) VALUES(@user_id, @nome, @cargo, @org, @unidade, @cursos, @pontos, @time_ptr, @dt_entrada)) ]])
     zof.prepare("mdt/mdt_hierarquia/deletePlayer", [[ DELETE FROM mdt_hierarquia WHERE user_id = @user_id ]])
+
+    zof.prepare("mdt/mdt_avisos/insert", "INSERT INTO mdt_avisos(titulo, descricao, data, autor, id_autor, org) VALUES(@titulo, @descricao, @data, @autor, @id_autor, @org)")
+    zof.prepare("mdt/mdt_avisos/delete", "DELETE FROM mdt_avisos WHERE id = @id")
+    zof.prepare("mdt/mdt_avisos/getFromOrg", "SELECT * FROM mdt_avisos WHERE org = @org")
+
+    zof.prepare("mdt/mdt_historico_penal/getAll", "SELECT * FROM mdt_historico_penal")
     
-    -- zof.execute("mdt/drop_all_tables")
+    zof.execute("mdt/drop_all_tables")
+
+    Citizen.Wait(1000)
+
     zof.execute("mdt/create_all_tables")
 end)

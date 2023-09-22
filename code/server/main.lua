@@ -16,6 +16,23 @@ playersOrg = {}
 
 chatOrgsLog = {}
 
+mdtHistoricoPenal = {}
+
+function src.getInfosOpenPanel()
+    local source  = source
+    local user_id = zof.getUserId(source)
+
+    local sUser_id = tostring(user_id)
+    local org = playersOrg[sUser_id]
+
+    return {
+        org = org,
+        nome = zof.getName(user_id),
+        infosOfficer = cacheOrgs[org].officers[sUser_id],
+        prisoes = #mdtHistoricoPenal
+    }
+end
+
 function initOrgsFromDb()
     for org, info in pairs(orgsConfigList) do
         if not cacheOrgs[org] then 
@@ -31,13 +48,13 @@ function initOrgsFromDb()
         end
 
         local rows = zof.query("mdt/mdt_hierarquia/getFromOrg", { org = org })
-        if not #rows > 0 then return end
+        if not (#rows > 0) then return end
 
         for i, v in pairs(rows) do
-            local user_id = tostring(v.user_id)
+            local sUser_id = tostring(v.user_id)
             v.online = zof.getUserSource(v.user_id) ~= nil
 
-            cacheOrgs[org].officers[user_id] = v
+            cacheOrgs[org].officers[sUser_id] = v
         end
     end
 end
@@ -144,3 +161,37 @@ function src.sendMessageChatOrg(message, org)
 
     return chatOrgsLog[org]
 end
+
+function src.getWarningsOrg(org)
+    return zof.query("zo/get_avisos_org", { org = org })
+end
+
+function src.createWarningOrg(details)
+    local source  = source
+    local user_id = zof.getUserId(source)
+
+    zof.execute("mdt/mdt_avisos/insert", {
+        id_autor = user_id, autor = zof.getName(user_id),
+        titulo = details.title, descricao = details.msg,
+        data = os.time(), org = details.org
+    })
+
+    return src.getAvisosOrg(aviso.org)
+end
+
+function src.deleteWarningOrg(details)
+    local source  = source
+    local user_id = zof.getUserId(source)
+
+    zof.execute("zo/delete_aviso_org", { id = details.id })
+
+    return src.getAvisosOrg(details.org)
+end
+
+Citizen.CreateThread(function()
+    Citizen.Wait(5000)
+
+    initOrgsFromDb()
+
+    mdtHistoricoPenal = zof.query("mdt/mdt_historico_penal/getAll", {})
+end)
