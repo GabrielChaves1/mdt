@@ -1,73 +1,27 @@
--- RegisterCommand("tp", function()
---     -- Cutscene()
---     cutseneMugshot()
--- end)
+RegisterCommand("tp", function()
+    cutseneMugshot()
+end)
 
--- RegisterCommand("ccp", function()
---     -- Cutscene()
---     createCamAndSetPosition()
--- end)
+RegisterCommand("jail", function(source, args)
+    vSERVER.arrestBandit({ 
+        banditUserId = args[1], 
+        time = args[2], 
+        codigos_penais = {},
+        descricao = "Prisão teste pelo comando JAIL",
+        oficiais = {},
+        imgs = {}
+    })
+end)
 
--- RegisterCommand("ta", function()
---     local ped = PlayerPedId()
-
---     -- SetEntityCoords(ped, 1683.74, 2500.32, 45.55 - 1.45)
---     -- SetEntityHeading(ped, 58.72)
-
---     -- FreezeEntityPosition(ped, true)
-
---     -- RequestAnimDict("amb@prop_human_seat_chair@male@left_elbow_on_knee@idle_a")
---     -- TaskPlayAnim(ped, "amb@prop_human_seat_chair@male@left_elbow_on_knee@idle_a" ,"idle_a", 8.0, -1, -1, 1, 0, 0, 0, 0)
-
---     -- Citizen.Wait(5000)
-
---     -- ClearPedTasks(ped)
-
---     -- RequestAnimDict("amb@prop_human_seat_chair@male@left_elbow_on_knee@react_aggressive")
---     -- TaskPlayAnim(ped, "amb@prop_human_seat_chair@male@left_elbow_on_knee@react_aggressive" ,"exit_forward", 8.0, 8.0, -1, 0, 0, 0, 0, 0)
-
---     TaskStartScenarioAtPosition(ped, "PROP_HUMAN_SEAT_BENCH", 1683.74, 2500.32, 45.55 - 0.5, 58.72, 0, false, true)
-
---     Citizen.Wait(3000)
-
---     -- ClearPedTasks(ped)
---     -- FreezeEntityPosition(ped, false)
--- end)
-
-function createCamAndSetPosition()
-    local drawTxt = function(text, font, x, y, scale, r, g, b, a)
-        SetTextFont(font)
-        SetTextScale(scale, scale)
-        SetTextColour(r, g, b, a)
-        SetTextOutline()
-        SetTextCentre(1)
-        SetTextEntry("STRING")
-        AddTextComponentString(text)
-        DrawText(x, y)
-    end
-
-    -- { 402.70, -998.32, -98.99, 88.67 },
-    -- { 401.46, -1005.22, -98.07, 170.27 },
-
-
-    local ped = PlayerPedId()
-    -- local x, y, z = table.unpack({ 402.92, -998.78, -98.51 })
-    local x, y, z = table.unpack({ 1515.37, 2684.55, 189.24 })
-
-	local camId = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
-
-    SetCamCoord(camId, x, y, z)
-	SetCamRot(camId, 0.0, 0.0, -10.0)
-
-	RenderScriptCams(true, false, 0, true, true)
-end
-
-configCutsene = {
+configsPrision = {
     cdsPlayer = { 402.87, -996.71, -99.00, 183.84 },
     cdsOfficer = { 402.98, -1000.26, -99.00, 7.54 },
+
     cdsSpawnPrision = {
         { 1683.74, 2500.32, 45.55 - 0.5, 58.72 }
     },
+
+    cdsSpawnLiberation = { 1846.33, 2585.92, 45.67, 272.82 },
 
     cams = {
         ["firstCam"] = {
@@ -87,17 +41,17 @@ configCutsene = {
     },
 }
 
-function cutseneMugshot()
+function src.cutseneMugshot(details)
     DoScreenFadeOut(250)
-    Citizen.Wait(250)
+    Citizen.Wait(1000)
 
 	local playerPed = PlayerPedId()
     
-	local CitizenId = playerPed
-	local nameStuck = "TH ZO"
-	local date = "21/09/2023"
-    local cityName = "Pirituba ZO"
-    local timeJail = 250
+	local CitizenId = details.time
+	local nameStuck = details.name
+	local date = details.date
+    local cityName = details.nameCity
+    local timeJail = playerPed
 
     local scaleFormBoard = LoadScale("mugshot_board_01")
     local renderHandle = CreateRenderModel("ID_Text", "prop_police_id_text")
@@ -118,8 +72,6 @@ function cutseneMugshot()
         end
     end)
 
-	Citizen.Wait(250)
-
 	BeginScaleformMovieMethod(scaleFormBoard, 'SET_BOARD')
     PushScaleformMovieMethodParameterString(cityName)
     PushScaleformMovieMethodParameterString(nameStuck)
@@ -132,15 +84,12 @@ function cutseneMugshot()
     EndScaleformMovieMethod()
 
 	local camCutsene = CreateCam("DEFAULT_SCRIPTED_CAMERA", 1)
-    local firstCam = configCutsene.cams["firstCam"]
+    local firstCam = configsPrision.cams["firstCam"]
 
 	SetCamCoord(camCutsene, firstCam.pos[1], firstCam.pos[2], firstCam.pos[3])
     SetCamRot(camCutsene, firstCam.rot[1], firstCam.rot[2], firstCam.rot[3])
 
     RenderScriptCams(1, 0, 0, 1, 1)
-
-    DoScreenFadeIn(1000)
-    Citizen.Wait(250)
 
 	CreateThread(function()
         FreezeEntityPosition(playerPed, true)
@@ -154,8 +103,8 @@ function cutseneMugshot()
         end
     end)
 
-	SetEntityCoords(playerPed, configCutsene.cdsPlayer[1], configCutsene.cdsPlayer[2], configCutsene.cdsPlayer[3] - 1.0)
-	SetEntityHeading(playerPed, configCutsene.cdsPlayer[4])
+	SetEntityCoords(playerPed, configsPrision.cdsPlayer[1], configsPrision.cdsPlayer[2], configsPrision.cdsPlayer[3] - 1.0)
+	SetEntityHeading(playerPed, configsPrision.cdsPlayer[4])
 	FreezeEntityPosition(playerPed, true)
 
 	LoadModel("prop_police_id_board")
@@ -178,18 +127,24 @@ function cutseneMugshot()
 	LoadAnimDict("mp_character_creation@lineup@male_a")
 	TaskPlayAnim(playerPed, "mp_character_creation@lineup@male_a", "loop_raised", 8.0, 8.0, -1, 49, 0, false, false, false)
 
+    Citizen.Wait(1000)
+
+    DoScreenFadeIn(1000)
+    Citizen.Wait(1000)
+
+    mugShootSave(details)
     Citizen.Wait(7000)
-    LoadModel("cs_casey")
 
-	local pedPolice = ClonePed(playerPed, false, false, false)
+    local pedOfficer = GetPlayerPedScriptIndex(GetPlayerFromServerId(details.pedOfficer))
+	local pedPolice = ClonePed(pedOfficer, false, false, false)
 
-    SetEntityCoords(pedPolice, configCutsene.cdsOfficer[1], configCutsene.cdsOfficer[2], configCutsene.cdsOfficer[3] - 1.0)
-	SetEntityHeading(pedPolice, configCutsene.cdsOfficer[4])
+    SetEntityCoords(pedPolice, configsPrision.cdsOfficer[1], configsPrision.cdsOfficer[2], configsPrision.cdsOfficer[3] - 1.0)
+	SetEntityHeading(pedPolice, configsPrision.cdsOfficer[4])
     
     TaskStartScenarioInPlace(pedPolice, "WORLD_HUMAN_PAPARAZZI", 0, false)
 
     local camCutseneTwo = CreateCam("DEFAULT_SCRIPTED_CAMERA", 1)
-    local photoCam = configCutsene.cams["photoCam"]
+    local photoCam = configsPrision.cams["photoCam"]
 
     SetCamCoord(camCutseneTwo, photoCam.pos[1], photoCam.pos[2], photoCam.pos[3])
     SetCamRot(camCutseneTwo, photoCam.rot[1], photoCam.rot[2], photoCam.rot[3])
@@ -208,7 +163,6 @@ function cutseneMugshot()
 	DeleteEntity(pedPolice)
 	SetModelAsNoLongerNeeded(-1320879687)
 
-
     ClearPedTasksImmediately(playerPed)
     DeleteObject(board)
     DeleteObject(boardOverlay)
@@ -218,11 +172,16 @@ function cutseneMugshot()
 	DestroyCam(camCutsene)
     DestroyCam(camCutseneTwo)
 
-    local cdsSp = configCutsene.cdsSpawnPrision[1]
+    cutseneInPrision(playerPed)
+    renderHandle = nil
+end
+
+function cutseneInPrision(playerPed)
+    local cdsSp = configsPrision.cdsSpawnPrision[1]
     TaskStartScenarioAtPosition(playerPed, "PROP_HUMAN_SEAT_BENCH", cdsSp[1], cdsSp[2], cdsSp[3], cdsSp[4], 0, false, true)
 
     local camCutseneSky = CreateCam("DEFAULT_SCRIPTED_CAMERA", 1)
-    local skyCam = configCutsene.cams["skyCam"]
+    local skyCam = configsPrision.cams["skyCam"]
 
 	SetCamCoord(camCutseneSky, skyCam.pos[1], skyCam.pos[2], skyCam.pos[3])
     SetCamRot(camCutseneSky, skyCam.rot[1], skyCam.rot[2], skyCam.rot[3])
@@ -238,44 +197,68 @@ function cutseneMugshot()
     
     DestroyCam(camCutseneSky)
     SetFocusEntity(playerPed)
-
-    renderHandle = nil
+    
     ClearPedTasks(playerPed)
     FreezeEntityPosition(playerPed, false)
 end
 
-function LoadModel(model)
-    RequestModel(GetHashKey(model))
-    while not HasModelLoaded(GetHashKey(model)) do
-        Wait(0)
+function mugShootSave(details)
+    if webhook.saveImagesScreenShotBasic then
+        exports['screenshot-basic']:requestScreenshotUpload(tostring(webhook.saveImagesScreenShotBasic), 'files[]', { encoding = 'jpg' }, function(data)
+            local Response = json.decode(data)
+            local imageURL = Response.attachments[1].url
+
+            details.mugshot = imageURL
+            table.insert(details.imgs, imageURL)
+
+            vSERVER.registerArrestBandit(details)
+        end)
     end
 end
 
-function LoadAnimDict(dict)
-    while (not HasAnimDictLoaded(dict)) do
-        RequestAnimDict(dict)
-        Wait(0)
-    end
-end
+function src.createThreadIsArrested(time)
+    time = parseInt(time)
+    local countSaveInfo = 1
 
-function LoadScale(scalef)
-	local handle = RequestScaleformMovie(scalef)
-    while not HasScaleformMovieLoaded(handle) do
-        Wait(0)
-    end
-	return handle
-end
+    local playerPed = PlayerPedId()
+    local cdsSp = configsPrision.cdsSpawnPrision[1]
 
-function CreateRenderModel(name, model)
-	local handle = 0
-	if not IsNamedRendertargetRegistered(name) then
-		RegisterNamedRendertarget(name, 0)
-	end
-	if not IsNamedRendertargetLinked(model) then
-		LinkNamedRendertarget(model)
-	end
-	if IsNamedRendertargetRegistered(name) then
-		handle = GetNamedRendertargetRenderId(name)
-	end
-	return handle
+    Citizen.CreateThread(function()
+        while time > 0 do
+            print("restam " .. time .. " minutos de prisão")
+            
+            if GetDistanceBetweenCoords(GetEntityCoords(playerPed), vector3(cdsSp[1], cdsSp[2], cdsSp[3]), false) > 50 then
+                DoScreenFadeOut(250)
+                Citizen.Wait(1000)
+
+                SetEntityCoords(playerPed, cdsSp[1], cdsSp[2], cdsSp[3])
+	            SetEntityHeading(playerPed, cdsSp[4])
+
+                cutseneInPrision(playerPed)
+
+                print("você foi pego tentando fugir da prisão")
+            end
+
+            Citizen.Wait(60000)
+            
+            time = time - 1
+            countSaveInfo = countSaveInfo + 1
+
+            if countSaveInfo > 5 then 
+                vSERVER.updateTimeArrested(time)
+                countSaveInfo = 1
+            end
+        end
+
+        vSERVER.updateTimeArrested(time)
+
+        DoScreenFadeOut(250)
+        Citizen.Wait(1000)
+
+        SetEntityCoords(playerPed, configsPrision.cdsSpawnLiberation[1], configsPrision.cdsSpawnLiberation[2], configsPrision.cdsSpawnLiberation[3])
+	    SetEntityHeading(playerPed, configsPrision.cdsSpawnLiberation[4])
+
+        DoScreenFadeIn(250)
+        Citizen.Wait(1000)
+    end)
 end
