@@ -7,7 +7,7 @@ export const Container = styled.aside`
   padding: 2.5rem 1.7rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: .5rem;
 `
 
 export const NavigationArea = styled.div`
@@ -18,16 +18,11 @@ export const NavigationArea = styled.div`
 `
 
 export const Logo = styled.img`
-  width: 10rem;
-  height: 10rem;
+  width: 14rem;
+  height: 14rem;
   object-fit: cover;
   outline: none;
-  border-radius: .6rem;
-  margin-bottom: 2rem;
-
-  ${props => props.theme.title === "light" && css`
-    filter: brightness(0);
-  `}
+  align-self: center;
 `
 
 export const NavigationAreaTitle = styled.h3`

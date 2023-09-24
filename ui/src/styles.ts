@@ -33,7 +33,7 @@ export const Wrapper = styled.main`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   gap: 2rem;
   padding: 2.5rem 7.4rem;
   flex: 1;

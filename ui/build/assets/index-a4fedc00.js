@@ -1,20 +1,20 @@
-import{C as g,u,P as f}from"./usePaginate-89a80142.js";import{s as r,b as p,j as i,a as t,L as h,d as m}from"./index-2e6b3bed.js";const b=r.div`
+import{s as r,a as p,j as o,b as t,n as u,o as f,p as h,f as m,q as b}from"./index-93699eff.js";const w=r.div`
   flex: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-`,y=r.div`
+`,x=r.div`
   display: grid;
   grid-template-columns: repeat(4, 24rem);
   grid-template-rows: repeat(3, 17.2rem);
   gap: 2rem;
   flex: 1;
   align-content: flex-start;
-`,x=r.div`
+`,y=r.div`
   border-radius: .6rem;
   border: solid .1rem ${({theme:e})=>e.border.primary};
-`,w=r.div`
+`,C=r.div`
   display: flex;
   flex-direction: column;
 `,$=r.div`
@@ -29,7 +29,7 @@ import{C as g,u,P as f}from"./usePaginate-89a80142.js";import{s as r,b as p,j as
   font-size: 1.6rem;
   font-weight: 400;
   color: #FFF;
-`,P=r.div`
+`,D=r.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,7 +38,7 @@ import{C as g,u,P as f}from"./usePaginate-89a80142.js";import{s as r,b as p,j as
   font-size: 1.2rem;
   font-weight: 400;
   color: #FFF;
-`,C=r.div`
+`,P=r.div`
   height: 10rem;
   display: flex;
   flex-direction: column;
@@ -46,11 +46,13 @@ import{C as g,u,P as f}from"./usePaginate-89a80142.js";import{s as r,b as p,j as
   justify-content: center;
   border-left: solid .1rem ${({theme:e})=>e.border.primary};
   border-right: solid .1rem ${({theme:e})=>e.border.primary};
-`,z=r.p`
+`,T=r.p`
   font-size: 1.6rem;
   font-weight: 400;
   color: ${({theme:e})=>e.text.title};
-`,D=r.time`
+  max-width: 80%;
+  text-align: center;
+`,z=r.time`
   font-size: 1.2rem;
   font-weight: 400;
   color: ${({theme:e})=>e.text.subtitle};
@@ -73,4 +75,4 @@ import{C as g,u,P as f}from"./usePaginate-89a80142.js";import{s as r,b as p,j as
   &:active {
     background: ${({theme:e})=>p(.94,e.colors.ripple)};
   }
-`;function S({date:e,id:s,timeToComplete:d,title:n}){const a=new Date(e),l=String(a.getDate()).padStart(2,"0"),c=String(a.getMonth()+1).padStart(2,"0"),o=String(a.getFullYear());return i(w,{children:[i($,{children:[t(v,{children:"Investigação"}),i(P,{children:[t(g,{size:"1.6rem",color:"white"}),d," min"]})]}),i(C,{children:[t(z,{children:n}),i(D,{children:[l,"/",c,"/",o]})]}),t(h,{to:`/courses/${s}`,children:t(F,{children:"Ver Detalhes"})})]})}function T(){const{amountOfPages:s,currentPage:d,items:n,totalOfItems:a,viewedItems:l,paginate:c}=u(12,1,[{id:1,title:"Curso de Armamento",date:Date.now(),timeToComplete:30}]);return i(b,{children:[t(m.Root,{children:t(m.Header,{children:t(m.Title,{children:"Cursos Disponíveis"})})}),i(y,{children:[n==null?void 0:n.map(o=>t(S,{...o},o.id)),[...new Array(12-n.length)].map(()=>t(x,{}))]}),t(f,{amountOfPages:s,currentPage:d,itemsBeingViewed:l,onPaginate:o=>c(o),totalOfItems:a})]})}export{T as default};
+`;function S({date:e,id:s,timeToComplete:d,title:n}){const a=new Date(e),l=String(a.getDate()).padStart(2,"0"),c=String(a.getMonth()+1).padStart(2,"0"),i=String(a.getFullYear());return o(C,{children:[o($,{children:[t(v,{children:"Policia Militar"}),o(D,{children:[t(u,{size:"1.6rem",color:"white"}),d," min"]})]}),o(P,{children:[t(T,{children:n}),o(z,{children:[l,"/",c,"/",i]})]}),t(f,{to:`/courses/${s}`,children:t(F,{children:"Ver Detalhes"})})]})}function k(){const{amountOfPages:s,currentPage:d,items:n,totalOfItems:a,viewedItems:l,paginate:c}=h(12,1,[{id:1,title:"Curso de Armamento",date:Date.now(),timeToComplete:30},{id:2,title:"Curso Tático",date:Date.now(),timeToComplete:30},{id:3,title:"Curso de Desce e Quebra",date:Date.now(),timeToComplete:30},{id:4,title:"Curso de Rolamento",date:Date.now(),timeToComplete:30},{id:5,title:"Curso de Investigação",date:Date.now(),timeToComplete:30}]);return o(w,{children:[t(m.Root,{children:t(m.Header,{children:t(m.Title,{children:"Cursos Disponíveis"})})}),o(x,{children:[n==null?void 0:n.map(i=>t(S,{...i},i.id)),[...new Array(12-n.length)].map((i,g)=>t(y,{},g))]}),t(b,{amountOfPages:s,currentPage:d,itemsBeingViewed:l,onPaginate:i=>c(i),totalOfItems:a})]})}export{k as default};

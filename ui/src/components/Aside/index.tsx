@@ -3,13 +3,14 @@ import * as S from './styles';
 import { Link, useLocation } from 'react-router-dom';
 import { BookOpen, Crown, Settings, StickyNote, Tv2, Users } from 'lucide-react';
 import { memo } from 'react';
+import Header from '../Header';
 
 function Aside() {
   const location = useLocation();
 
   const paths = [
     {
-      url: "/",
+      url: "/home",
       icon: Tv2,
       text: "Página Inicial"
     },
@@ -42,13 +43,15 @@ function Aside() {
 
   return (
     <S.Container>
+      <S.Logo src="https://cdn.discordapp.com/attachments/840674428828516352/1154846262336700457/logodroyen.png" />
+      <Header />
       <S.NavigationArea>
         <S.NavigationAreaTitle>Navegação</S.NavigationAreaTitle>
         <S.NavigationAreaContent>
           {paths.map(({ url, text, icon: Icon }) => (
             <Link key={url} to={url}>
               <Button
-                variant={location.pathname === url ? 'primary' : 'secondary'} 
+                variant={location.pathname.includes(url) ? 'primary' : 'secondary'} 
                 fill>
                 <Icon size={'1.8rem'}/>
                 {text}

@@ -47,6 +47,8 @@ export const Subtitle = styled.p`
   font-size: 1.6rem;
   font-weight: 400;
   color: ${({theme}) => theme.text.title};
+  max-width: 80%;
+  text-align: center;
 `
 
 export const Date = styled.time`

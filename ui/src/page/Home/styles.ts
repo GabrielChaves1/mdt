@@ -7,7 +7,7 @@ export const Wrapper = styled(Container)`
   'banner  stats'
   'warns   players'
   'warns   chat'
-  'widget  chat';
+  'warns  chat';
   grid-template-columns: 65.6rem 34.5rem;
   grid-template-rows: 16.5rem 8.5rem auto 24.5rem;
   gap: 2rem;

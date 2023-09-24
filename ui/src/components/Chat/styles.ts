@@ -24,7 +24,7 @@ export const InputArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.4rem 2.5rem;
+  padding: 1.4rem;
 `
 
 export const InputBox = styled.div`
