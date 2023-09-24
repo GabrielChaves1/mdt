@@ -16,7 +16,7 @@ playersOrg = {}
 
 chatOrgsLog = {}
 
-mdtHistoricoPenal = {}
+mdtPresos = {}
 
 function src.getInfosOpenPanel()
     local source  = source
@@ -96,9 +96,9 @@ AddEventHandler("vRP:playerSpawn", function(user_id, source, first_spawn)
     local sUser_id = tostring(user_id)
 
     local org = playersOrg[sUser_id]
-    if not org then return end
+    if org then cacheOrgs[org].officers[sUser_id].online = true end
 
-    cacheOrgs[org].officers[sUser_id].online = true
+    if mdtPresos[sUser_id] then vCLIENT.createThreadIsArrested(source, mdtPresos[sUser_id].tempo) end
 end)
 
 AddEventHandler("playerDropped", function(reason)
@@ -188,10 +188,85 @@ function src.deleteWarningOrg(details)
     return src.getAvisosOrg(details.org)
 end
 
+function src.arrestBandit(details)
+    local source = source
+    local user_id = zof.getUserId(source)
+
+    if details.banditUserId then
+        local banditSource = zof.getUserSource(details.banditUserId)
+        if not banditSource then print("arrestBandit player offline") return end -- player offline
+
+        details.user_id = parseInt(details.banditUserId)
+        details.name = zof.getName(details.banditUserId)
+        details.nameCity = "Cidade Teste"
+        details.date = returnDateFormat()
+        details.id_officer = user_id
+        details.pedOfficer = tonumber(source)
+        details.banditSource = banditSource
+
+        vCLIENT.cutseneMugshot(banditSource, details)
+    end
+end
+
+function src.registerArrestBandit(details)
+    zof.query("mdt/mdt_historico_penal/insert", {
+        user_id = details.user_id,
+        codigos_penais = json.encode(details.codigos_penais),
+        data = os.time(),
+        descricao = details.descricao,
+        oficiais = json.encode(details.oficiais),
+        imgs = json.encode(details.imgs),
+        is_multa = false
+    })
+
+    local lastIdInsertHistoricoPenal = zof.query("mdt/mdt_historico_penal/getLastIdInserted", {})[1].id
+    if not lastIdInsertHistoricoPenal then return end
+
+    local info = {
+        user_id = details.user_id,
+        id_historico_penal = lastIdInsertHistoricoPenal,
+        nome = details.name,
+        foto = details.mugshot,
+        tempo = details.time,
+        autor = zof.getName(details.id_officer),
+        id_autor = details.id_officer
+    }
+
+    zof.query("mdt/mdt_presos/insert", info)
+    mdtPresos[tostring(details.user_id)] = info
+
+    local banditSource = zof.getUserSource(details.user_id)
+    if not banditSource then return end
+
+    Citizen.Wait(30000)
+
+    vCLIENT.createThreadIsArrested(details.banditSource, details.time)
+end
+
+function src.updateTimeArrested(time)
+    local source = source
+    local user_id = zof.getUserId(source)
+
+    if not user_id then return end
+
+    if time > 0 then
+        zof.query("mdt/mdt_presos/update", { user_id = user_id, tempo = time })
+        mdtPresos[tostring(user_id)].tempo = time
+    else
+        zof.query("mdt/mdt_presos/delete", { user_id = user_id })
+        mdtPresos[tostring(user_id)] = nil
+    end
+end
+
 Citizen.CreateThread(function()
     Citizen.Wait(5000)
 
     initOrgsFromDb()
 
-    mdtHistoricoPenal = zof.query("mdt/mdt_historico_penal/getAll", {})
+    mdtPresos.all = zof.query("mdt/mdt_presos/getAll", {})
+    for i, v in pairs(mdtPresos.all) do
+        mdtPresos[tostring(v.user_id)] = v
+    end
+
+    mdtPresos.all = nil
 end)

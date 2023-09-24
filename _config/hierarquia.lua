@@ -1,3 +1,7 @@
+webhook = {
+    saveImagesScreenShotBasic = "https://discord.com/api/webhooks/1155258139256570028/v1x0MU44TC795eJcKjGONCTBWy-v7TfM5WuPDOMl9srWWz6Js5ra11kSA3j0201f2PH4"
+}
+
 orgsConfigList = {
     ["PoliciaMilitar"] = {
 		details = {
