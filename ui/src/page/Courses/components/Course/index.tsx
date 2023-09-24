@@ -14,7 +14,7 @@ export default function Course({ date, id, timeToComplete, title }: ICourse) {
     
     <S.Wrapper>
       <S.Header>
-        <S.Title>Investigação</S.Title>
+        <S.Title>Policia Militar</S.Title>
         <S.TimeBox>
           <Clock size={'1.6rem'} color="white" />
           {timeToComplete} min

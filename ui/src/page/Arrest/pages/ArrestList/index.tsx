@@ -15,7 +15,7 @@ import IPrision from "@/types/Prision";
 import { Link } from "react-router-dom";
 
 export default function ArrestList() {
-  const { data, isLoading } = useQuery<IPrision[]>(['getPrisions', () => fetchNui("getPrisions")], {
+  const { data, isLoading } = useQuery<IPrision[]>(['getPrisions'], () => fetchNui("getPrisions"), {
     initialData: [
       {
         prisoner: {
@@ -200,8 +200,8 @@ export default function ArrestList() {
             <Loading />
           ) : (
             <>
-              {items.map((item) => (
-                <Table.Row key={item.prisoner.id}>
+              {items.map((item, i) => (
+                <Table.Row key={i}>
                   <Table.Item>{item.prisoner.name}</Table.Item>
                   <Table.Item>{item.time} meses</Table.Item>
                   <Table.Item>R$ {item.fine.toLocaleString('pt-br')}</Table.Item>

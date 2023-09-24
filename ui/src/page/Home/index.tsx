@@ -120,7 +120,7 @@ export default function Home() {
           <Card.Content>
             <S.PostsArea>
               {data.notices?.map((notice) => (
-                <Notice {...notice} />
+                <Notice key={notice.id} {...notice} />
               ))}
             </S.PostsArea>
           </Card.Content>

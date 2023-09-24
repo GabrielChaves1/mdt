@@ -14,6 +14,30 @@ export default function CourseList() {
       date: Date.now(),
       timeToComplete: 30
     },
+    {
+      id: 2,
+      title: "Curso Tático",
+      date: Date.now(),
+      timeToComplete: 30
+    },
+    {
+      id: 3,
+      title: "Curso de Desce e Quebra",
+      date: Date.now(),
+      timeToComplete: 30
+    },
+    {
+      id: 4,
+      title: "Curso de Rolamento",
+      date: Date.now(),
+      timeToComplete: 30
+    },
+    {
+      id: 5,
+      title: "Curso de Investigação",
+      date: Date.now(),
+      timeToComplete: 30
+    },
   ])
 
   return (
@@ -29,7 +53,7 @@ export default function CourseList() {
           <Course key={course.id} {...course} />
         ))}
 
-        {[...new Array(itemsPerPage - items.length)].map(() => <S.EmptySlot />)}
+        {[...new Array(itemsPerPage - items.length)].map((_, i) => <S.EmptySlot key={i}/>)}
       </S.Grid>
       <Pagination
         amountOfPages={amountOfPages}

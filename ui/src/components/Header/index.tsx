@@ -9,8 +9,8 @@ export default function Header() {
         <S.UserDataBox>
           <p>Gabriel Droyen</p>
           <span>Recruta</span>
-          <S.ProgressBar data-required="100">
-            <S.Fill data-exp="50" />
+          <S.ProgressBar>
+            <S.Fill data-exp="50" data-required="100" />
           </S.ProgressBar>
         </S.UserDataBox>
       </S.UserBox>

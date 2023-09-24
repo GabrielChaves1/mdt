@@ -1,6 +1,6 @@
 import React, { lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import CourseDetails from '@/page/Courses/pages/Details';
+import CourseDetails from '@/page/Courses/pages/CourseDetails';
 import ArrestList from '@/page/Arrest/pages/ArrestList';
 import NewArrest from '@/page/Arrest/pages/NewArrest';
 
@@ -10,7 +10,7 @@ const User = lazy(() => import("@/page/User"));
 const RolesHierarchy = lazy(() => import("@/page/RolesHierarchy"));
 const Configurations = lazy(() => import("@/page/Configurations"));
 const Courses = lazy(() => import("@/page/Courses"));
-const CourseList = lazy(() => import("@/page/Courses/pages/List"));
+const CourseList = lazy(() => import("@/page/Courses/pages/CourseList"));
 
 const RoutesList: React.FC = () => {
     return (

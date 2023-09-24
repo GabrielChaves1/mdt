@@ -19,6 +19,7 @@ export const NavigationArea = styled.div`
 
 export const Logo = styled.img`
   width: 14rem;
+  height: 14rem;
   object-fit: cover;
   outline: none;
   align-self: center;

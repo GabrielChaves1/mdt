@@ -31,7 +31,7 @@ export const UserDataBox = styled.div`
 `
 
 export const ProgressBar = styled.div`
-  width: 20.8rem;
+  width: 19.6rem;
   height: .3rem;
   position: relative;
   margin-top: .6rem;
@@ -45,20 +45,21 @@ export const Fill = styled.div`
   max-width: 100%;
   background: ${({theme}) => theme.colors.primary};
   border-radius: inherit;
-  position: relative;
   z-index: 2;
 
   &::before {
-    content: attr(data-exp) "xp";
+    content: attr(data-exp) "/" attr(data-required) " exp";
     font-size: 1rem;
     font-weight: 400;
     color: #FFF;
     position: absolute;
-    left: calc(100% - 14%);
-    top: 50%;
-    transform: translateY(-50%);
-    background: ${({theme}) => theme.colors.primary};
+    top: -2.4rem;
+    right: 0;
+    border: solid .1rem ${({theme}) => theme.border.primary};
     padding: .05rem .35rem;
     border-radius: 1rem;
+    padding: .2rem .6rem;
+    box-shadow: 0 .1rem .3rem rgba(0,0,0, .1);
+    color: ${({theme}) => theme.text.title};
   }
 `
