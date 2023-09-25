@@ -10,8 +10,6 @@ Tunnel.bindInterface(GetCurrentResourceName(), src)
 vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
 RegisterCommand("test", function()
-  -- local infos = vSERVER.getInfosOpenPanel()
-
   SetNuiFocus(true, true)
   SendNUIMessage({ action = "setVisible", data = true })
 end)
