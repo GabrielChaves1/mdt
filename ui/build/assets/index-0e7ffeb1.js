@@ -1,4 +1,4 @@
-import{s as a,C as d,j as i,b as e,f as r,d as c,I as n,T as o,B as t}from"./index-e35a313f.js";const l=a(d)`
+import{s as a,C as d,j as i,b as e,g as r,d as c,I as n,T as o,B as t}from"./index-58e2572b.js";const l=a(d)`
   display: flex;
   flex-direction: column;
   gap: 2rem;

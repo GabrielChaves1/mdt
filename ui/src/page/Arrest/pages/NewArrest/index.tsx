@@ -1,6 +1,6 @@
 import Banner from "@/components/Banner";
 import Button from "@/components/Button";
-import { ArrowLeftToLine, Plus, Search } from "lucide-react";
+import { ArrowLeftToLine, Clock, Plus, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
 import * as S from "./styles";
@@ -9,6 +9,7 @@ import { TextField } from "@/components/TextField";
 import { Textarea } from "@/components/Textarea";
 import Switch from "@/components/Switch";
 import Card from "@/components/Card";
+import Checkbox from "@/components/Checkbox";
 
 export default function NewArrest() {
   const { colors } = useTheme();
@@ -96,7 +97,116 @@ export default function NewArrest() {
             <Card.Content>
               <S.CrimeList>
                 <S.Crime>
-                  
+                  <S.CrimeNameBox>
+                    <Checkbox />
+                    <p>Tentativa de Homicídio</p>
+                  </S.CrimeNameBox>
+                  <S.CrimeSpecsBox>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                  </S.CrimeSpecsBox>
+                </S.Crime>
+                <S.Crime>
+                  <S.CrimeNameBox>
+                    <Checkbox />
+                    <p>Tentativa de Homicídio</p>
+                  </S.CrimeNameBox>
+                  <S.CrimeSpecsBox>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                  </S.CrimeSpecsBox>
+                </S.Crime>
+                <S.Crime>
+                  <S.CrimeNameBox>
+                    <Checkbox />
+                    <p>Tentativa de Homicídio</p>
+                  </S.CrimeNameBox>
+                  <S.CrimeSpecsBox>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                  </S.CrimeSpecsBox>
+                </S.Crime>
+                <S.Crime>
+                  <S.CrimeNameBox>
+                    <Checkbox />
+                    <p>Tentativa de Homicídio</p>
+                  </S.CrimeNameBox>
+                  <S.CrimeSpecsBox>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                  </S.CrimeSpecsBox>
+                </S.Crime>
+                <S.Crime>
+                  <S.CrimeNameBox>
+                    <Checkbox />
+                    <p>Tentativa de Homicídio</p>
+                  </S.CrimeNameBox>
+                  <S.CrimeSpecsBox>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                  </S.CrimeSpecsBox>
+                </S.Crime>
+                <S.Crime>
+                  <S.CrimeNameBox>
+                    <Checkbox />
+                    <p>Tentativa de Homicídio</p>
+                  </S.CrimeNameBox>
+                  <S.CrimeSpecsBox>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                  </S.CrimeSpecsBox>
+                </S.Crime>
+                <S.Crime>
+                  <S.CrimeNameBox>
+                    <Checkbox />
+                    <p>Tentativa de Homicídio</p>
+                  </S.CrimeNameBox>
+                  <S.CrimeSpecsBox>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                    <S.CrimeSpec>
+                      <Clock color={colors.icon} size={'1.4rem'} />
+                      15 meses
+                    </S.CrimeSpec>
+                  </S.CrimeSpecsBox>
                 </S.Crime>
               </S.CrimeList>
             </Card.Content>

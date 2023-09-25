@@ -11,9 +11,10 @@ export interface ModalRootHandles {
 interface ModalRootProps {
   onOpen?: (data?: any) => void
   children: ReactNode
+  height?: string | number
 }
 
-const ModalRoot: ForwardRefRenderFunction<ModalRootHandles, ModalRootProps> = ({ children, onOpen }, ref) => {
+const ModalRoot: ForwardRefRenderFunction<ModalRootHandles, ModalRootProps> = ({ children, onOpen, height }, ref) => {
   const { colors } = useTheme()
   const [visible, setVisible] = useState<boolean>(false);
   
@@ -43,7 +44,7 @@ const ModalRoot: ForwardRefRenderFunction<ModalRootHandles, ModalRootProps> = ({
       exit={{ opacity: 0 }}
     >
       <S.CloseTrigger onClick={closeModal}></S.CloseTrigger>
-      <S.Wrapper>
+      <S.Wrapper style={{ height }}>
         <S.CloseButton onClick={closeModal}>
           <XCircle size={'2rem'} color={colors.icon} />
         </S.CloseButton>

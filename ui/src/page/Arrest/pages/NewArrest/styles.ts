@@ -105,6 +105,8 @@ export const CrimeList = styled.div`
   flex-direction: column;
   gap: .5rem;
   padding: 2.5rem;
+  max-height: 29rem;
+  overflow: auto;
 `
 
 export const Crime = styled.div`
@@ -112,4 +114,36 @@ export const Crime = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: solid .1rem ${({theme}) => theme.border.primary};
+  border-radius: .6rem;
+`
+
+export const CrimeNameBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  p {
+    font-size: 1.4rem;
+    color: ${({theme}) => theme.text.title};
+    font-weight: 400;
+  }
+`
+
+export const CrimeSpecsBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`
+
+export const CrimeSpec = styled.div`
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .4rem .8rem;
+  border: solid .1rem ${({theme}) => theme.border.primary};
+  border-radius: .6rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: ${({theme}) => theme.text.title};
 `
