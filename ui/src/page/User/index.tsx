@@ -4,12 +4,12 @@ import Card from '@/components/Card';
 import Input from '@/components/Input';
 import { TextField } from '@/components/TextField';
 import Button from '@/components/Button';
-import Chat from '@/components/Chat';
+import SearchIcon from '@/assets/search.webp';
 
 export default function User() {
   return (
     <S.Wrapper>
-      <Banner.Root>
+      <Banner.Root icon={SearchIcon}>
         <Banner.Header>
           <Banner.Title>Buscar cidadão</Banner.Title>
         </Banner.Header>

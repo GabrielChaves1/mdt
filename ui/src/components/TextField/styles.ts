@@ -18,7 +18,7 @@ export const Text = styled.input`
 `
 
 export const Area = styled.div`
-  width: 100%;
+  flex: 1;
   border: solid .1rem ${props => props.theme.border.primary};
   border-radius: .6rem;
   background: none;

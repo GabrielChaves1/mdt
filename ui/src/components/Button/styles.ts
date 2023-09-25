@@ -1,4 +1,4 @@
-import { shade } from "polished";
+import { darken, shade } from "polished";
 import styled, { css } from "styled-components";
 import { ButtonSize, ButtonVariant } from ".";
 
@@ -30,7 +30,7 @@ export const Container = styled.button<{
   `}
 
   ${props => props.variant === 'primary' && css`
-    background: ${props => props.theme.colors.primary};
+    background: ${props =>  darken(.01, props.theme.colors.primary)};
 
     &:hover {
       background: ${props => shade(0.1, props.theme.colors.primary)}

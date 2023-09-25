@@ -4,6 +4,7 @@ import ICourse from '@/types/Course';
 import Course from '../../components/Course';
 import Pagination from '@/components/Pagination';
 import Banner from '@/components/Banner';
+import CourseIcon from '@/assets/book.webp';
 
 export default function CourseList() {
   const itemsPerPage = 12
@@ -42,7 +43,7 @@ export default function CourseList() {
 
   return (
     <S.Content>
-      <Banner.Root>
+      <Banner.Root icon={CourseIcon}>
         <Banner.Header>
           <Banner.Title>Cursos Disponíveis</Banner.Title>
         </Banner.Header>

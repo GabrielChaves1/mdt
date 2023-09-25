@@ -1,13 +1,16 @@
+import { darken, transparentize } from "polished";
 import styled, { css } from "styled-components";
 
 export const Container = styled.aside`
   width: 31.1rem;
+  min-width: 31.1rem;
   height: 100%;
   border-right: solid .1rem ${props => props.theme.border.primary};
   padding: 2.5rem 1.7rem;
   display: flex;
   flex-direction: column;
   gap: .5rem;
+  background: linear-gradient(-70deg, ${({theme}) => darken(.02, theme.bg.primary)}, ${({theme}) => transparentize(.95, theme.colors.primary)});
 `
 
 export const NavigationArea = styled.div`

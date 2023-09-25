@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  background: ${({theme}) => transparentize(.5, theme.bg.primary)};
 `
 
 export const Header = styled.div`

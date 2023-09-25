@@ -1,4 +1,4 @@
-import { transparentize } from "polished";
+import { darken, transparentize } from "polished";
 import styled from "styled-components";
 
 export const Root = styled.section`
@@ -10,6 +10,7 @@ export const Root = styled.section`
   display: flex;
   flex-direction: column;
   box-shadow: 0 .4rem .8rem 0 rgba(0, 0, 0, 0.025);
+  background: linear-gradient(120deg, ${({theme}) => transparentize(.5, theme.bg.primary)}, ${({theme}) => transparentize(.97, theme.colors.primary)});
 `
 
 export const Header = styled.header`
@@ -17,6 +18,7 @@ export const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 4rem;
 `
 
 export const HeaderTitle = styled.h2`

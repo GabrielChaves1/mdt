@@ -1,12 +1,11 @@
-import{s as r,a as p,j as o,b as t,n as u,o as f,p as h,f as m,q as b}from"./index-93699eff.js";const w=r.div`
+import{s as r,a as p,j as o,b as t,o as u,p as f,q as h,f as m,t as b}from"./index-e35a313f.js";const w=r.div`
   flex: 1;
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
 `,x=r.div`
   display: grid;
-  grid-template-columns: repeat(4, 24rem);
+  grid-template-columns: repeat(4, auto);
   grid-template-rows: repeat(3, 17.2rem);
   gap: 2rem;
   flex: 1;
@@ -17,6 +16,7 @@ import{s as r,a as p,j as o,b as t,n as u,o as f,p as h,f as m,q as b}from"./ind
 `,C=r.div`
   display: flex;
   flex-direction: column;
+  background: ${({theme:e})=>p(.5,e.bg.primary)};
 `,$=r.div`
   display: flex;
   width: 100%;
@@ -52,11 +52,11 @@ import{s as r,a as p,j as o,b as t,n as u,o as f,p as h,f as m,q as b}from"./ind
   color: ${({theme:e})=>e.text.title};
   max-width: 80%;
   text-align: center;
-`,z=r.time`
+`,k=r.time`
   font-size: 1.2rem;
   font-weight: 400;
   color: ${({theme:e})=>e.text.subtitle};
-`,F=r.button`
+`,z=r.button`
   width: 100%;
   height: 3.5rem;
   background: none;
@@ -75,4 +75,4 @@ import{s as r,a as p,j as o,b as t,n as u,o as f,p as h,f as m,q as b}from"./ind
   &:active {
     background: ${({theme:e})=>p(.94,e.colors.ripple)};
   }
-`;function S({date:e,id:s,timeToComplete:d,title:n}){const a=new Date(e),l=String(a.getDate()).padStart(2,"0"),c=String(a.getMonth()+1).padStart(2,"0"),i=String(a.getFullYear());return o(C,{children:[o($,{children:[t(v,{children:"Policia Militar"}),o(D,{children:[t(u,{size:"1.6rem",color:"white"}),d," min"]})]}),o(P,{children:[t(T,{children:n}),o(z,{children:[l,"/",c,"/",i]})]}),t(f,{to:`/courses/${s}`,children:t(F,{children:"Ver Detalhes"})})]})}function k(){const{amountOfPages:s,currentPage:d,items:n,totalOfItems:a,viewedItems:l,paginate:c}=h(12,1,[{id:1,title:"Curso de Armamento",date:Date.now(),timeToComplete:30},{id:2,title:"Curso Tático",date:Date.now(),timeToComplete:30},{id:3,title:"Curso de Desce e Quebra",date:Date.now(),timeToComplete:30},{id:4,title:"Curso de Rolamento",date:Date.now(),timeToComplete:30},{id:5,title:"Curso de Investigação",date:Date.now(),timeToComplete:30}]);return o(w,{children:[t(m.Root,{children:t(m.Header,{children:t(m.Title,{children:"Cursos Disponíveis"})})}),o(x,{children:[n==null?void 0:n.map(i=>t(S,{...i},i.id)),[...new Array(12-n.length)].map((i,g)=>t(y,{},g))]}),t(b,{amountOfPages:s,currentPage:d,itemsBeingViewed:l,onPaginate:i=>c(i),totalOfItems:a})]})}export{k as default};
+`;function F({date:e,id:s,timeToComplete:d,title:n}){const a=new Date(e),l=String(a.getDate()).padStart(2,"0"),c=String(a.getMonth()+1).padStart(2,"0"),i=String(a.getFullYear());return o(C,{children:[o($,{children:[t(v,{children:"Policia Militar"}),o(D,{children:[t(u,{size:"1.6rem",color:"white"}),d," min"]})]}),o(P,{children:[t(T,{children:n}),o(k,{children:[l,"/",c,"/",i]})]}),t(f,{to:`/courses/${s}`,children:t(z,{children:"Ver Detalhes"})})]})}const S=""+new URL("book-73029a63.webp",import.meta.url).href;function B(){const{amountOfPages:s,currentPage:d,items:n,totalOfItems:a,viewedItems:l,paginate:c}=h(12,1,[{id:1,title:"Curso de Armamento",date:Date.now(),timeToComplete:30},{id:2,title:"Curso Tático",date:Date.now(),timeToComplete:30},{id:3,title:"Curso de Desce e Quebra",date:Date.now(),timeToComplete:30},{id:4,title:"Curso de Rolamento",date:Date.now(),timeToComplete:30},{id:5,title:"Curso de Investigação",date:Date.now(),timeToComplete:30}]);return o(w,{children:[t(m.Root,{icon:S,children:t(m.Header,{children:t(m.Title,{children:"Cursos Disponíveis"})})}),o(x,{children:[n==null?void 0:n.map(i=>t(F,{...i},i.id)),[...new Array(12-n.length)].map((i,g)=>t(y,{},g))]}),t(b,{amountOfPages:s,currentPage:d,itemsBeingViewed:l,onPaginate:i=>c(i),totalOfItems:a})]})}export{B as default};

@@ -1,7 +1,7 @@
 import Card from '@/components/Card';
 import * as S from './styles';
 import Banner from '@/components/Banner';
-import { Eye, Plus, Settings } from 'lucide-react';
+import { Eye, Plus } from 'lucide-react';
 import Chat from '@/components/Chat';
 import { useRef } from 'react';
 import { ModalRootHandles } from '@/components/Modal/ModalRoot';

@@ -1,3 +1,4 @@
+import { darken, transparentize } from "polished";
 import styled from "styled-components";
 
 export const Wrapper = styled.main`
@@ -35,6 +36,7 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: flex-end;
   gap: 2rem;
-  padding: 2.5rem 7.4rem;
-  flex: 1;
+  width: 100%;
+  position: relative;
+  background: linear-gradient(120deg, ${({theme}) => darken(.02, theme.bg.primary)}, ${({theme}) => transparentize(.92, theme.colors.primary)});
 `

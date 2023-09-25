@@ -12,9 +12,7 @@ export const TextField = forwardRef(({ icon: Icon, max, ...props }: TextfieldPro
   const { colors } = useTheme();
   const [text, setText] = useState<string>("");
 
-  const onInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
-  }
+  const onInput = (e: ChangeEvent<HTMLInputElement>) => setText(e.target.value);
 
   return (
     <S.Area>

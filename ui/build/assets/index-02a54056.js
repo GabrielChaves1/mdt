@@ -1,11 +1,11 @@
-import{c as w,s as t,C,a as b,r as a,j as i,b as r,Z as M,d as o,M as c,A as g,T as P,e as A,B as v,u as O,L as R,f as u,P as S,E as z,g as k}from"./index-93699eff.js";const D=w("MapPin",[["path",{d:"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z",key:"2oe9fu"}],["circle",{cx:"12",cy:"10",r:"3",key:"ilqhr7"}]]),j=w("SendHorizonal",[["path",{d:"m3 3 3 9-3 9 19-9Z",key:"1aobqy"}],["path",{d:"M6 12h16",key:"s4cdu5"}]]),y=t(C)`
+import{c as w,s as t,a as f,C,r as a,j as i,b as r,Z as M,d as o,M as c,A as b,T as P,e as A,B as v,u as O,L as R,f as u,P as S,E as k,g as z}from"./index-e35a313f.js";const D=w("MapPin",[["path",{d:"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z",key:"2oe9fu"}],["circle",{cx:"12",cy:"10",r:"3",key:"ilqhr7"}]]),j=w("SendHorizonal",[["path",{d:"m3 3 3 9-3 9 19-9Z",key:"1aobqy"}],["path",{d:"M6 12h16",key:"s4cdu5"}]]),y=t(C)`
   display: grid;
   grid-template-areas: 
   'banner  stats'
   'warns   players'
   'warns   chat'
   'warns  chat';
-  grid-template-columns: 65.6rem 34.5rem;
+  grid-template-columns: 64.55rem 33.55rem;
   grid-template-rows: 16.5rem 8.5rem auto 24.5rem;
   gap: 2rem;
 `,N=t.div`
@@ -24,6 +24,7 @@ import{c as w,s as t,C,a as b,r as a,j as i,b as r,Z as M,d as o,M as c,A as g,T
   border-radius: .6rem;
   border: solid .1rem ${e=>e.theme.border.primary};
   box-shadow: 0 .4rem .8rem 0 rgba(0, 0, 0, 0.025);
+  background: linear-gradient(120deg, transparent, ${({theme:e})=>f(.97,e.colors.primary)});
 
   h1 {
     font-size: 1.8rem;
@@ -81,7 +82,7 @@ import{c as w,s as t,C,a as b,r as a,j as i,b as r,Z as M,d as o,M as c,A as g,T
   padding: 1rem;
   width: max-content;
   border-radius: .7rem .7rem .7rem 0;
-  background: ${({theme:e})=>b(.85,e.colors.primary)};
+  background: ${({theme:e})=>f(.85,e.colors.primary)};
 `,I=t.p`
   font-size: 1.2rem;
   font-weight: 300;
@@ -97,7 +98,7 @@ import{c as w,s as t,C,a as b,r as a,j as i,b as r,Z as M,d as o,M as c,A as g,T
   font-weight: 300;
   color: ${({theme:e})=>e.text.subtitle};
   user-select: text;
-`;function F(){return i(H,{children:[i(B,{children:[r(I,{children:"John Doe"}),r(L,{children:"Boa tarde pessoal!"})]}),r(E,{children:"Hoje ás 16:35"})]})}const f=a.memo(F),W=t.div`
+`;function F(){return i(H,{children:[i(B,{children:[r(I,{children:"John Doe"}),r(L,{children:"Boa tarde pessoal!"})]}),r(E,{children:"Hoje ás 16:35"})]})}const g=a.memo(F),W=t.div`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -136,7 +137,7 @@ import{c as w,s as t,C,a as b,r as a,j as i,b as r,Z as M,d as o,M as c,A as g,T
   font-weight: 300;
   
   &::placeholder {
-    color: ${({theme:e})=>b(.6,e.text.title)}
+    color: ${({theme:e})=>f(.6,e.text.title)}
   }
 `,V=t.button`
   display: flex;
@@ -145,7 +146,7 @@ import{c as w,s as t,C,a as b,r as a,j as i,b as r,Z as M,d as o,M as c,A as g,T
   background: none;
   border: none;
   outline: none;
-`;function G(){const{colors:e}=M();return i(o.Root,{children:[r(o.Header,{children:i(o.Column,{children:[r(o.Title,{children:"Chat Geral"}),r(o.Subtitle,{children:"Bate-papo geral da policia"})]})}),r(o.Separator,{}),r(o.Content,{children:i(W,{children:[i(Z,{children:[r(f,{}),r(f,{}),r(f,{})]}),r(o.Separator,{}),r(_,{children:i(q,{children:[r(J,{placeholder:"Mensagem..."}),r(V,{children:r(j,{color:e.primary})})]})})]})})]})}const Q=t.div`
+`;function G(){const{colors:e}=M();return i(o.Root,{children:[r(o.Header,{children:i(o.Column,{children:[r(o.Title,{children:"Chat Geral"}),r(o.Subtitle,{children:"Bate-papo geral da policia"})]})}),r(o.Separator,{}),r(o.Content,{children:i(W,{children:[i(Z,{children:[r(g,{}),r(g,{}),r(g,{})]}),r(o.Separator,{}),r(_,{children:i(q,{children:[r(J,{placeholder:"Mensagem..."}),r(V,{children:r(j,{color:e.primary})})]})})]})})]})}const Q=t.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -178,7 +179,7 @@ import{c as w,s as t,C,a as b,r as a,j as i,b as r,Z as M,d as o,M as c,A as g,T
   font-weight: 400;
   color: ${({theme:e})=>e.text.title};
   border-radius: 3rem;
-  background: ${({theme:e})=>b(.8,e.colors.primary)};
+  background: ${({theme:e})=>f(.8,e.colors.primary)};
 `;t.button`
   width: 3.3rem;
   height: 3.3rem;
@@ -189,7 +190,7 @@ import{c as w,s as t,C,a as b,r as a,j as i,b as r,Z as M,d as o,M as c,A as g,T
   background: none;
   position: relative;
   overflow: hidden;
-`;const ee=a.forwardRef((e,l)=>{function s(){}return i(c.Root,{onOpen:s,ref:l,children:[r(c.Header,{title:"Policiais On-line",subtitle:"Atualmente há 5 policiais em serviço"}),r(c.Content,{children:r(Q,{children:i(K,{children:[i(Y,{children:[r(U,{children:"John Doe"}),r(X,{children:"Coronel | PMERJ"})]}),r(g,{icon:D,label:"Marcar no Mapa"})]})})})]})}),re=ee,te=t.div`
+`;const ee=a.forwardRef((e,l)=>{function s(){}return i(c.Root,{onOpen:s,ref:l,children:[r(c.Header,{title:"Policiais On-line",subtitle:"Atualmente há 5 policiais em serviço"}),r(c.Content,{children:r(Q,{children:i(K,{children:[i(Y,{children:[r(U,{children:"John Doe"}),r(X,{children:"Coronel | PMERJ"})]}),r(b,{icon:D,label:"Marcar no Mapa"})]})})})]})}),re=ee,te=t.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -220,4 +221,4 @@ import{c as w,s as t,C,a as b,r as a,j as i,b as r,Z as M,d as o,M as c,A as g,T
 `,de=t.div`
   display: flex;
   flex-direction: column;
-`;function ce({author:e,description:l,id:s,title:d,createdAt:m}){const h=new Date(m),p=h.getDate(),n=String(h.getMonth()+1).padStart(2,"0"),$=h.getFullYear();return i(ae,{children:[i(de,{children:[r(le,{children:d}),i(se,{children:[p,"/",n,"/",$," - ",e.name," #",e.id]})]}),r(v,{size:"sm",children:"Ver mais"})]})}const me=a.memo(ce);function pe(){var p;const{data:e,isLoading:l}=O(["getInitialData"],()=>k("getInitialData"),{initialData:{officer:{id:1,name:"Droyen Patrulheiro"},canStartPatrol:!0,totalOfPrisions:1243,totalOfFines:52,totalOfWorkingOfficers:34,notices:[{id:1,title:"Não colocar itens no baú",description:"Não coloquem itens no baú temporariamente",createdAt:Date.now(),author:{id:1,name:"Droyen Patrulheiro"}}],permissions:["CAN_CREATE_NOTICE"]}}),s=a.useRef(null),d=a.useRef(null),m=()=>{var n;(n=s.current)==null||n.openModal()},h=()=>{var n;(n=d.current)==null||n.openModal()};return l||!e?r(y,{children:r(R,{})}):i(y,{children:[r(re,{ref:s}),r(ne,{ref:d}),r("div",{style:{gridArea:"banner"},children:r(u.Root,{style:{height:"100%"},children:i(u.Header,{children:[i(u.Title,{children:["Bem-vindo ",r("b",{children:e.officer.name}),"!"]}),e.canStartPatrol&&r(u.Action,{children:"Iniciar Patrulha"})]})})}),i(N,{children:[i(x,{children:[r("h1",{children:"Prisões"}),r("span",{children:e.totalOfPrisions.toLocaleString("pt-br")})]}),i(x,{children:[r("h1",{children:"Multas"}),r("span",{children:e.totalOfFines.toLocaleString("pt-br")})]})]}),r("div",{style:{gridArea:"warns"},children:i(o.Root,{children:[i(o.Header,{children:[i(o.Column,{children:[r(o.Title,{children:"Avisos"}),r(o.Subtitle,{children:"Resumo de avisos da guarnição"})]}),r(g,{onClick:h,label:"Criar aviso",icon:S})]}),r(o.Separator,{}),r(o.Content,{children:r(T,{children:(p=e.notices)==null?void 0:p.map(n=>r(me,{...n},n.id))})})]})}),r("div",{style:{gridArea:"players"},children:r(o.Root,{children:i(o.Header,{children:[i(o.Column,{children:[r(o.Title,{children:"Policiais On-line"}),i(o.Subtitle,{children:["Policiais ativos no momento (",e.totalOfWorkingOfficers,")"]})]}),r(g,{onClick:m,label:"Ver Policiais",icon:z})]})})}),r("div",{style:{gridArea:"chat"},children:r(G,{})})]})}export{pe as default};
+`;function ce({author:e,description:l,id:s,title:d,createdAt:m}){const h=new Date(m),p=h.getDate(),n=String(h.getMonth()+1).padStart(2,"0"),$=h.getFullYear();return i(ae,{children:[i(de,{children:[r(le,{children:d}),i(se,{children:[p,"/",n,"/",$," - ",e.name," #",e.id]})]}),r(v,{size:"sm",children:"Ver mais"})]})}const me=a.memo(ce);function pe(){var p;const{data:e,isLoading:l}=O(["getInitialData"],()=>z("getInitialData"),{initialData:{officer:{id:1,name:"Droyen Patrulheiro"},canStartPatrol:!0,totalOfPrisions:1243,totalOfFines:52,totalOfWorkingOfficers:34,notices:[{id:1,title:"Não colocar itens no baú",description:"Não coloquem itens no baú temporariamente",createdAt:Date.now(),author:{id:1,name:"Droyen Patrulheiro"}}],permissions:["CAN_CREATE_NOTICE"]}}),s=a.useRef(null),d=a.useRef(null),m=()=>{var n;(n=s.current)==null||n.openModal()},h=()=>{var n;(n=d.current)==null||n.openModal()};return l||!e?r(y,{children:r(R,{})}):i(y,{children:[r(re,{ref:s}),r(ne,{ref:d}),r("div",{style:{gridArea:"banner"},children:r(u.Root,{style:{height:"100%"},children:i(u.Header,{children:[i(u.Title,{children:["Bem-vindo ",r("b",{children:e.officer.name}),"!"]}),e.canStartPatrol&&r(u.Action,{children:"Iniciar Patrulha"})]})})}),i(N,{children:[i(x,{children:[r("h1",{children:"Prisões"}),r("span",{children:e.totalOfPrisions.toLocaleString("pt-br")})]}),i(x,{children:[r("h1",{children:"Multas"}),r("span",{children:e.totalOfFines.toLocaleString("pt-br")})]})]}),r("div",{style:{gridArea:"warns"},children:i(o.Root,{children:[i(o.Header,{children:[i(o.Column,{children:[r(o.Title,{children:"Avisos"}),r(o.Subtitle,{children:"Resumo de avisos da guarnição"})]}),r(b,{onClick:h,label:"Criar aviso",icon:S})]}),r(o.Separator,{}),r(o.Content,{children:r(T,{children:(p=e.notices)==null?void 0:p.map(n=>r(me,{...n},n.id))})})]})}),r("div",{style:{gridArea:"players"},children:r(o.Root,{children:i(o.Header,{children:[i(o.Column,{children:[r(o.Title,{children:"Policiais On-line"}),i(o.Subtitle,{children:["Policiais ativos no momento (",e.totalOfWorkingOfficers,")"]})]}),r(b,{onClick:m,label:"Ver Policiais",icon:k})]})})}),r("div",{style:{gridArea:"chat"},children:r(G,{})})]})}export{pe as default};

@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
   height: 6rem;
   border: solid .1rem ${({theme}) => theme.border.primary};
   border-radius: .6rem;
+  background: ${({theme}) =>  transparentize(.6, theme.bg.primary)};
 `
 
 export const Text = styled.p`

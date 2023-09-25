@@ -7,6 +7,7 @@ import EditPermissionsModal from './components/EditPermissionsModal';
 import { FileEdit, Users } from 'lucide-react';
 import ShowPolicersModal from './components/ShowPolicersModal';
 import Action from '@/components/Action';
+import CrownIcon from '@/assets/crown.webp';
 
 interface Role {
   id: number,
@@ -31,7 +32,7 @@ export default function RolesHierarchy() {
       <ShowPolicersModal ref={showPolicersModalRef} />
       <EditPermissionsModal ref={editPermissionsModalRef} />
 
-      <Banner.Root>
+      <Banner.Root icon={CrownIcon}>
         <Banner.Header>
           <Banner.Title>Hierarquia de Cargos</Banner.Title>
         </Banner.Header>
