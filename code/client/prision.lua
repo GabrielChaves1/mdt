@@ -259,6 +259,8 @@ function src.createThreadIsArrested(time)
 end
 
 function src.unArrested()
+    local playerPed = PlayerPedId()
+    
     vSERVER.updateTimeArrested(0)
 
     DoScreenFadeOut(250)

@@ -29,8 +29,6 @@ function src.getInitialData()
     local sUser_id = tostring(user_id)
     local org = playersOrg[sUser_id]
 
-    print(sUser_id, org, cacheOrgs[org].officers[sUser_id].cargo)
-
     if not org then return end
 
     return {
@@ -50,13 +48,38 @@ function src.getInitialData()
     }
 end
 
+function src.getOnlineOfficers()
+    local source = source
+    local user_id = zof.getUserId(source)
+    local sUser_id = tostring(user_id)
+
+    local org = playersOrg[sUser_id]
+    if not org then return {} end
+
+    local officersOnline = {}
+    for i, v in pairs(cacheOrgs[org].officers) do
+        if v.online then
+            local cargo = cargosOrgs[v.cargo].cargo
+
+            table.insert(officersOnline, {
+                user_id = v.user_id,
+                nome = v.nome,
+                cargo = orgsConfigList[org].hierarchy[cargo].displayName,
+                org = org
+            })
+        end
+    end
+
+    return officersOnline
+end
+
 function initOrgsFromDb()
     for org, info in pairs(orgsConfigList) do
         if not cacheOrgs[org] then 
             cacheOrgs[org] = {
                 officers = {},
                 details = info.details
-            } 
+            }
         end
 
         for cargo, v in pairs(info.hierarchy) do
@@ -64,7 +87,10 @@ function initOrgsFromDb()
             if not cargosOrgs[v.offServiceSet] then cargosOrgs[v.offServiceSet] = {} end
 
             cargosOrgs[cargo].org = org
+            cargosOrgs[cargo].cargo = cargo
+
             cargosOrgs[v.offServiceSet].org = org
+            cargosOrgs[v.offServiceSet].cargo = cargo
         end
 
         local rows = zof.query("mdt/mdt_hierarquia/getFromOrg", { org = org })
@@ -204,23 +230,32 @@ end
 function src.createWarningOrg(details)
     local source  = source
     local user_id = zof.getUserId(source)
+    local sUser_id = tostring(user_id)
+
+    local org = playersOrg[sUser_id]
+    if not org then return {} end
 
     zof.execute("mdt/mdt_avisos/insert", {
         id_autor = user_id, autor = zof.getName(user_id),
-        titulo = details.title, descricao = details.msg,
-        data = os.time(), org = details.org
+        titulo = details.title, descricao = details.description,
+        data = os.time(), org = org
     })
 
-    return src.getAvisosOrg(aviso.org)
+    return
 end
 
 function src.deleteWarningOrg(details)
     local source  = source
     local user_id = zof.getUserId(source)
 
+    local sUser_id = tostring(user_id)
+
+    local org = playersOrg[sUser_id]
+    if not org then return {} end
+
     zof.execute("zo/delete_aviso_org", { id = details.id })
 
-    return src.getAvisosOrg(details.org)
+    return
 end
 
 function src.arrestBandit(details)
@@ -301,6 +336,13 @@ function src.insertOrUpdatePermissionsTablet(infos)
         cargosOrgs[infos.cargo].perms = infos.perms
         zof.query("mdt/mdt_perms_cargos/insert", { cargo = infos.cargo, org = infos.org, perms = infos.perms })
     end
+end
+
+function src.markOfficerOnMap(user_id)
+    local source = source
+    local markingSource = zof.getUserSource(user_id)
+
+    vCLIENT.markOfficerOnMap(source, tonumber(markingSource), "Oficial - " .. zof.getName(user_id))
 end
 
 Citizen.CreateThread(function()
