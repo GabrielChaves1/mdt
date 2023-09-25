@@ -28,7 +28,7 @@ interface DataResponse {
 
   notices: INotice[]
 
-  permissions: ["CAN_CREATE_NOTICE"]
+  permissions: [ "CAN_CREATE_NOTICE" ]
 }
 
 export default function Home() {
@@ -47,13 +47,11 @@ export default function Home() {
       notices: [
         {
           id: 1,
-          title: "Não colocar itens no baú",
-          description: "Não coloquem itens no baú temporariamente",
-          createdAt: Date.now(),
-          author: {
-            id: 1,
-            name: "Droyen Patrulheiro"
-          }
+          titulo: "Não colocar itens no baú",
+          descricao: "Não coloquem itens no baú temporariamente",
+          data: Date.now(),
+          id_autor: 1,
+          autor: "Droyen Patrulheiro"
         }
       ],
     
@@ -88,8 +86,8 @@ export default function Home() {
       <div style={{gridArea: "banner"}}>
         <Banner.Root style={{ height: '100%' }}>
           <Banner.Header>
-            <Banner.Title>Bem-vindo <b>{data.officer.name}</b>!</Banner.Title>
-            {data.canStartPatrol && (
+            <Banner.Title>Bem-vindo <b>{data?.officer?.name}</b>!</Banner.Title>
+            {data?.canStartPatrol && (
               <Banner.Action>Iniciar Patrulha</Banner.Action>
             )}
           </Banner.Header>
@@ -99,11 +97,11 @@ export default function Home() {
       <S.Stats>
         <S.StatsBox>
           <h1>Prisões</h1>
-          <span>{data.totalOfPrisions.toLocaleString('pt-br')}</span>
+          <span>{data?.totalOfPrisions.toLocaleString('pt-br')}</span>
         </S.StatsBox>
         <S.StatsBox>
           <h1>Multas</h1>
-          <span>{data.totalOfFines.toLocaleString('pt-br')}</span>
+          <span>{data?.totalOfFines.toLocaleString('pt-br')}</span>
         </S.StatsBox>
       </S.Stats>
 
@@ -119,7 +117,7 @@ export default function Home() {
           <Card.Separator />
           <Card.Content>
             <S.PostsArea>
-              {data.notices?.map((notice) => (
+              {data?.notices?.map((notice) => (
                 <Notice key={notice.id} {...notice} />
               ))}
             </S.PostsArea>
@@ -132,7 +130,7 @@ export default function Home() {
           <Card.Header>
             <Card.Column>
               <Card.Title>Policiais On-line</Card.Title>
-              <Card.Subtitle>Policiais ativos no momento ({data.totalOfWorkingOfficers})</Card.Subtitle>
+              <Card.Subtitle>Policiais ativos no momento ({data?.totalOfWorkingOfficers})</Card.Subtitle>
             </Card.Column>
             <Action onClick={handleOpenOnlinePolicersList} label='Ver Policiais' icon={Eye} />
           </Card.Header>

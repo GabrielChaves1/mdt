@@ -2,13 +2,14 @@ src = {}
 
 Citizen.CreateThread(function()
     zof.prepare("mdt/create_all_tables", [[
-        CREATE TABLE mdt_perms_cargos(
+        CREATE TABLE IF NOT EXISTS mdt_perms_cargos(
             cargo VARCHAR(100),
             org VARCHAR(100),
+            perms TEXT,
             PRIMARY KEY (cargo, org)
         );
 
-        CREATE TABLE mdt_hierarquia(
+        CREATE TABLE IF NOT EXISTS mdt_hierarquia(
             user_id INT,
             nome VARCHAR(100),
             cargo VARCHAR(100),
@@ -21,7 +22,7 @@ Citizen.CreateThread(function()
             PRIMARY KEY (user_id)
         );
 
-        CREATE TABLE mdt_codigo_penal(
+        CREATE TABLE IF NOT EXISTS mdt_codigo_penal(
             id INT AUTO_INCREMENT,
             nome_codigo VARCHAR(100),
             descricao TEXT,
@@ -30,7 +31,7 @@ Citizen.CreateThread(function()
             PRIMARY KEY (id)
         );
 
-        CREATE TABLE mdt_veiculos_detidos(
+        CREATE TABLE IF NOT EXISTS mdt_veiculos_detidos(
             user_id INT,
             placa VARCHAR(20),
             modelo VARCHAR(100),
@@ -41,7 +42,7 @@ Citizen.CreateThread(function()
             PRIMARY KEY (user_id)
         );
 
-        CREATE TABLE mdt_cursos(
+        CREATE TABLE IF NOT EXISTS mdt_cursos(
             id_curso INT AUTO_INCREMENT,
             oficial INT,
             descricao VARCHAR(255),
@@ -53,13 +54,13 @@ Citizen.CreateThread(function()
             PRIMARY KEY (id_curso)
         );
 
-        CREATE TABLE mdt_curso_perm(
+        CREATE TABLE IF NOT EXISTS mdt_curso_perm(
             id_curso INT,
             permissao VARCHAR(255),
             PRIMARY KEY (id_curso)
         );
 
-        CREATE TABLE mdt_historico_penal(
+        CREATE TABLE IF NOT EXISTS mdt_historico_penal(
             id INT AUTO_INCREMENT,
             user_id INT,
             codigos_penais TEXT,
@@ -71,7 +72,7 @@ Citizen.CreateThread(function()
             PRIMARY KEY (id)
         );
 
-        CREATE TABLE mdt_historico_acoes(
+        CREATE TABLE IF NOT EXISTS mdt_historico_acoes(
             id INT AUTO_INCREMENT,
             oficial_responsavel INT,
             escalados TEXT,
@@ -80,7 +81,7 @@ Citizen.CreateThread(function()
             PRIMARY KEY (id)
         );
 
-        CREATE TABLE mdt_unidades(
+        CREATE TABLE IF NOT EXISTS mdt_unidades(
             id INT AUTO_INCREMENT,
             org VARCHAR(100),
             nome VARCHAR(100),
@@ -88,7 +89,7 @@ Citizen.CreateThread(function()
             PRIMARY KEY (id)
         );
 
-        CREATE TABLE mdt_avisos(
+        CREATE TABLE IF NOT EXISTS mdt_avisos(
             id INT AUTO_INCREMENT,
             titulo VARCHAR(100),
             descricao VARCHAR(255),
@@ -99,7 +100,7 @@ Citizen.CreateThread(function()
             PRIMARY KEY (id)
         );
 
-        CREATE TABLE mdt_presos(
+        CREATE TABLE IF NOT EXISTS mdt_presos(
             user_id INT,
             id_historico_penal INT,
             nome VARCHAR(100),
@@ -125,9 +126,14 @@ Citizen.CreateThread(function()
         DROP TABLE mdt_presos;
     ]])
 
+    
+    zof.prepare("mdt/mdt_perms_cargos/getAll", "SELECT * FROM mdt_perms_cargos")
+    zof.prepare("mdt/mdt_perms_cargos/insert", "INSERT INTO mdt_perms_cargos(cargo, org, perms) VALUES(@cargo, @org, @perms)")
+    zof.prepare("mdt/mdt_perms_cargos/update", "UPDATE mdt_perms_cargos SET perms = @perms WHERE cargo = @cargo AND org = @org")
+
     zof.prepare("mdt/mdt_hierarquia/getFromOrg", [[ SELECT * FROM mdt_hierarquia WHERE org = @org ]])
     zof.prepare("mdt/mdt_hierarquia/getPlayer", [[ SELECT * FROM mdt_hierarquia WHERE user_id = @user_id ]])
-    zof.prepare("mdt/mdt_hierarquia/insert", [[ INSERT INTO mdt_hierarquia(user_id, nome, cargo, org, unidade, cursos, pontos, time_ptr, dt_entrada) VALUES(@user_id, @nome, @cargo, @org, @unidade, @cursos, @pontos, @time_ptr, @dt_entrada)) ]])
+    zof.prepare("mdt/mdt_hierarquia/insert", [[ INSERT INTO mdt_hierarquia(user_id, nome, cargo, org, unidade, cursos, pontos, time_ptr, dt_entrada) VALUES(@user_id, @nome, @cargo, @org, @unidade, @cursos, @pontos, @time_ptr, @dt_entrada) ]])
     zof.prepare("mdt/mdt_hierarquia/deletePlayer", [[ DELETE FROM mdt_hierarquia WHERE user_id = @user_id ]])
 
     zof.prepare("mdt/mdt_avisos/insert", "INSERT INTO mdt_avisos(titulo, descricao, data, autor, id_autor, org) VALUES(@titulo, @descricao, @data, @autor, @id_autor, @org)")
@@ -145,7 +151,7 @@ Citizen.CreateThread(function()
     zof.prepare("mdt/mdt_presos/get", "SELECT * FROM mdt_presos WHERE user_id = @user_id")
     
     
-    zof.execute("mdt/drop_all_tables")
+    -- zof.execute("mdt/drop_all_tables")
 
     Citizen.Wait(1000)
 

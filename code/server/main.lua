@@ -10,26 +10,43 @@ Proxy.addInterface(GetCurrentResourceName(), src)
 vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
 cacheOrgs = {}
-
 cargosOrgs = {}
+officersOnlineCount = {}
 playersOrg = {}
 
 chatOrgsLog = {}
 
 mdtPresos = {}
 
-function src.getInfosOpenPanel()
+permissionsTablet = {
+    ["CAN_MANAGE_WARNING"] = { display = "Gerenciar Avisos", description = "Com essa permissão o usuário poderá criar, editar e excluir avisos da organização" },
+}
+
+function src.getInitialData()
     local source  = source
     local user_id = zof.getUserId(source)
 
     local sUser_id = tostring(user_id)
     local org = playersOrg[sUser_id]
 
+    print(sUser_id, org, cacheOrgs[org].officers[sUser_id].cargo)
+
+    if not org then return end
+
     return {
-        org = org,
-        nome = zof.getName(user_id),
-        infosOfficer = cacheOrgs[org].officers[sUser_id],
-        prisoes = #mdtHistoricoPenal
+        officer = {
+            id = user_id,
+            name = zof.getName(user_id),
+        },
+    
+        canStartPatrol = true,
+        totalOfPrisions = #mdtPresos,
+        totalOfFines = 52,
+        totalOfWorkingOfficers = officersOnlineCount[org] or 0,
+    
+        notices = zof.query("mdt/mdt_avisos/getFromOrg", { org = org }),
+    
+        permissions = cargosOrgs[cacheOrgs[org].officers[sUser_id].cargo].perms
     }
 end
 
@@ -43,18 +60,24 @@ function initOrgsFromDb()
         end
 
         for cargo, v in pairs(info.hierarchy) do
-            cargosOrgs[cargo] = org
-            cargosOrgs[v.offServiceSet] = org
+            if not cargosOrgs[cargo] then cargosOrgs[cargo] = {} end
+            if not cargosOrgs[v.offServiceSet] then cargosOrgs[v.offServiceSet] = {} end
+
+            cargosOrgs[cargo].org = org
+            cargosOrgs[v.offServiceSet].org = org
         end
 
         local rows = zof.query("mdt/mdt_hierarquia/getFromOrg", { org = org })
-        if not (#rows > 0) then return end
-
-        for i, v in pairs(rows) do
-            local sUser_id = tostring(v.user_id)
-            v.online = zof.getUserSource(v.user_id) ~= nil
-
-            cacheOrgs[org].officers[sUser_id] = v
+        if (#rows > 0) then
+            for i, v in pairs(rows) do
+                local sUser_id = tostring(v.user_id)
+                v.online = zof.getUserSource(v.user_id) ~= nil
+    
+                if v.online then officersOnlineCount[org] = (officersOnlineCount[org] or 0) + 1 end
+    
+                cacheOrgs[org].officers[sUser_id] = v
+                playersOrg[sUser_id] = org
+            end
         end
     end
 end
@@ -65,6 +88,9 @@ function addPlayerOrg(infos)
     if not infos.user_id then return end
 
     local sUser_id = tostring(infos.user_id)
+    local source = zof.getUserSource(infos.user_id)
+
+    if not source then return end
 
     local playerInfos = zof.query("mdt/mdt_hierarquia/getPlayer", { user_id = infos.user_id })
     if #playerInfos > 0 then return end -- colocar mensagem de player já está em outra organização
@@ -73,8 +99,10 @@ function addPlayerOrg(infos)
     local newInfosPlayer = { 
         user_id = infos.user_id, cargo = infos.cargo, 
         org = infos.org, unidade = infos.org, cursos = json.encode({}), 
-        pontos = 0, time_ptr = 0, dt_entrada = os.time(), nome = zof.getName(infos.user_id)
+        pontos = 0, time_ptr = 0, dt_entrada = os.time(), nome = zof.getName(infos.user_id), online = true
     }
+
+    officersOnlineCount[infos.org] = (officersOnlineCount[infos.org] or 0) + 1
 
     zof.query("mdt/mdt_hierarquia/insert", newInfosPlayer)
     cacheOrgs[infos.org].officers[sUser_id] = newInfosPlayer
@@ -96,7 +124,11 @@ AddEventHandler("vRP:playerSpawn", function(user_id, source, first_spawn)
     local sUser_id = tostring(user_id)
 
     local org = playersOrg[sUser_id]
-    if org then cacheOrgs[org].officers[sUser_id].online = true end
+    if org then 
+        cacheOrgs[org].officers[sUser_id].online = true
+
+        officersOnlineCount[org] = (officersOnlineCount[org] or 0) + 1
+    end
 
     if mdtPresos[sUser_id] then vCLIENT.createThreadIsArrested(source, mdtPresos[sUser_id].tempo) end
 end)
@@ -109,12 +141,15 @@ AddEventHandler("playerDropped", function(reason)
     local org = playersOrg[sUser_id]
     if not org then return end
 
+    officersOnlineCount[org] = (officersOnlineCount[org] or 0) - 1
     cacheOrgs[org].officers[sUser_id].online = false
 end)
 
 AddEventHandler('vRP:playerJoinGroup', function(user_id, group, gtype)
 	if user_id and cargosOrgs[group] then
-        addPlayerOrg({ user_id = user_id, org = cargosOrgs[group], cargo = group })
+        if not cargosOrgs[group].org then return end
+
+        addPlayerOrg({ user_id = user_id, org = cargosOrgs[group].org, cargo = group, permissions = (cargosOrgs[group].perms or {}) })
     end
 end)
 
@@ -258,15 +293,30 @@ function src.updateTimeArrested(time)
     end
 end
 
-Citizen.CreateThread(function()
-    Citizen.Wait(5000)
+function src.insertOrUpdatePermissionsTablet(infos)
+    if cargosOrgs[infos.cargo] then
+        cargosOrgs[infos.cargo].perms = infos.perms
+        zof.query("mdt/mdt_perms_cargos/update", { cargo = infos.cargo, org = infos.org, perms = infos.perms })
+    else
+        cargosOrgs[infos.cargo].perms = infos.perms
+        zof.query("mdt/mdt_perms_cargos/insert", { cargo = infos.cargo, org = infos.org, perms = infos.perms })
+    end
+end
 
+Citizen.CreateThread(function()
     initOrgsFromDb()
+
+    local permsGroups = zof.query("mdt/mdt_perms_cargos/getAll", {})
+    for i, v in pairs(permsGroups) do
+        if cargosOrgs[v.cargo] then
+            cargosOrgs[v.cargo].perms = v
+        end
+    end
+    permsGroups = nil
 
     mdtPresos.all = zof.query("mdt/mdt_presos/getAll", {})
     for i, v in pairs(mdtPresos.all) do
         mdtPresos[tostring(v.user_id)] = v
     end
-
     mdtPresos.all = nil
 end)

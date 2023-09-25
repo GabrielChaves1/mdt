@@ -3,8 +3,8 @@ import * as S from './styles'
 import Button from '@/components/Button';
 import INotice from '@/types/Notice';
 
-function Notice({ author, description, id, title, createdAt }: INotice) {
-  const date = new Date(createdAt);
+function Notice({ autor, id_autor, descricao, id, titulo, data }: INotice) {
+  const date = new Date(data);
 
   const day = date.getDate();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -13,8 +13,8 @@ function Notice({ author, description, id, title, createdAt }: INotice) {
   return (
     <S.Container>
       <S.Header>
-        <S.Title>{title}</S.Title>
-        <S.Author>{day}/{month}/{year} - {author.name} #{author.id}</S.Author>
+        <S.Title>{titulo}</S.Title>
+        <S.Author>{day}/{month}/{year} - {autor} #{id_autor}</S.Author>
       </S.Header>
       <Button size='sm'>Ver mais</Button>
     </S.Container>
