@@ -9,7 +9,7 @@ declare module 'styled-components' {
         },
 
         border: {
-            primary: string
+            primary: string,
         },
     
         text: {
@@ -20,7 +20,8 @@ declare module 'styled-components' {
         colors: {
             primary: string,
             icon: string,
-            ripple: string
+            ripple: string,
+            error: string
         }
     }
 }

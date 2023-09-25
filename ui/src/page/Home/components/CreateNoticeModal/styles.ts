@@ -5,6 +5,15 @@ export const Column = styled.div`
   flex-direction: column;
   gap: 1rem;
   margin-bottom: 2rem;
+
+  p {
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+  }
 `
 
 export const Row = styled.div`

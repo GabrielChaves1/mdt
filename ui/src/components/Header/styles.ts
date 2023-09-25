@@ -31,7 +31,7 @@ export const UserDataBox = styled.div`
 `
 
 export const ProgressBar = styled.div`
-  width: 19.6rem;
+  width: 21.27rem;
   height: .3rem;
   position: relative;
   margin-top: .6rem;

@@ -6,7 +6,7 @@ export default {
 	},
 
 	border: {
-		primary: 'rgba(70, 70, 70, 0.12)'
+		primary: 'rgba(70, 70, 70, 0.12)',
 	},
 
 	text: {
@@ -17,6 +17,7 @@ export default {
 	colors: {
 		primary: "#5D87FF",
 		icon: "#7E848F",
-		ripple: "#000"
+		ripple: "#000",
+		error: "crimson"
 	}
 }

@@ -103,8 +103,8 @@ export const Extenuatory = styled.div`
 export const CrimeList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: .5rem;
-  padding: 2.5rem;
+  gap: .6rem;
+  padding: 2rem;
   max-height: 29rem;
   overflow: auto;
 `
@@ -127,6 +127,10 @@ export const CrimeNameBox = styled.div`
     font-size: 1.4rem;
     color: ${({theme}) => theme.text.title};
     font-weight: 400;
+    max-width: 25rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 `
 

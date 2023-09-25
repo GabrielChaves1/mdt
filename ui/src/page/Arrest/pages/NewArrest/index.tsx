@@ -1,6 +1,6 @@
 import Banner from "@/components/Banner";
 import Button from "@/components/Button";
-import { ArrowLeftToLine, Clock, Plus, Search } from "lucide-react";
+import { ArrowLeftToLine, Banknote, Clock, Plus, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
 import * as S from "./styles";
@@ -99,7 +99,7 @@ export default function NewArrest() {
                 <S.Crime>
                   <S.CrimeNameBox>
                     <Checkbox />
-                    <p>Tentativa de Homicídio</p>
+                    <p title="ART 150 - Tentativa de Homicídio Testando Aviso Lembrete">ART 150 - Tentativa de Homicídio Testando Aviso Lembrete</p>
                   </S.CrimeNameBox>
                   <S.CrimeSpecsBox>
                     <S.CrimeSpec>
@@ -107,104 +107,8 @@ export default function NewArrest() {
                       15 meses
                     </S.CrimeSpec>
                     <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                  </S.CrimeSpecsBox>
-                </S.Crime>
-                <S.Crime>
-                  <S.CrimeNameBox>
-                    <Checkbox />
-                    <p>Tentativa de Homicídio</p>
-                  </S.CrimeNameBox>
-                  <S.CrimeSpecsBox>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                  </S.CrimeSpecsBox>
-                </S.Crime>
-                <S.Crime>
-                  <S.CrimeNameBox>
-                    <Checkbox />
-                    <p>Tentativa de Homicídio</p>
-                  </S.CrimeNameBox>
-                  <S.CrimeSpecsBox>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                  </S.CrimeSpecsBox>
-                </S.Crime>
-                <S.Crime>
-                  <S.CrimeNameBox>
-                    <Checkbox />
-                    <p>Tentativa de Homicídio</p>
-                  </S.CrimeNameBox>
-                  <S.CrimeSpecsBox>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                  </S.CrimeSpecsBox>
-                </S.Crime>
-                <S.Crime>
-                  <S.CrimeNameBox>
-                    <Checkbox />
-                    <p>Tentativa de Homicídio</p>
-                  </S.CrimeNameBox>
-                  <S.CrimeSpecsBox>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                  </S.CrimeSpecsBox>
-                </S.Crime>
-                <S.Crime>
-                  <S.CrimeNameBox>
-                    <Checkbox />
-                    <p>Tentativa de Homicídio</p>
-                  </S.CrimeNameBox>
-                  <S.CrimeSpecsBox>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                  </S.CrimeSpecsBox>
-                </S.Crime>
-                <S.Crime>
-                  <S.CrimeNameBox>
-                    <Checkbox />
-                    <p>Tentativa de Homicídio</p>
-                  </S.CrimeNameBox>
-                  <S.CrimeSpecsBox>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
-                    </S.CrimeSpec>
-                    <S.CrimeSpec>
-                      <Clock color={colors.icon} size={'1.4rem'} />
-                      15 meses
+                      <Banknote color={colors.icon} size={'1.6rem'} />
+                      R$ 0
                     </S.CrimeSpec>
                   </S.CrimeSpecsBox>
                 </S.Crime>
