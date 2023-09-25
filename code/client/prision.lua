@@ -13,6 +13,10 @@ RegisterCommand("jail", function(source, args)
     })
 end)
 
+RegisterCommand("unjail", function(source, args)
+    src.unArrested()
+end)
+
 configsPrision = {
     cdsPlayer = { 402.87, -996.71, -99.00, 183.84 },
     cdsOfficer = { 402.98, -1000.26, -99.00, 7.54 },
@@ -204,7 +208,7 @@ end
 
 function mugShootSave(details)
     if webhook.saveImagesScreenShotBasic then
-        exports['screenshot-basic']:requestScreenshotUpload(tostring(webhook.saveImagesScreenShotBasic), 'files[]', { encoding = 'jpg' }, function(data)
+        exports['screenshot-basic']:requestScreenshotUpload(tostring(webhook.saveImagesScreenShotBasic), 'files[]', { encoding = 'png' }, function(data)
             local Response = json.decode(data)
             local imageURL = Response.attachments[1].url
 
@@ -250,15 +254,19 @@ function src.createThreadIsArrested(time)
             end
         end
 
-        vSERVER.updateTimeArrested(time)
-
-        DoScreenFadeOut(250)
-        Citizen.Wait(1000)
-
-        SetEntityCoords(playerPed, configsPrision.cdsSpawnLiberation[1], configsPrision.cdsSpawnLiberation[2], configsPrision.cdsSpawnLiberation[3])
-	    SetEntityHeading(playerPed, configsPrision.cdsSpawnLiberation[4])
-
-        DoScreenFadeIn(250)
-        Citizen.Wait(1000)
+        src.unArrested()
     end)
+end
+
+function src.unArrested()
+    vSERVER.updateTimeArrested(0)
+
+    DoScreenFadeOut(250)
+    Citizen.Wait(1000)
+
+    SetEntityCoords(playerPed, configsPrision.cdsSpawnLiberation[1], configsPrision.cdsSpawnLiberation[2], configsPrision.cdsSpawnLiberation[3])
+    SetEntityHeading(playerPed, configsPrision.cdsSpawnLiberation[4])
+
+    DoScreenFadeIn(250)
+    Citizen.Wait(1000)
 end

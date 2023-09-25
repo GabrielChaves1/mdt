@@ -22,6 +22,11 @@ local registerNUICallbacks = {
     cb(true)
   end,
 
+  ["getInitialData"] = function(data, cb)
+    local resp = vSERVER.getInitialData()
+    cb(resp)
+  end,
+
   ["getMessagesChatOrg"] = function(data, cb)
     local resp = vSERVER.getMessagesChatOrg(data.org)
     cb(resp)
@@ -34,9 +39,11 @@ local registerNUICallbacks = {
 }
 
 Citizen.CreateThread(function()
-  for i, handler in pairs(registerNUICallbacks) do RegisterNUICallback(i, handler) end
-
-
+  for i, handler in pairs(registerNUICallbacks) do 
+    RegisterNUICallback(i, function(data, cb)
+      handler(data, cb)
+    end)
+  end
 end)
 
 function src.atualizarChatOrg(chat)
