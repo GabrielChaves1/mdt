@@ -1,6 +1,6 @@
 import Banner from "@/components/Banner";
 import Button from "@/components/Button";
-import { ArrowLeftToLine, Plus } from "lucide-react";
+import { ArrowLeftToLine, Plus, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
 import * as S from "./styles";
@@ -58,7 +58,7 @@ export default function NewArrest() {
           <Input.Root>
             <Input.Label>Descrição</Input.Label>
             <Input.Content>
-              <Textarea style={{height: '21.4rem'}} placeholder="Digite aqui..." />
+              <Textarea style={{height: '21.75rem'}} placeholder="Digite aqui..." />
             </Input.Content>
           </Input.Root>
         </S.LeftContent>
@@ -75,15 +75,31 @@ export default function NewArrest() {
                 <Switch />
               </S.Extenuatory>
               <S.Extenuatory>
-                <p>Fiança (-100%)</p>
+                <p>Colaboração</p>
+                <Switch />
+              </S.Extenuatory>
+              <S.Extenuatory>
+                <p>Réu Confesso</p>
                 <Switch />
               </S.Extenuatory>
             </S.ExtenuatoryList>
           </S.ExtenuatoryArea>
           <Card.Root>
             <Card.Header>
-              <Card.Title>Selecionar Crimes</Card.Title>
+              <Card.Column>
+                <Card.Title>Selecionar Crimes</Card.Title>
+                <Card.Subtitle>Lista de artigos criminais</Card.Subtitle>
+              </Card.Column>
+              <TextField placeholder="Pesquisar crime" icon={Search} style={{width: '10rem'}} />
             </Card.Header>
+            <Card.Separator />
+            <Card.Content>
+              <S.CrimeList>
+                <S.Crime>
+                  
+                </S.Crime>
+              </S.CrimeList>
+            </Card.Content>
           </Card.Root>
         </S.RightContent>
       </S.Wrapper>

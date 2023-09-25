@@ -1,4 +1,4 @@
-import { darken } from "polished";
+import { darken, transparentize } from "polished";
 import styled from "styled-components";
 
 export const Root = styled.section`
@@ -19,7 +19,7 @@ export const Head = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   align-items: center;
   justify-content: center;
-  background: ${({theme}) =>  darken(.015, theme.bg.primary)};
+  background: ${({theme}) =>  darken(.017, theme.bg.primary)};
   border: solid .1rem ${({theme}) => theme.border.primary};
   border-radius: .6rem .6rem 0 0;
 `
@@ -51,6 +51,7 @@ export const Row = styled.div`
   align-items: center;
   border: solid .1rem ${({theme}) => theme.border.primary};
   border-bottom: none;
+  background: ${({theme}) =>  transparentize(.6, theme.bg.primary)};
 
   &:first-child {
     border-top: none;

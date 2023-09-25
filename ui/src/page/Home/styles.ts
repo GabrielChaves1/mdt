@@ -1,4 +1,5 @@
 import Container from "@/components/Container";
+import { transparentize } from "polished";
 import styled from "styled-components";
 
 export const Wrapper = styled(Container)`
@@ -8,7 +9,7 @@ export const Wrapper = styled(Container)`
   'warns   players'
   'warns   chat'
   'warns  chat';
-  grid-template-columns: 65.6rem 34.5rem;
+  grid-template-columns: 64.55rem 33.55rem;
   grid-template-rows: 16.5rem 8.5rem auto 24.5rem;
   gap: 2rem;
 `
@@ -31,6 +32,7 @@ export const StatsBox = styled.div`
   border-radius: .6rem;
   border: solid .1rem ${props => props.theme.border.primary};
   box-shadow: 0 .4rem .8rem 0 rgba(0, 0, 0, 0.025);
+  background: linear-gradient(120deg, transparent, ${({theme}) => transparentize(.97, theme.colors.primary)});
 
   h1 {
     font-size: 1.8rem;

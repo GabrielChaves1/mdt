@@ -4,15 +4,16 @@ import Switch from '@/components/Switch';
 import { useThemeManager } from '@/contexts/ThemeContext';
 import dark from '@/styles/themes/dark';
 import light from '@/styles/themes/light';
+import ConfigIcon from '@/assets/config.webp';
 
 export default function Configurations() {
   const { theme, updateTheme } = useThemeManager();
 
   return (
     <S.Wrapper>
-      <Banner.Root>
+      <Banner.Root icon={ConfigIcon}>
         <Banner.Header>
-          <Banner.Title>Configurações</Banner.Title>
+          <Banner.Title>Configurações Locais</Banner.Title>
         </Banner.Header>
       </Banner.Root>
 

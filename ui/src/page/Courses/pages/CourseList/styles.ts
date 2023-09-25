@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Content = styled.div`
   flex: 1;
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -10,7 +9,7 @@ export const Content = styled.div`
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 24rem);
+  grid-template-columns: repeat(4, auto);
   grid-template-rows: repeat(3, 17.2rem);
   gap: 2rem;
   flex: 1;

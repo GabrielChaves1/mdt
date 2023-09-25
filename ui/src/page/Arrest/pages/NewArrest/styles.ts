@@ -18,6 +18,7 @@ export const LeftContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  background: linear-gradient(120deg, ${({theme}) => transparentize(.5, theme.bg.primary)}, ${({theme}) => transparentize(.97, theme.colors.primary)});
 `
 
 export const RightContent = styled.div`
@@ -64,6 +65,7 @@ export const ExtenuatoryArea = styled.div`
   border-radius: .6rem;
   width: 100%;
   position: relative;
+  background: linear-gradient(120deg, ${({theme}) => transparentize(.5, theme.bg.primary)}, ${({theme}) => transparentize(.97, theme.colors.primary)});
 `
 
 export const ExtenuatoryTitle = styled.p`
@@ -76,7 +78,7 @@ export const ExtenuatoryList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-height: 15.5rem;
+  height: 15.5rem;
   overflow: auto;
   padding-right: .5rem;
   width: 100%;
@@ -96,4 +98,18 @@ export const Extenuatory = styled.div`
     font-weight: 400;
     color: ${({theme}) => theme.text.title};
   }
+`
+
+export const CrimeList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: 2.5rem;
+`
+
+export const Crime = styled.div`
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `
