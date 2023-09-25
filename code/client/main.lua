@@ -27,6 +27,21 @@ local registerNUICallbacks = {
     cb(resp)
   end,
 
+  ["getOnlineOfficers"] = function(data, cb)
+    local resp = vSERVER.getOnlineOfficers()
+    cb(resp)
+  end,
+
+  ["markOfficerOnMap"] = function(data, cb)
+    local resp = vSERVER.markOfficerOnMap(data)
+    cb(resp)
+  end,
+
+  ["createNotice"] = function(data, cb)
+    local resp = vSERVER.createWarningOrg(data)
+    cb(resp)
+  end,
+
   ["getMessagesChatOrg"] = function(data, cb)
     local resp = vSERVER.getMessagesChatOrg(data.org)
     cb(resp)
@@ -45,6 +60,20 @@ Citizen.CreateThread(function()
     end)
   end
 end)
+
+function src.markOfficerOnMap(ped, name)
+  ped = GetPlayerPedScriptIndex(GetPlayerFromServerId(ped))
+  local blipOfficer = AddBlipForEntity(ped)
+
+  SetBlipSprite(blipOfficer, 458)
+  SetBlipColour(blipOfficer, 3)
+  SetBlipScale(blipOfficer, 0.7)
+  SetBlipAsShortRange(blipOfficer, false)
+  SetBlipRoute(blipOfficer, true)
+  BeginTextCommandSetBlipName("STRING")
+  AddTextComponentString(name)
+  EndTextCommandSetBlipName(blipOfficer)
+end
 
 function src.atualizarChatOrg(chat)
     SendNUIMessage({

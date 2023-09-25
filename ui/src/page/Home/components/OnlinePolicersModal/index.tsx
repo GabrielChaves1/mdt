@@ -8,9 +8,9 @@ import fetchNui from "@/utils/fetchNui";
 import Loading from "@/components/Loading";
 
 interface Officer {
-  id: number,
-  name: string,
-  role: string,
+  user_id: number,
+  nome: string,
+  cargo: string,
   org: string
 }
 
@@ -25,7 +25,7 @@ const OnlinePolicersModal = forwardRef<ModalRootHandles>((_, ref) => {
   }
 
   function handleMarkOnMap(officer: Officer) {
-    fetchNui("markOfficerOnMap", officer.id);
+    fetchNui("markOfficerOnMap", officer.user_id);
   }
 
   return (
@@ -37,8 +37,8 @@ const OnlinePolicersModal = forwardRef<ModalRootHandles>((_, ref) => {
             {list.map((officer) => (
               <S.Item>
                 <S.Row>
-                  <S.PolicerName>{officer.name}</S.PolicerName>
-                  <S.PolicerRole>{officer.role} | {officer.org}</S.PolicerRole>
+                  <S.PolicerName>{officer?.nome}</S.PolicerName>
+                  <S.PolicerRole>{officer?.cargo} | {officer?.org}</S.PolicerRole>
                 </S.Row>
                 <Action onClick={() => handleMarkOnMap(officer)} icon={MapPin} label="Marcar no Mapa" />
               </S.Item>

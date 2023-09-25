@@ -24,7 +24,7 @@ type FormData = {
 }
 
 const CreateNoticeModal = forwardRef<ModalRootHandles>((_, ref) => {
-  const thisRef = useRef<ModalRootHandles>(ref);
+  // const thisRef = useRef<ModalRootHandles>(ref);
   const { colors } = useTheme();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
@@ -36,7 +36,7 @@ const CreateNoticeModal = forwardRef<ModalRootHandles>((_, ref) => {
   }
 
   async function onSubmit(data: FormData) {
-    thisRef.current?.closeModal();
+    // thisRef.current?.closeModal();
     const res = await fetchNui("createNotice", data);
   }
 

@@ -10,7 +10,9 @@ client_scripts {
   "_config/*",
   
   "code/client/main.lua",
-  "code/client/*",
+  "code/client/utils.lua",
+  
+  "code/client/prision.lua",
 }
 
 server_scripts {
