@@ -1,9 +1,7 @@
 export default interface IPrision {
-  prisoner: {
-    id: number,
-    name: string
-  },
-  time: number,
-  fine: number,
-  arrestedIn: number
+  user_id: number,
+  nome: string
+  tempo: number,
+  valor_multa: number,
+  data: number
 }

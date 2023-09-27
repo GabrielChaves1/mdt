@@ -17,6 +17,12 @@ RegisterCommand("unjail", function(source, args)
     src.unArrested()
 end)
 
+RegisterCommand("tf", function(source, args)
+    takePhoteFromCell(function(img)
+        print("takePhoteFromCell", img)
+    end)
+end)
+
 configsPrision = {
     cdsPlayer = { 402.87, -996.71, -99.00, 183.84 },
     cdsOfficer = { 402.98, -1000.26, -99.00, 7.54 },
@@ -29,7 +35,7 @@ configsPrision = {
 
     cams = {
         ["firstCam"] = {
-            pos = { 402.92, -998.78, -98.51 },
+            pos = { 402.92, -997.78, -98.51 },
             rot = { 0.0, 0.0, 0.0 }
         },
     
@@ -221,15 +227,15 @@ function mugShootSave(details)
 end
 
 function src.createThreadIsArrested(time)
-    time = parseInt(time)
+    timeArrest = parseInt(time)
     local countSaveInfo = 1
 
     local playerPed = PlayerPedId()
     local cdsSp = configsPrision.cdsSpawnPrision[1]
 
     Citizen.CreateThread(function()
-        while time > 0 do
-            print("restam " .. time .. " minutos de prisão")
+        while timeArrest > 0 do
+            print("restam " .. timeArrest .. " minutos de prisão")
             
             if GetDistanceBetweenCoords(GetEntityCoords(playerPed), vector3(cdsSp[1], cdsSp[2], cdsSp[3]), false) > 50 then
                 DoScreenFadeOut(250)
@@ -245,11 +251,11 @@ function src.createThreadIsArrested(time)
 
             Citizen.Wait(60000)
             
-            time = time - 1
+            timeArrest = timeArrest - 1
             countSaveInfo = countSaveInfo + 1
 
             if countSaveInfo > 5 then 
-                vSERVER.updateTimeArrested(time)
+                vSERVER.updateTimeArrested(timeArrest)
                 countSaveInfo = 1
             end
         end
@@ -261,6 +267,7 @@ end
 function src.unArrested()
     local playerPed = PlayerPedId()
     
+    timeArrest = 0
     vSERVER.updateTimeArrested(0)
 
     DoScreenFadeOut(250)

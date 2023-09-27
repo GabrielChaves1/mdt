@@ -18,157 +18,19 @@ export default function ArrestList() {
   const { data, isLoading } = useQuery<IPrision[]>(['getPrisions'], () => fetchNui("getPrisions"), {
     initialData: [
       {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
+        user_id: 1,
+        nome: "Th Pirituba",
+        tempo: 100,
+        valor_multa: 0,
+        data: Date.now()
       },
+
       {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
-      },
-      {
-        prisoner: {
-          id: 1,
-          name: "Th Pirituba"
-        },
-        time: 100,
-        fine: 0,
-        arrestedIn: Date.now()
+        user_id: 1,
+        nome: "Th Pirituba",
+        tempo: 100,
+        valor_multa: 1000,
+        data: Date.now()
       },
     ],
   })
@@ -179,6 +41,16 @@ export default function ArrestList() {
 
   const handleViewDetails = () => {
     viewDetailModalRef.current?.openModal();
+  }
+
+  const formatDate = (data: number) => {
+    const date = new Date(data);
+
+    const day = date.getDate();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`
   }
 
   return (
@@ -202,10 +74,10 @@ export default function ArrestList() {
             <>
               {items.map((item, i) => (
                 <Table.Row key={i}>
-                  <Table.Item>{item.prisoner.name}</Table.Item>
-                  <Table.Item>{item.time} meses</Table.Item>
-                  <Table.Item>R$ {item.fine.toLocaleString('pt-br')}</Table.Item>
-                  <Table.Item>20/09/2023</Table.Item>
+                  <Table.Item>{item?.nome}</Table.Item>
+                  <Table.Item>{item?.tempo} meses</Table.Item>
+                  <Table.Item>R$ {item?.valor_multa.toLocaleString('pt-br')}</Table.Item>
+                  <Table.Item>{formatDate(item?.data)}</Table.Item>
                   <Table.Item>
                     <Action icon={Eye} size='sm' onClick={handleViewDetails} label='Ver detalhes' />
                   </Table.Item>

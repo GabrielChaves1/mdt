@@ -11,12 +11,15 @@ vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
 cacheOrgs = {}
 cargosOrgs = {}
-officersOnlineCount = {}
-playersOrg = {}
 
+playersOrg = {}
 chatOrgsLog = {}
 
 mdtPresos = {}
+mdtCodigoPenal = {}
+
+prisonsTotalCount = 0
+officersOnlineCount = {}
 
 permissionsTablet = {
     ["CAN_MANAGE_WARNING"] = { display = "Gerenciar Avisos", description = "Com essa permissão o usuário poderá criar, editar e excluir avisos da organização" },
@@ -244,7 +247,7 @@ function src.createWarningOrg(details)
     return
 end
 
-function src.deleteWarningOrg(details)
+function src.deleteWarningOrg(id)
     local source  = source
     local user_id = zof.getUserId(source)
 
@@ -253,7 +256,7 @@ function src.deleteWarningOrg(details)
     local org = playersOrg[sUser_id]
     if not org then return {} end
 
-    zof.execute("zo/delete_aviso_org", { id = details.id })
+    zof.execute("mdt/mdt_avisos/delete", { id = id })
 
     return
 end
@@ -278,10 +281,30 @@ function src.arrestBandit(details)
     end
 end
 
+function src.getPrisions()
+    return zof.query("mdt/mdt_historico_penal/getAll", {})
+end
+
 function src.registerArrestBandit(details)
+    prisonsTotalCount = prisonsTotalCount + 1
+
+    local valorMulta = 0
+    local tempoTotal = 0
+    local codigosPenais = {}
+
+    for i, v in pairs(details.codigos_penais) do
+        valorMulta = valorMulta + v.valor_multa
+        tempoTotal = tempoTotal + v.tempo
+
+        table.insert(codigosPenais, v.id)
+    end
+
     zof.query("mdt/mdt_historico_penal/insert", {
         user_id = details.user_id,
-        codigos_penais = json.encode(details.codigos_penais),
+        nome = zof.getName(details.user_id),
+        valor_multa = valorMulta,
+        tempo = tempoTotal,
+        codigos_penais = json.encode(codigosPenais),
         data = os.time(),
         descricao = details.descricao,
         oficiais = json.encode(details.oficiais),
@@ -345,7 +368,50 @@ function src.markOfficerOnMap(user_id)
     vCLIENT.markOfficerOnMap(source, tonumber(markingSource), "Oficial - " .. zof.getName(user_id))
 end
 
+function src.getAllCodigoPenal()
+    return mdtCodigoPenal
+end
+
+function src.insertOrUpdateCodigoPenal(details)
+    local infos = {
+        nome_codigo = details.nome_codigo,
+        descricao = details.descricao,
+        tempo = details.tempo,
+        multa = details.multa
+    }
+
+    if details.insert then
+        zof.query("mdt/mdt_codigo_penal/insert", infos)
+
+        local lastIdInsert = zof.query("mdt/mdt_codigo_penal/getLastIdInserted", {})[1].id
+        if not lastIdInsert then return end
+
+        infos.id = lastIdInsert
+        table.insert(mdtCodigoPenal, infos)
+
+        return
+    end
+
+    for i, v in pairs(mdtCodigoPenal) do
+        if v.id == details.id then
+            infos.id = details.id
+            zof.query("mdt/mdt_codigo_penal/update", infos)
+
+            mdtCodigoPenal[i] = infos
+
+            return
+        end
+    end
+    
+end
+
+function src.deleteCodigoPenal(id)
+    zof.execute("mdt/mdt_codigo_penal/getAll", { id = id })
+end
+
 Citizen.CreateThread(function()
+    Citizen.Wait(5000)
+
     initOrgsFromDb()
 
     local permsGroups = zof.query("mdt/mdt_perms_cargos/getAll", {})
@@ -361,4 +427,7 @@ Citizen.CreateThread(function()
         mdtPresos[tostring(v.user_id)] = v
     end
     mdtPresos.all = nil
+
+    prisonsTotalCount = #zof.query("mdt/mdt_historico_penal/getAll", {})
+    mdtCodigoPenal = zof.query("mdt/mdt_codigo_penal/getAll", {})
 end)

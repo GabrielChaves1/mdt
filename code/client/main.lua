@@ -35,6 +35,11 @@ local registerNUICallbacks = {
     cb(resp)
   end,
 
+  ["getPrisions"] = function(data, cb)
+    local resp = vSERVER.getPrisions()
+    cb(resp)
+  end,
+
   ["createNotice"] = function(data, cb)
     local resp = vSERVER.createWarningOrg(data)
     cb(resp)

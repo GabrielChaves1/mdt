@@ -63,6 +63,9 @@ Citizen.CreateThread(function()
         CREATE TABLE IF NOT EXISTS mdt_historico_penal(
             id INT AUTO_INCREMENT,
             user_id INT,
+            nome VARCHAR(100),
+            valor_multa INT,
+            tempo INT,
             codigos_penais TEXT,
             data INT,
             descricao TEXT,
@@ -113,17 +116,17 @@ Citizen.CreateThread(function()
     ]])
 
     zof.prepare("mdt/drop_all_tables", [[
-        DROP TABLE mdt_perms_cargos;
-        DROP TABLE mdt_hierarquia;
-        DROP TABLE mdt_codigo_penal;
-        DROP TABLE mdt_veiculos_detidos;
-        DROP TABLE mdt_cursos;
-        DROP TABLE mdt_curso_perm;
-        DROP TABLE mdt_historico_penal;
-        DROP TABLE mdt_historico_acoes;
-        DROP TABLE mdt_unidades;
-        DROP TABLE mdt_avisos;
-        DROP TABLE mdt_presos;
+        DROP TABLE IF EXISTS mdt_perms_cargos;
+        DROP TABLE IF EXISTS mdt_hierarquia;
+        DROP TABLE IF EXISTS mdt_codigo_penal;
+        DROP TABLE IF EXISTS mdt_veiculos_detidos;
+        DROP TABLE IF EXISTS mdt_cursos;
+        DROP TABLE IF EXISTS mdt_curso_perm;
+        DROP TABLE IF EXISTS mdt_historico_penal;
+        DROP TABLE IF EXISTS mdt_historico_acoes;
+        DROP TABLE IF EXISTS mdt_unidades;
+        DROP TABLE IF EXISTS mdt_avisos;
+        DROP TABLE IF EXISTS mdt_presos;
     ]])
 
     
@@ -140,7 +143,7 @@ Citizen.CreateThread(function()
     zof.prepare("mdt/mdt_avisos/delete", "DELETE FROM mdt_avisos WHERE id = @id")
     zof.prepare("mdt/mdt_avisos/getFromOrg", "SELECT * FROM mdt_avisos WHERE org = @org")
 
-    zof.prepare("mdt/mdt_historico_penal/insert", "INSERT INTO mdt_historico_penal(user_id, codigos_penais, data, descricao, oficiais, imgs, is_multa) VALUES(@user_id, @codigos_penais, @data, @descricao, @oficiais, @imgs, @is_multa)")
+    zof.prepare("mdt/mdt_historico_penal/insert", "INSERT INTO mdt_historico_penal(user_id, nome, valor_multa, tempo, codigos_penais, data, descricao, oficiais, imgs, is_multa) VALUES(@user_id, @nome, @valor_multa, @tempo, @codigos_penais, @data, @descricao, @oficiais, @imgs, @is_multa)")
     zof.prepare("mdt/mdt_historico_penal/getAll", "SELECT * FROM mdt_historico_penal")
     zof.prepare("mdt/mdt_historico_penal/getLastIdInserted", "SELECT id FROM mdt_historico_penal ORDER BY id DESC LIMIT 1")
 
@@ -149,10 +152,14 @@ Citizen.CreateThread(function()
     zof.prepare("mdt/mdt_presos/update", "UPDATE mdt_presos SET tempo = @tempo WHERE user_id = @user_id")
     zof.prepare("mdt/mdt_presos/getAll", "SELECT * FROM mdt_presos")
     zof.prepare("mdt/mdt_presos/get", "SELECT * FROM mdt_presos WHERE user_id = @user_id")
-    
-    
-    -- zof.execute("mdt/drop_all_tables")
 
+    zof.prepare("mdt/mdt_codigo_penal/insert", "INSERT INTO mdt_codigo_penal(nome_codigo, descricao, tempo, multa) VALUES(@nome_codigo, @descricao, @tempo, @multa)")
+    zof.prepare("mdt/mdt_codigo_penal/delete", "DELETE FROM mdt_codigo_penal WHERE id = @id")
+    zof.prepare("mdt/mdt_codigo_penal/update", "UPDATE mdt_codigo_penal SET nome_codigo = @nome_codigo, descricao = @descricao, tempo = @tempo, multa = @multa WHERE id = @id")
+    zof.prepare("mdt/mdt_codigo_penal/getAll", "SELECT * FROM mdt_codigo_penal")
+    zof.prepare("mdt/mdt_codigo_penal/getLastIdInserted", "SELECT id FROM mdt_codigo_penal ORDER BY id DESC LIMIT 1")
+    
+    zof.execute("mdt/drop_all_tables")
     Citizen.Wait(1000)
 
     zof.execute("mdt/create_all_tables")
@@ -165,3 +172,8 @@ function returnDateFormat()
 
     return dia .. "/" .. mes .. "/" .. ano
 end
+
+RegisterServerEvent("trydeleteobj")
+AddEventHandler("trydeleteobj", function(index)
+    TriggerClientEvent("syncdeleteobj", -1, index)
+end)
