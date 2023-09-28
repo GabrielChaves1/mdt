@@ -1,6 +1,6 @@
-import { animations } from '@/styles/animations'
 import * as S from './styles'
 import { ReactNode } from "react"
+import { animations } from '@/styles/animations'
 
 interface ContainerProps {
   children: ReactNode
@@ -9,7 +9,7 @@ interface ContainerProps {
 export default function Container({ children, ...props }: ContainerProps) {
   return (
     <S.Container {...props} {...animations.fade}>
-      {children}
+        {children}
     </S.Container>   
   )
 }

@@ -11,7 +11,6 @@ import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup"
 import { ShieldAlert } from "lucide-react";
 import { useTheme } from "styled-components";
-import { useRef } from 'react' 
 
 const schema = yup.object({
   title: yup.string().required("O título é obrigatório!").max(60, "Máximo de 60 caracteres").nonNullable(),
@@ -24,7 +23,6 @@ type FormData = {
 }
 
 const CreateNoticeModal = forwardRef<ModalRootHandles>((_, ref) => {
-  // const thisRef = useRef<ModalRootHandles>(ref);
   const { colors } = useTheme();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
@@ -36,7 +34,6 @@ const CreateNoticeModal = forwardRef<ModalRootHandles>((_, ref) => {
   }
 
   async function onSubmit(data: FormData) {
-    // thisRef.current?.closeModal();
     const res = await fetchNui("createNotice", data);
   }
 

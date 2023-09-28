@@ -44,7 +44,7 @@ export const Body = styled.div`
 
 export const Row = styled.div`
   width: 100%;
-  height: 4.5rem;
+  height: 4.2rem;
   display: grid;
   place-items: center;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
@@ -64,7 +64,7 @@ export const Row = styled.div`
 `
 
 export const RowItem = styled.p`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: ${({theme}) => theme.text.subtitle};
   font-weight: 300;
   display: flex;

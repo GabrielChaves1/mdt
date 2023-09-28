@@ -6,3 +6,9 @@ export const TableArea = styled.div`
   position: relative;
   flex: 1;
 `
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`

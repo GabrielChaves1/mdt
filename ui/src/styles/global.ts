@@ -43,7 +43,7 @@ export const GlobalStyles = createGlobalStyle`
 
     
     input, textarea {
-    outline: none;
+        outline: none;
     }
 
     input::-webkit-outer-spin-button,

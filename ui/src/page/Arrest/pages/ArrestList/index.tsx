@@ -13,6 +13,7 @@ import fetchNui from "@/utils/fetchNui";
 import Loading from "@/components/Loading";
 import IPrision from "@/types/Prision";
 import { Link } from "react-router-dom";
+import Animator from "@/components/Animator";
 
 export default function ArrestList() {
   const { data, isLoading } = useQuery<IPrision[]>(['getPrisions'], () => fetchNui("getPrisions"), {
@@ -35,7 +36,7 @@ export default function ArrestList() {
     ],
   })
 
-  const { amountOfPages, currentPage, items, totalOfItems, viewedItems, paginate } = usePaginate(12, 1, data || []);
+  const { amountOfPages, currentPage, items, totalOfItems, viewedItems, paginate } = usePaginate<IPrision>(13, 1, data);
 
   const viewDetailModalRef = useRef<ModalRootHandles>(null);
 
@@ -54,39 +55,40 @@ export default function ArrestList() {
   }
 
   return (
-    <>
-      <ViewDetailModal ref={viewDetailModalRef} />
+    <Animator>
+      <S.Container>
+        <ViewDetailModal ref={viewDetailModalRef} />
 
-      <Banner.Root>
-        <Banner.Header>
-          <Banner.Title>Últimas prisões</Banner.Title>
-        </Banner.Header>
-        <Link to="/arrest/new">
-          <Banner.Action>Nova Prisão</Banner.Action>
-        </Link>
-      </Banner.Root>
+        <Banner.Root>
+          <Banner.Header>
+            <Banner.Title>Últimas prisões</Banner.Title>
+          </Banner.Header>
+          <Link to="/arrest/new">
+            <Banner.Action>Nova Prisão</Banner.Action>
+          </Link>
+        </Banner.Root>
 
-      <S.TableArea>
-        <Table.Root headColumns={["Prisioneiro", "Tempo", "Multa", "Data", "Ações"]}>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <>
-              {items.map((item, i) => (
-                <Table.Row key={i}>
-                  <Table.Item>{item?.nome}</Table.Item>
-                  <Table.Item>{item?.tempo} meses</Table.Item>
-                  <Table.Item>R$ {item?.valor_multa.toLocaleString('pt-br')}</Table.Item>
-                  <Table.Item>{formatDate(item?.data)}</Table.Item>
-                  <Table.Item>
-                    <Action icon={Eye} size='sm' onClick={handleViewDetails} label='Ver detalhes' />
-                  </Table.Item>
-                </Table.Row>
-              ))}
-            </>
-          )}
-        </Table.Root>
-
+        <S.TableArea>
+          <Table.Root headColumns={["Prisioneiro", "Tempo", "Multa", "Data", "Ações"]}>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <>
+                {items.map((item, i) => (
+                  <Table.Row key={i}>
+                    <Table.Item>{item?.nome}</Table.Item>
+                    <Table.Item>{item?.tempo} meses</Table.Item>
+                    <Table.Item>R$ {item?.valor_multa.toLocaleString('pt-br')}</Table.Item>
+                    <Table.Item>{formatDate(item?.data)}</Table.Item>
+                    <Table.Item>
+                      <Action icon={Eye} size='sm' onClick={handleViewDetails} label='Ver detalhes' />
+                    </Table.Item>
+                  </Table.Row>
+                ))}
+              </>
+            )}
+          </Table.Root>
+        </S.TableArea>
         {amountOfPages > 1 && (
           <Pagination
             amountOfPages={amountOfPages}
@@ -95,7 +97,7 @@ export default function ArrestList() {
             totalOfItems={totalOfItems}
             onPaginate={(page: number) => paginate(page)} />
         )}
-      </S.TableArea>
-    </>
+      </S.Container>
+    </Animator>
   )
 }

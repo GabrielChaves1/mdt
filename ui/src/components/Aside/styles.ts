@@ -10,7 +10,7 @@ export const Container = styled.aside`
   display: flex;
   flex-direction: column;
   gap: .5rem;
-  background: linear-gradient(-70deg, ${({theme}) => darken(.02, theme.bg.primary)}, ${({theme}) => transparentize(.95, theme.colors.primary)});
+  background: ${({theme}) => darken(.01, theme.bg.primary)};
 `
 
 export const NavigationArea = styled.div`

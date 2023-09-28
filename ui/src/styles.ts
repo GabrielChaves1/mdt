@@ -38,5 +38,5 @@ export const Content = styled.div`
   gap: 2rem;
   width: 100%;
   position: relative;
-  background: linear-gradient(120deg, ${({theme}) => darken(.02, theme.bg.primary)}, ${({theme}) => transparentize(.92, theme.colors.primary)});
+  background: ${({theme}) => theme.bg.primary};
 `

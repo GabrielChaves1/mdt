@@ -9,6 +9,7 @@ import ViewDetailModal from './components/ViewDetailModal';
 import { useRef } from 'react';
 import { ModalRootHandles } from '@/components/Modal/ModalRoot';
 import { Outlet } from 'react-router-dom';
+import Animator from '@/components/Animator';
 
 export default function Arrest() {
   return (

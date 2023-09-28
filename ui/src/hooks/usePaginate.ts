@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function usePaginate<T>(itemsPerPage: number, initialPage = 1, items: Array<T>) {
+export default function usePaginate<T>(itemsPerPage: number, initialPage = 1, items: T[]) {
   const [currentPage, setCurrentPage] = useState(initialPage)
   const paginate = (page: number) => setCurrentPage(page)
   

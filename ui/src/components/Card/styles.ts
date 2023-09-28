@@ -10,7 +10,7 @@ export const Root = styled.section`
   display: flex;
   flex-direction: column;
   box-shadow: 0 .4rem .8rem 0 rgba(0, 0, 0, 0.025);
-  background: linear-gradient(120deg, ${({theme}) => transparentize(.5, theme.bg.primary)}, ${({theme}) => transparentize(.97, theme.colors.primary)});
+  background: transparent;
 `
 
 export const Header = styled.header`
