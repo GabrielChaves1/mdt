@@ -159,7 +159,7 @@ Citizen.CreateThread(function()
     zof.prepare("mdt/mdt_codigo_penal/getAll", "SELECT * FROM mdt_codigo_penal")
     zof.prepare("mdt/mdt_codigo_penal/getLastIdInserted", "SELECT id FROM mdt_codigo_penal ORDER BY id DESC LIMIT 1")
     
-    zof.execute("mdt/drop_all_tables")
+    -- zof.execute("mdt/drop_all_tables")
     Citizen.Wait(1000)
 
     zof.execute("mdt/create_all_tables")

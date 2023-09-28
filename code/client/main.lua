@@ -30,6 +30,20 @@ local registerNUICallbacks = {
     cb(resp)
   end,
 
+  ["getHierarchy"] = function(data, cb)
+    local resp = vSERVER.getHierarchy()
+    cb(resp)
+  end,
+
+  ["getPermissionsGroup"] = function(data, cb)
+    local resp = vSERVER.getPermissionsGroup(data)
+    cb(resp)
+  end,
+
+  ["insertOrUpdatePermissionsGroup"] = function(data, cb)
+    local resp = vSERVER.insertOrUpdatePermissionsGroup(data)
+  end,
+
   ["markOfficerOnMap"] = function(data, cb)
     local resp = vSERVER.markOfficerOnMap(data)
     cb(resp)

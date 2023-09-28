@@ -8,23 +8,34 @@ import { FileEdit, Users } from 'lucide-react';
 import ShowPolicersModal from './components/ShowPolicersModal';
 import Action from '@/components/Action';
 import CrownIcon from '@/assets/crown.webp';
-
-interface Role {
-  id: number,
-  name: string,
-  index: string
-}
+import { useQuery } from '@tanstack/react-query';
+import fetchNui from '@/utils/fetchNui';
+import Loading from '@/components/Loading';
+import GroupHierarchy from '@/types/GroupHierarchy';
 
 export default function RolesHierarchy() {
+  const { data, isLoading } = useQuery<GroupHierarchy[]>(['getHierarchy'], () => fetchNui("getHierarchy"), {
+    initialData: [
+      {
+        group: "PMESPRecruta",
+        display: "Recruta",
+        position: 1,
+        org: "PMESP"
+      },
+    ],
+  })
+  
+  const sortedPositionGroup = data?.sort((a, b) => a.position - b.position)
+
   const editPermissionsModalRef = useRef<ModalRootHandles>(null);
   const showPolicersModalRef = useRef<ModalRootHandles>(null);
 
-  const handleEditPermissions = (role: string) => {
-    editPermissionsModalRef.current?.openModal({ role });
+  const handleEditPermissions = (group: GroupHierarchy) => {
+    editPermissionsModalRef.current?.openModal({ group });
   }
 
-  const handleShowPolicers = (role: string) => {
-    showPolicersModalRef.current?.openModal({ role });
+  const handleShowPolicers = (group: GroupHierarchy) => {
+    showPolicersModalRef.current?.openModal({ group });
   }
 
   return (
@@ -39,14 +50,22 @@ export default function RolesHierarchy() {
       </Banner.Root>
 
       <Table.Root headColumns={["ID", "Cargo", "Ações"]}>
-        <Table.Row>
-          <Table.Item>#1</Table.Item>
-          <Table.Item>Comandante Geral</Table.Item>
-          <Table.Item>
-            <Action icon={FileEdit} size='sm' label='Editar Permissões' onClick={() => handleEditPermissions("Comandante Geral")} />
-            <Action icon={Users} size='sm' label='Visualizar Oficiais' onClick={() => handleShowPolicers("Comandante Geral")} />
-          </Table.Item>
-        </Table.Row>
+        {isLoading ? (
+            <Loading />
+          ) : (
+            <>
+              {sortedPositionGroup?.map((item, i) => (
+                <Table.Row key={i}>
+                  <Table.Item>#{item?.position}</Table.Item>
+                  <Table.Item>{item?.display}</Table.Item>
+                  <Table.Item>
+                    <Action icon={FileEdit} size='sm' label='Editar Permissões' onClick={() => handleEditPermissions(item)} />
+                    <Action icon={Users} size='sm' label='Visualizar Oficiais' onClick={() => handleShowPolicers(item)} />
+                  </Table.Item>
+                </Table.Row>
+              ))}
+            </>
+          )}
       </Table.Root>
     </S.Wrapper>
   )

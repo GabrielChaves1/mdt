@@ -21,6 +21,10 @@ zof = {
         return false
     end,
 
+    getUserGroups = function(user_id)
+        return vRP.getUserGroups(user_id)
+    end,
+
     prepare = function(name, query)
         return vRP._prepare(name, query)
     end,

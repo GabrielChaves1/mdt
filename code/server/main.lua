@@ -22,7 +22,9 @@ prisonsTotalCount = 0
 officersOnlineCount = {}
 
 permissionsTablet = {
-    ["CAN_MANAGE_WARNING"] = { display = "Gerenciar Avisos", description = "Com essa permissão o usuário poderá criar, editar e excluir avisos da organização" },
+    ["CAN_MANAGE_WARNING"] = { display = "Gerenciar Avisos", description = "Com essa permissão o usuário poderá CRIAR, EDITAR e EXCLUIR avisos da organização" },
+    ["CAN_REGISTER_JAIL"] = { display = "Prender Indivíduo", description = "Com essa permissão o usuário poderá PRENDER qualquer cidadão" },
+    ["CAN_REGISTER_UNJAIL"] = { display = "Soltar Indivíduo", description = "Com essa permissão o usuário poderá SOLTAR qualquer cidadão preso" },
 }
 
 function src.getInitialData()
@@ -147,19 +149,70 @@ function removePlayerOrg(user_id)
     playersOrg[sUser_id] = nil
 end
 
+function src.getHierarchy()
+    local source = source
+    local user_id = zof.getUserId(source)
+    local sUser_id = tostring(user_id)
+
+    local org = playersOrg[sUser_id]
+    if not org then return end
+
+    local rolesHierarchy = {}
+
+    for i, v in pairs(orgsConfigList[org].hierarchy) do
+        table.insert(rolesHierarchy, {
+            group = i,
+            display = v.displayName,
+            position = v.position,
+            org = org
+        })
+    end
+
+    return rolesHierarchy
+end
+
+function src.getPermissionsGroup(group)
+    local source = source
+    local user_id = zof.getUserId(source)
+    local sUser_id = tostring(user_id)
+
+    local org = playersOrg[sUser_id]
+
+    if not org then return end
+    if not group then return end
+
+    print("perms cargo", json.encode(cargosOrgs[group].perms))
+
+    local permsGroup = {}
+
+    for perm, v in pairs(permissionsTablet) do
+        v.active = (cargosOrgs[group].perms or {})[perm] ~= nil
+        table.insert(permsGroup, v)
+    end
+
+    return permsGroup
+end
+
 AddEventHandler("vRP:playerSpawn", function(user_id, source, first_spawn)
 	Citizen.Wait(10000)
+
+    if mdtPresos[sUser_id] then vCLIENT.createThreadIsArrested(source, mdtPresos[sUser_id].tempo) end
 	
     local sUser_id = tostring(user_id)
 
     local org = playersOrg[sUser_id]
     if org then 
         cacheOrgs[org].officers[sUser_id].online = true
-
         officersOnlineCount[org] = (officersOnlineCount[org] or 0) + 1
+    else
+        local myGroups = zof.getUserGroups(user_id)
+        for i, v in pairs(myGroups) do
+            if cargosOrgs[i] then
+                addPlayerOrg({ user_id = user_id, org = cargosOrgs[i].org, cargo = i, permissions = (cargosOrgs[i].perms or {}) })
+                return
+            end
+        end
     end
-
-    if mdtPresos[sUser_id] then vCLIENT.createThreadIsArrested(source, mdtPresos[sUser_id].tempo) end
 end)
 
 AddEventHandler("playerDropped", function(reason)
@@ -351,13 +404,15 @@ function src.updateTimeArrested(time)
     end
 end
 
-function src.insertOrUpdatePermissionsTablet(infos)
+function src.insertOrUpdatePermissionsGroup(infos)
+    print(json.encode(infos))
+
     if cargosOrgs[infos.cargo] then
         cargosOrgs[infos.cargo].perms = infos.perms
-        zof.query("mdt/mdt_perms_cargos/update", { cargo = infos.cargo, org = infos.org, perms = infos.perms })
+        zof.query("mdt/mdt_perms_cargos/update", { cargo = infos.cargo, org = infos.org, perms = json.encode(infos.perms) })
     else
         cargosOrgs[infos.cargo].perms = infos.perms
-        zof.query("mdt/mdt_perms_cargos/insert", { cargo = infos.cargo, org = infos.org, perms = infos.perms })
+        zof.query("mdt/mdt_perms_cargos/insert", { cargo = infos.cargo, org = infos.org, perms = json.encode(infos.perms) })
     end
 end
 
