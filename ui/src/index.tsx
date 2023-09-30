@@ -22,7 +22,6 @@ debugData([
 const App: React.FC = () => {
 	const { visible } = useVisibility();
 	const { theme } = useThemeManager();
-	const { colors } = useTheme();
 
 	return (
 		<>
@@ -33,7 +32,7 @@ const App: React.FC = () => {
 						<motion.div
 							initial={{ opacity: 0, y: '100%' }}
 							animate={{ opacity: 1, y: '0%', transition: { duration: .4 } }}>
-							<S.Wrapper>
+							<S.Wrapper id="wrapper">
 								<Aside />
 								<S.Content>
 									<AnimatePresence>

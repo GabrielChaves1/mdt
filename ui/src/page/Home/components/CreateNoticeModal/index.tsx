@@ -1,5 +1,5 @@
 import Modal from "@/components/Modal";
-import { ModalRootHandles } from "@/components/Modal/ModalRoot";
+import { ModalHostProps, ModalRootHandles } from "@/components/Modal/ModalRoot";
 import { TextField } from "@/components/TextField";
 import { Textarea } from "@/components/Textarea/styles";
 import { forwardRef } from "react";
@@ -22,7 +22,7 @@ type FormData = {
   description: string
 }
 
-const CreateNoticeModal = forwardRef<ModalRootHandles>((_, ref) => {
+const CreateNoticeModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClose }, ref) => {
   const { colors } = useTheme();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
@@ -34,7 +34,8 @@ const CreateNoticeModal = forwardRef<ModalRootHandles>((_, ref) => {
   }
 
   async function onSubmit(data: FormData) {
-    const res = await fetchNui("createNotice", data);
+    const res = await fetchNui("createNotice", data, true);
+    onClose();
   }
 
   return (

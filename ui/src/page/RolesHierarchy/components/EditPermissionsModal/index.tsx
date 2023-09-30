@@ -2,7 +2,7 @@ import * as S from './styles';
 import { Search } from 'lucide-react';
 import Modal from '@/components/Modal';
 import { forwardRef, useState } from 'react';
-import { ModalRootHandles } from '@/components/Modal/ModalRoot';
+import { ModalHostProps, ModalRootHandles } from '@/components/Modal/ModalRoot';
 import { TextField } from '@/components/TextField';
 import Switch from '@/components/Switch';
 import Button from '@/components/Button';
@@ -11,16 +11,16 @@ import fetchNui from '@/utils/fetchNui';
 import Permission from '@/types/Permission';
 import Loading from '@/components/Loading';
 
-const EditPermissionsModal = forwardRef<ModalRootHandles>((_, ref) => {
+const EditPermissionsModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClose }, ref) => {
   const [ role, setRole ] = useState<GroupHierarchy>({} as GroupHierarchy);
-  const [ permissions, setPermissions ] = useState<Permission[]>([] as Permission[]);
+  const [ permissions, setPermissions ] = useState<Permission[]>([]);
   const [ selectedPermissions, setSelectedPermissions ] = useState<string[]>([]);
 
   async function onOpen(data: { group: GroupHierarchy }) {
-    var dataGroup = data?.group;
-    setRole(dataGroup);
+    var _role = data?.group;
+    setRole(_role);
 
-    const perms = await fetchNui("getPermissionsGroup", dataGroup?.group) as Permission[]
+    const perms = await fetchNui<Permission[]>("getPermissionsGroup", _role?.group)
     if(perms.length <= 0) return;
 
     setPermissions(perms);
@@ -28,7 +28,7 @@ const EditPermissionsModal = forwardRef<ModalRootHandles>((_, ref) => {
 
   function handleSubmit() {
     fetchNui("insertOrUpdatePermissionsGroup", { perms: selectedPermissions, cargo: role?.group, org: role?.org });
-    // ref.current?.closeModal();
+    onClose();
   }
 
   function handleManagePermissions(checked: boolean, id: string) {
@@ -49,7 +49,7 @@ const EditPermissionsModal = forwardRef<ModalRootHandles>((_, ref) => {
         <S.Column>
           <TextField placeholder='Pesquisar...' icon={Search} />
           <S.PermissionsList>
-            { permissions ? (
+            {permissions ? (
               permissions?.map((perm) => (
                 <S.Permission>
                   <S.PermissionTitleArea>

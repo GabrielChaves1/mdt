@@ -41,7 +41,7 @@ export default function RolesHierarchy() {
   return (
     <S.Wrapper>
       <ShowPolicersModal ref={showPolicersModalRef} />
-      <EditPermissionsModal ref={editPermissionsModalRef} />
+      <EditPermissionsModal onClose={() => editPermissionsModalRef.current?.closeModal()} ref={editPermissionsModalRef} />
 
       <Banner.Root icon={CrownIcon}>
         <Banner.Header>

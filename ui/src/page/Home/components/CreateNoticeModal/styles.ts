@@ -8,7 +8,7 @@ export const Column = styled.div`
 
   p {
     font-size: 1.2rem;
-    color: white;
+    color: ${({theme}) => theme.text.title};
     font-weight: 300;
     display: flex;
     align-items: center;

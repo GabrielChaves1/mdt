@@ -56,9 +56,8 @@ export default function ArrestList() {
 
   return (
     <Animator>
-      <S.Container>
+      <S.Wrapper>
         <ViewDetailModal ref={viewDetailModalRef} />
-
         <Banner.Root>
           <Banner.Header>
             <Banner.Title>Últimas prisões</Banner.Title>
@@ -97,7 +96,7 @@ export default function ArrestList() {
             totalOfItems={totalOfItems}
             onPaginate={(page: number) => paginate(page)} />
         )}
-      </S.Container>
+      </S.Wrapper>
     </Animator>
   )
 }

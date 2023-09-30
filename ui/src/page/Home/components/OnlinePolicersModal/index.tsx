@@ -1,5 +1,5 @@
 import Modal from "@/components/Modal";
-import { ModalRootHandles } from "@/components/Modal/ModalRoot";
+import { ModalHostProps, ModalRootHandles } from "@/components/Modal/ModalRoot";
 import { forwardRef, useState } from "react";
 import * as S from "./styles";
 import { MapPin } from "lucide-react";
@@ -45,7 +45,6 @@ const OnlinePolicersModal = forwardRef<ModalRootHandles>((_, ref) => {
             ))}
           </S.List>
         ) : (
-
           <Loading />
         )}
       </Modal.Content>

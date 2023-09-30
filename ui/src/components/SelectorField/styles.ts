@@ -1,26 +1,10 @@
 import { lighten, transparentize } from "polished";
 import styled from "styled-components";
 
-
-export const Text = styled.input`
-  flex: 1;
-  background: none;
-  
-  font-size: 1.4rem;
-  font-weight: 300;
-
-  color: ${props => props.theme.text.title};
-  
-  &::placeholder {
-    color: ${props => transparentize(.7, props.theme.text.title)};
-  }
-`
-
 export const Area = styled.div`
   height: 4.21rem;
   border: solid .1rem ${props => props.theme.border.primary};
   border-radius: .6rem;
-  background: none;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -66,21 +50,44 @@ export const Button = styled.button`
   }
 `
 
-export const SelectedList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, auto);
-  gap: .5rem;
+export const List = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: .5rem 1rem;
+  gap: .6rem;
   flex: 1;
-  margin-left: 1rem;
-  overflow-y: auto;
+  height: 100%;
+  overflow: auto;
+  justify-content: flex-start;
 `
 
-export const SelectedItem = styled.p`
+export const CreateItem = styled.div`
+  padding: .3rem .7rem;
+  border-radius: 3rem;
+  border: solid .1rem ${({theme}) => theme.border.primary};
   font-size: 1.2rem;
   font-weight: 400;
-  height: 2rem;
+  color: #FFF;
+`
+
+export const Input = styled.input`
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  width: 11.7rem;
+  padding: 0 .5rem;
+  font-weight: 400;
   color: ${({theme}) => theme.text.title};
-  border-radius: 2rem;
-  padding: .3rem .8rem;
+`
+
+export const Item = styled.span`
+  padding: .3rem .7rem;
+  width: max-content;
+  border-radius: 3rem;
   background: ${({theme}) => theme.colors.primary};
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #FFF;
 `

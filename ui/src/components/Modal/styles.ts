@@ -6,7 +6,6 @@ export const Root = styled(motion.div)`
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: ${({theme}) => transparentize(.1, theme.bg.primary)};
   z-index: 5;
   left: 0;
   top: 0;
@@ -79,4 +78,5 @@ export const CloseTrigger = styled.div`
   position: absolute;
   left: 0;
   top: 0;
+  background: rgba(0,0,0, .22);
 `

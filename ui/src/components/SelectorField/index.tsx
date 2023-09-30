@@ -31,14 +31,16 @@ export const SelectorField = forwardRef(({ ...props }: SelectorFieldProps, ref: 
   return (
     <>
       <S.Area>
-        <S.SelectedList>
-          <S.SelectedItem>Droyen</S.SelectedItem>
-          <S.Text 
-            value={input}
-            onChange={({target}) => setInput(target.value)} 
-            ref={ref} 
-            {...props} />
-        </S.SelectedList>
+        <S.List>
+          <S.CreateItem>
+            <S.Input placeholder="Nome do infrator" />
+          </S.CreateItem>
+          <S.Item>Droyen</S.Item>
+          <S.Item>Droyen</S.Item>
+          <S.Item>Droyen</S.Item>
+          <S.Item>Droyen</S.Item>
+          <S.Item>Droyen</S.Item>
+        </S.List>
         {isTyping ? (
           <S.Button disabled>
             <LoaderIcon size={'1.6rem'} color={colors.icon} />

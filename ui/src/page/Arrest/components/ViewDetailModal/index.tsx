@@ -5,7 +5,8 @@ import * as S from './styles';
 import { Banknote, Clock, Forward } from "lucide-react";
 import { useTheme } from "styled-components";
 
-const ViewDetailModal = forwardRef<ModalRootHandles>((_, ref) => {
+const ViewDetailsModal = forwardRef<ModalRootHandles>((_, ref) => {
+
   const { colors } = useTheme();
 
   return (
@@ -82,4 +83,4 @@ const ViewDetailModal = forwardRef<ModalRootHandles>((_, ref) => {
   )
 });
 
-export default ViewDetailModal;
+export default ViewDetailsModal;

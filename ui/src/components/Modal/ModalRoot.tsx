@@ -2,6 +2,7 @@ import { ForwardRefRenderFunction, ReactNode, forwardRef, useCallback, useImpera
 import * as S from './styles';
 import { XCircle } from 'lucide-react';
 import { useTheme } from 'styled-components';
+import { createPortal } from 'react-dom';
 
 export interface ModalRootHandles {
   openModal: (data?: any) => void
@@ -14,19 +15,23 @@ interface ModalRootProps {
   height?: string | number
 }
 
+export interface ModalHostProps {
+  onClose: () => void
+}
+
 const ModalRoot: ForwardRefRenderFunction<ModalRootHandles, ModalRootProps> = ({ children, onOpen, height }, ref) => {
   const { colors } = useTheme()
   const [visible, setVisible] = useState<boolean>(false);
-  
+
   const openModal = useCallback((props: any) => {
-    if(onOpen) onOpen({...props});
+    if (onOpen) onOpen({ ...props });
     setVisible(true);
-  },[])
-  
+  }, [])
+
   const closeModal = useCallback(() => {
     setVisible(false);
-  },[])
-  
+  }, [])
+
   useImperativeHandle(ref, () => {
     return {
       openModal,
@@ -34,9 +39,9 @@ const ModalRoot: ForwardRefRenderFunction<ModalRootHandles, ModalRootProps> = ({
     }
   })
 
-  if(!visible) return null;
+  if (!visible) return null;
 
-  return (
+  return createPortal(
     <S.Root
       transition={{ duration: .15 }}
       initial={{ opacity: 0 }}
@@ -50,7 +55,8 @@ const ModalRoot: ForwardRefRenderFunction<ModalRootHandles, ModalRootProps> = ({
         </S.CloseButton>
         {children}
       </S.Wrapper>
-    </S.Root>
+    </S.Root>,
+    document.getElementById('wrapper')!
   )
 }
 

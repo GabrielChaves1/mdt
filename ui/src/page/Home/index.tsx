@@ -81,7 +81,7 @@ export default function Home() {
   return (
     <S.Wrapper>
       <OnlinePolicersModal ref={viewPolicersModalRef} />
-      <CreateNoticeModal ref={createNoticeModalRef} />
+      <CreateNoticeModal onClose={() => viewPolicersModalRef.current?.closeModal()} ref={createNoticeModalRef} />
 
       <div style={{gridArea: "banner"}}>
         <Banner.Root style={{ height: '100%' }}>
