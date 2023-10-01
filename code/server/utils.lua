@@ -165,6 +165,16 @@ Citizen.CreateThread(function()
     zof.execute("mdt/create_all_tables")
 end)
 
+function table.contains(table, element)
+    for _, value in pairs(table) do
+      if value == element then
+        return true
+      end
+    end
+    
+    return false
+end
+
 function returnDateFormat()
     local dia = string.format("%02d", tonumber(os.date("%d", os.time())))
     local mes = string.format("%02d", tonumber(os.date("%m", os.time())))

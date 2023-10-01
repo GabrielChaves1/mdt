@@ -181,16 +181,45 @@ function src.getPermissionsGroup(group)
     if not org then return end
     if not group then return end
 
-    print("perms cargo", json.encode(cargosOrgs[group].perms))
-
     local permsGroup = {}
-
     for perm, v in pairs(permissionsTablet) do
-        v.active = (cargosOrgs[group].perms or {})[perm] ~= nil
+        if cargosOrgs[group].perms ~= nil then
+            v.active = (cargosOrgs[group].perms[perm] or nil) ~= nil
+        else
+            v.active = false
+        end
+
+        v.index = perm
         table.insert(permsGroup, v)
     end
 
     return permsGroup
+end
+
+function src.getOfficersGroup(group)
+    local source = source
+    local user_id = zof.getUserId(source)
+    local sUser_id = tostring(user_id)
+
+    local org = playersOrg[sUser_id]
+
+    if not org then return end
+    if not group then return end
+    
+
+    local officers = cacheOrgs[org].officers
+    local officersGroup = {}
+
+    for i, v in pairs(officers) do
+        if v.cargo == group then
+            table.insert(officersGroup, {
+                user_id = v.user_id,
+                nome = v.nome
+            })
+        end
+    end
+
+    return officersGroup
 end
 
 AddEventHandler("vRP:playerSpawn", function(user_id, source, first_spawn)
@@ -405,9 +434,7 @@ function src.updateTimeArrested(time)
 end
 
 function src.insertOrUpdatePermissionsGroup(infos)
-    print(json.encode(infos))
-
-    if cargosOrgs[infos.cargo] then
+    if cargosOrgs[infos.cargo].perms ~= nil then
         cargosOrgs[infos.cargo].perms = infos.perms
         zof.query("mdt/mdt_perms_cargos/update", { cargo = infos.cargo, org = infos.org, perms = json.encode(infos.perms) })
     else
@@ -472,7 +499,7 @@ Citizen.CreateThread(function()
     local permsGroups = zof.query("mdt/mdt_perms_cargos/getAll", {})
     for i, v in pairs(permsGroups) do
         if cargosOrgs[v.cargo] then
-            cargosOrgs[v.cargo].perms = v
+            cargosOrgs[v.cargo].perms = json.decode(v.perms or json.encode({}))
         end
     end
     permsGroups = nil

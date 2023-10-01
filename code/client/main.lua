@@ -40,6 +40,11 @@ local registerNUICallbacks = {
     cb(resp)
   end,
 
+  ["getOfficersGroup"] = function(data, cb)
+    local resp = vSERVER.getOfficersGroup(data)
+    cb(resp)
+  end,
+
   ["insertOrUpdatePermissionsGroup"] = function(data, cb)
     local resp = vSERVER.insertOrUpdatePermissionsGroup(data)
   end,

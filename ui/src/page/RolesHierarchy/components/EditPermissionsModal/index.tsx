@@ -23,22 +23,37 @@ const EditPermissionsModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onC
     const perms = await fetchNui<Permission[]>("getPermissionsGroup", _role?.group)
     if(perms.length <= 0) return;
 
+    perms.forEach(perm => {
+      if(perm.active)
+        selectedPermissions.push(perm.index)
+    });
+
+    setSelectedPermissions(selectedPermissions);
     setPermissions(perms);
   }
 
   function handleSubmit() {
-    fetchNui("insertOrUpdatePermissionsGroup", { perms: selectedPermissions, cargo: role?.group, org: role?.org });
+    var dict: { [k: string]: boolean } = {}
+    selectedPermissions.forEach(perm => { dict[perm] = true });
+
+    fetchNui("insertOrUpdatePermissionsGroup", { perms: dict, cargo: role?.group, org: role?.org });
+
+    setSelectedPermissions([])
     onClose();
   }
 
-  function handleManagePermissions(checked: boolean, id: string) {
+  function handleManagePermissions(checked: boolean, index: string) {
+    const indexPerm = permissions.findIndex(el => el.index === index);
+
+    permissions[indexPerm].active = checked;
+    setPermissions(permissions);
+
     if(checked) {
-      setSelectedPermissions([...selectedPermissions, id]);
+      setSelectedPermissions([...selectedPermissions, index]);
       return;
     }
 
-    const index = selectedPermissions.findIndex(el => el === id);
-    const _selectedPermissions = selectedPermissions.splice(index, 1);
+    const _selectedPermissions = permissions.filter(x => x.active).map(x => x.index);
     setSelectedPermissions(_selectedPermissions);
   }
 
