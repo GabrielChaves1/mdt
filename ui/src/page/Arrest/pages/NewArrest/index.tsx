@@ -12,30 +12,35 @@ import Card from "@/components/Card";
 import Checkbox from "@/components/Checkbox";
 import Animator from "@/components/Animator";
 import { SelectorField } from "@/components/SelectorField";
-import { useState } from "react";
-import Loading from "@/components/Loading";
+import { useRef, useState } from "react";
 import fetchNui from "@/utils/fetchNui";
+import Modal from "@/components/Modal";
+import { ModalRootHandles } from "@/components/Modal/ModalRoot";
 
 export default function NewArrest() {
   const { colors } = useTheme();
+  const imagePreviewModalRef = useRef<ModalRootHandles>(null);
 
-  const [ imagesPrision, setImagesPrision ] = useState<string[]>([] as string[]);
+  const [imagesPrision, setImagesPrision] = useState<string[]>([]);
 
   async function handleCamShoot() {
-    const img = await fetchNui<string>("phoneCamShoot")
-
-    imagesPrision.push(img)
-    setImagesPrision(imagesPrision)
-
-    console.log("imagesPrision", imagesPrision)
+    const img = await fetchNui<string>("phoneCamShoot", undefined, "https://media.discordapp.net/attachments/943683002725195856/1147313900791025694/286dc281-e221-43bc-95bd-3705de9c1645.png?ex=651a0256&is=6518b0d6&hm=57cff0ae4232f39618834edb97742c75d40f02fe45db831702b092b83740a35f&=&width=377&height=670")
+    setImagesPrision((prevState) => [...prevState, img]);
   }
 
   return (
     <Animator>
+      <Modal.Root ref={imagePreviewModalRef}>
+        <Modal.Header title="Preview da Imagem" />
+        <Modal.Content>
+          <S.ImagePreview src="https://media.discordapp.net/attachments/943683002725195856/1147313900791025694/286dc281-e221-43bc-95bd-3705de9c1645.png?ex=651a0256&is=6518b0d6&hm=57cff0ae4232f39618834edb97742c75d40f02fe45db831702b092b83740a35f&=&width=377&height=670"/>
+        </Modal.Content>
+      </Modal.Root>
+
       <S.Container>
         <Link to="/arrest">
           <Button variant="secondary">
-            <ArrowLeftToLine size={'1.6rem'} color={colors.icon}/>
+            <ArrowLeftToLine size={'1.6rem'} color={colors.icon} />
             Voltar
           </Button>
         </Link>
@@ -60,16 +65,14 @@ export default function NewArrest() {
               <Input.Content>
                 <S.ImageSelectorBox>
                   <S.ImageSelector onClick={handleCamShoot}>
-                    <Plus size={'3rem'} color={colors.icon}/>
+                    <Plus size={'3rem'} color={colors.icon} />
                   </S.ImageSelector>
 
-                  {
-                    imagesPrision?.map((srcImg) => (
-                      <S.ImageSelector>
-                        <img src={srcImg} />
-                      </S.ImageSelector>
-                    ))
-                  }
+                  {imagesPrision?.map((srcImg) => (
+                    <S.ImageSelector onClick={() => imagePreviewModalRef.current?.openModal()}>
+                      <img src={srcImg} />
+                    </S.ImageSelector>
+                  ))}
                 </S.ImageSelectorBox>
               </Input.Content>
             </Input.Root>
@@ -84,7 +87,7 @@ export default function NewArrest() {
             <Input.Root>
               <Input.Label>Descrição</Input.Label>
               <Input.Content>
-                <Textarea style={{height: '21.75rem'}} placeholder="Digite aqui..." />
+                <Textarea style={{ height: '21.75rem' }} placeholder="Digite aqui..." />
               </Input.Content>
             </Input.Root>
           </S.LeftContent>
@@ -116,7 +119,7 @@ export default function NewArrest() {
                   <Card.Title>Selecionar Crimes</Card.Title>
                   <Card.Subtitle>Lista de artigos criminais</Card.Subtitle>
                 </Card.Column>
-                <TextField placeholder="Pesquisar crime" icon={Search} style={{width: '10rem'}} />
+                <TextField placeholder="Pesquisar crime" icon={Search} style={{ width: '10rem' }} />
               </Card.Header>
               <Card.Separator />
               <Card.Content>

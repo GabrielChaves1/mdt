@@ -40,6 +40,7 @@ export const ImageSelectorBox = styled.div`
   align-items: center;
   width: 100%;
   height: 10rem;
+  
 `
 
 export const ImageSelector = styled.button`
@@ -161,4 +162,13 @@ export const CrimeSpec = styled.div`
   font-size: 1.4rem;
   font-weight: 400;
   color: ${({theme}) => theme.text.title};
+`
+
+export const ImagePreview = styled.img`
+  width: 60rem;
+  height: 60rem;
+  background: none;
+  border: solid .1rem ${({theme}) => theme.border.primary};
+  border-radius: .6rem;
+  object-fit: contain;
 `
