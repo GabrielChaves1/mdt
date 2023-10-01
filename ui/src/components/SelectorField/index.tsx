@@ -79,7 +79,7 @@ export const SelectorField = forwardRef(({ ...props }: SelectorFieldProps, ref: 
               <S.Input
                 value={input}
                 onChange={({ target }) => setInput(target.value)}
-                onBlur={() => setCanWrite(false)} ref={inputRef} placeholder="Nome do infrator" />
+                onBlur={() => setCanWrite(false)} ref={inputRef} placeholder="ID" />
             </S.CreateItem>
           )}
 

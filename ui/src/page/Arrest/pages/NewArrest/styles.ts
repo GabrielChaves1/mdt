@@ -43,13 +43,20 @@ export const ImageSelectorBox = styled.div`
 `
 
 export const ImageSelector = styled.button`
-  flex: 1;
-  height: 100%;
+  /* flex: 1; */
+  height: 10rem;
+  width: 10rem;
   border: solid .1rem ${({theme}) => theme.border.primary};
   background: none;
   outline: none;
   border-radius: .6rem;
   transition: all .15s ease-in-out;
+
+  img {
+    height: 10rem;
+    width: 10rem;
+    object-fit: contain;
+  }
 
   &:hover {
     background: ${({theme}) => transparentize(.98, theme.colors.ripple)};

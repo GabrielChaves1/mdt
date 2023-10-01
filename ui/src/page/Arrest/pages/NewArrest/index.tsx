@@ -12,9 +12,23 @@ import Card from "@/components/Card";
 import Checkbox from "@/components/Checkbox";
 import Animator from "@/components/Animator";
 import { SelectorField } from "@/components/SelectorField";
+import { useState } from "react";
+import Loading from "@/components/Loading";
+import fetchNui from "@/utils/fetchNui";
 
 export default function NewArrest() {
   const { colors } = useTheme();
+
+  const [ imagesPrision, setImagesPrision ] = useState<string[]>([] as string[]);
+
+  async function handleCamShoot() {
+    const img = await fetchNui<string>("phoneCamShoot")
+
+    imagesPrision.push(img)
+    setImagesPrision(imagesPrision)
+
+    console.log("imagesPrision", imagesPrision)
+  }
 
   return (
     <Animator>
@@ -45,9 +59,17 @@ export default function NewArrest() {
               <Input.Label>Imagens do Infrator</Input.Label>
               <Input.Content>
                 <S.ImageSelectorBox>
-                  <S.ImageSelector><Plus size={'3rem'} color={colors.icon}/></S.ImageSelector>
-                  <S.ImageSelector><Plus size={'3rem'} color={colors.icon}/></S.ImageSelector>
-                  <S.ImageSelector><Plus size={'3rem'} color={colors.icon}/></S.ImageSelector>
+                  <S.ImageSelector onClick={handleCamShoot}>
+                    <Plus size={'3rem'} color={colors.icon}/>
+                  </S.ImageSelector>
+
+                  {
+                    imagesPrision?.map((srcImg) => (
+                      <S.ImageSelector>
+                        <img src={srcImg} />
+                      </S.ImageSelector>
+                    ))
+                  }
                 </S.ImageSelectorBox>
               </Input.Content>
             </Input.Root>

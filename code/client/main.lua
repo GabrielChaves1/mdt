@@ -30,6 +30,18 @@ local registerNUICallbacks = {
     cb(resp)
   end,
 
+  ["phoneCamShoot"] = function(data, cb)
+    -- SendNUIMessage({ action = "setVisible", data = false })
+    SetNuiFocus(false, false)
+
+    takePhoteFromCell(function(img)
+      -- SendNUIMessage({ action = "setVisible", data = true })
+      SetNuiFocus(true, true)
+
+      cb(img)
+    end)
+  end,
+
   ["getHierarchy"] = function(data, cb)
     local resp = vSERVER.getHierarchy()
     cb(resp)
