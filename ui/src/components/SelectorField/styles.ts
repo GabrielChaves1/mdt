@@ -50,7 +50,7 @@ export const Button = styled.button`
   }
 `
 
-export const List = styled.div`
+export const SelectedList = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -60,6 +60,13 @@ export const List = styled.div`
   height: 100%;
   overflow: auto;
   justify-content: flex-start;
+  cursor: pointer;
+
+  p {
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: ${({theme}) =>  transparentize(.6, theme.text.title)};
+  }
 `
 
 export const CreateItem = styled.div`
@@ -77,6 +84,7 @@ export const Input = styled.input`
   outline: none;
   font-size: 1.2rem;
   width: 11.7rem;
+  text-align: center;
   padding: 0 .5rem;
   font-weight: 400;
   color: ${({theme}) => theme.text.title};
@@ -90,4 +98,51 @@ export const Item = styled.span`
   font-size: 1.2rem;
   font-weight: 400;
   color: #FFF;
+`
+
+export const QueryListContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 14rem);
+`
+
+export const QueryList = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 13rem;
+  background: ${({theme}) => theme.bg.primary};
+  border: solid .1rem ${({theme}) => theme.border.primary};
+  box-shadow: 0 0 .8rem rgba(0, 0, 0, 0.1);
+  border-radius: .6rem;
+  overflow: auto;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+`
+
+export const QueryItem = styled.button`
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: solid .1rem ${({theme}) => theme.border.primary};
+  border-left: none;
+  border-radius: none;
+  color: ${({theme}) => theme.text.title};
+  font-size: 1.4rem;
+
+  &:not(&:disabled):hover {
+    background: ${({theme}) => lighten(.02, theme.bg.primary)};
+  }
+
+  &:disabled {
+    opacity: .25;
+    cursor: not-allowed;
+  }
 `
