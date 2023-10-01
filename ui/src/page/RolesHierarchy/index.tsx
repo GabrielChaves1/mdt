@@ -25,7 +25,7 @@ export default function RolesHierarchy() {
     ],
   })
   
-  const sortedPositionGroup = data?.sort((a, b) => a.position - b.position)
+  const sortedPositionGroup = data?.sort((a, b) => a.position - b.position);
 
   const editPermissionsModalRef = useRef<ModalRootHandles>(null);
   const showPolicersModalRef = useRef<ModalRootHandles>(null);

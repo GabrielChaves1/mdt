@@ -20,15 +20,20 @@ const EditPermissionsModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onC
     var _role = data?.group;
     setRole(_role);
 
-    const perms = await fetchNui<Permission[]>("getPermissionsGroup", _role?.group)
+    const perms = await fetchNui<Permission[]>("getPermissionsGroup", _role?.group, [
+      {
+        index: 'teste',
+        display: 'Promover',
+        description: 'Promover Membros',
+        active: true
+      }
+    ])
     if(perms.length <= 0) return;
 
     perms.forEach(perm => {
-      if(perm.active)
-        selectedPermissions.push(perm.index)
+      if(perm.active) setSelectedPermissions((prevState) => [...prevState, perm.index]);
     });
 
-    setSelectedPermissions(selectedPermissions);
     setPermissions(perms);
   }
 
@@ -45,15 +50,16 @@ const EditPermissionsModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onC
   function handleManagePermissions(checked: boolean, index: string) {
     const indexPerm = permissions.findIndex(el => el.index === index);
 
-    permissions[indexPerm].active = checked;
-    setPermissions(permissions);
+    let _permissions = [...permissions];
+    _permissions[indexPerm].active = checked;
+    setPermissions(_permissions);
 
     if(checked) {
-      setSelectedPermissions([...selectedPermissions, index]);
+      setSelectedPermissions((prevState) => [...prevState, index]);
       return;
     }
 
-    const _selectedPermissions = permissions.filter(x => x.active).map(x => x.index);
+    const _selectedPermissions = _permissions.filter(x => x.active).map(x => x.index);
     setSelectedPermissions(_selectedPermissions);
   }
 
