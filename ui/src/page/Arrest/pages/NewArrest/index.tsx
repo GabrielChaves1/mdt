@@ -24,7 +24,7 @@ export default function NewArrest() {
   const [imagesPrision, setImagesPrision] = useState<string[]>([]);
 
   async function handleCamShoot() {
-    const img = await fetchNui<string>("phoneCamShoot", undefined, "https://media.discordapp.net/attachments/943683002725195856/1147313900791025694/286dc281-e221-43bc-95bd-3705de9c1645.png?ex=651a0256&is=6518b0d6&hm=57cff0ae4232f39618834edb97742c75d40f02fe45db831702b092b83740a35f&=&width=377&height=670")
+    const img = await fetchNui<string>("phoneCamShoot", undefined)
     setImagesPrision((prevState) => [...prevState, img]);
   }
 
@@ -33,7 +33,7 @@ export default function NewArrest() {
       <Modal.Root ref={imagePreviewModalRef}>
         <Modal.Header title="Preview da Imagem" />
         <Modal.Content>
-          <S.ImagePreview src="https://media.discordapp.net/attachments/943683002725195856/1147313900791025694/286dc281-e221-43bc-95bd-3705de9c1645.png?ex=651a0256&is=6518b0d6&hm=57cff0ae4232f39618834edb97742c75d40f02fe45db831702b092b83740a35f&=&width=377&height=670"/>
+          <S.ImagePreview />
         </Modal.Content>
       </Modal.Root>
 
