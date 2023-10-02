@@ -88,14 +88,12 @@ export default function ArrestList() {
             )}
           </Table.Root>
         </S.TableArea>
-        {amountOfPages > 1 && (
-          <Pagination
-            amountOfPages={amountOfPages}
-            currentPage={currentPage}
-            itemsBeingViewed={viewedItems}
-            totalOfItems={totalOfItems}
-            onPaginate={(page: number) => paginate(page)} />
-        )}
+        <Pagination
+          amountOfPages={amountOfPages}
+          currentPage={currentPage}
+          itemsBeingViewed={viewedItems}
+          totalOfItems={totalOfItems}
+          onPaginate={(page: number) => paginate(page)} />
       </S.Wrapper>
     </Animator>
   )

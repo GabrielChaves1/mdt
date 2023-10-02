@@ -12,6 +12,8 @@ import { useQuery } from '@tanstack/react-query';
 import fetchNui from '@/utils/fetchNui';
 import Loading from '@/components/Loading';
 import GroupHierarchy from '@/types/GroupHierarchy';
+import usePaginate from '@/hooks/usePaginate';
+import Pagination from '@/components/Pagination';
 
 export default function RolesHierarchy() {
   const { data, isLoading } = useQuery<GroupHierarchy[]>(['getHierarchy'], () => fetchNui("getHierarchy"), {
@@ -24,6 +26,7 @@ export default function RolesHierarchy() {
       },
     ],
   })
+  const { amountOfPages, currentPage, items, totalOfItems, viewedItems, paginate } = usePaginate<GroupHierarchy>(13, 1, data);
   
   const sortedPositionGroup = data?.sort((a, b) => a.position - b.position);
 
@@ -67,6 +70,12 @@ export default function RolesHierarchy() {
             </>
           )}
       </Table.Root>
+      <Pagination
+          amountOfPages={amountOfPages}
+          currentPage={currentPage}
+          itemsBeingViewed={viewedItems}
+          totalOfItems={totalOfItems}
+          onPaginate={(page: number) => paginate(page)} />
     </S.Wrapper>
   )
 }

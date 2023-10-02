@@ -15,15 +15,15 @@ interface Officer {
 }
 
 const ShowPolicersModal = forwardRef<ModalRootHandles>((_, ref) => {
-  const [ role, setRole ] = useState<GroupHierarchy>({} as GroupHierarchy);
-  const [ officers, setOfficers ] = useState<Officer[]>([]);
-  
+  const [role, setRole] = useState<GroupHierarchy>({} as GroupHierarchy);
+  const [officers, setOfficers] = useState<Officer[]>([]);
+
   async function onOpen(data: { group: GroupHierarchy }) {
     var _role = data?.group;
     setRole(_role);
 
     const officers = await fetchNui<Officer[]>("getOfficersGroup", _role?.group)
-    if(officers.length <= 0) return;
+    if (officers.length <= 0) return;
 
     setOfficers(officers)
   }
@@ -34,24 +34,23 @@ const ShowPolicersModal = forwardRef<ModalRootHandles>((_, ref) => {
       <Modal.Content>
         <S.List>
           {officers ? (
-              officers.length == 0 ? <h2>Nenhum oficial encontrado para este cargo</h2> : (
-                officers?.map((officer) => (
-                  <S.User>
-                    <S.Header>
-                      <Avatar />
-                      <S.TextArea>
-                        <p>{officer.nome}</p>
-                        <span>{role.display}</span>
-                      </S.TextArea>
-                    </S.Header>
-                    <Action icon={Eye} label='Ver Perfil'/>
-                  </S.User>
-                ))
-              )
-            ) : (
-              <Loading />
+            officers.length == 0 ? <h3>Nenhum oficial encontrado para este cargo</h3> : (
+              officers?.map((officer) => (
+                <S.User>
+                  <S.Header>
+                    <Avatar />
+                    <S.TextArea>
+                      <p>{officer.nome}</p>
+                      <span>{role.display}</span>
+                    </S.TextArea>
+                  </S.Header>
+                  <Action icon={Eye} label='Ver Perfil' />
+                </S.User>
+              ))
+            )
+          ) : (
+            <Loading />
           )}
-          
         </S.List>
       </Modal.Content>
     </Modal.Root>

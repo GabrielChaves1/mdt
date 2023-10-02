@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { BookOpen, Crown, Settings, StickyNote, Tv2, Users } from 'lucide-react';
 import { memo } from 'react';
 import Header from '../Header';
+import LogoImage from '@/assets/logo.webp';
 
 function Aside() {
   const location = useLocation();
@@ -43,7 +44,7 @@ function Aside() {
 
   return (
     <S.Container>
-      <S.Logo src="https://cdn.discordapp.com/attachments/840674428828516352/1154846262336700457/logodroyen.png" />
+      <S.Logo src={LogoImage} />
       <Header />
       <S.NavigationArea>
         <S.NavigationAreaTitle>Navegação</S.NavigationAreaTitle>

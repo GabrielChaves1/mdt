@@ -14,6 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import fetchNui from '@/utils/fetchNui';
 import Notice from './components/Notice';
 import Loading from '@/components/Loading';
+import { useNuiEvent } from '@/hooks/useNuiEvent';
 
 interface DataResponse {
   officer: {
@@ -32,7 +33,7 @@ interface DataResponse {
 }
 
 export default function Home() {
-  const { data, isLoading } = useQuery<DataResponse>(['getInitialData'], () => fetchNui("getInitialData"), {
+  const { data, isLoading, refetch } = useQuery<DataResponse>(['getInitialData'], () => fetchNui("getInitialData"), {
     initialData: {
       officer: {
         id: 1,
@@ -58,6 +59,8 @@ export default function Home() {
       permissions: ["CAN_CREATE_NOTICE"]
     }
   })
+
+  useNuiEvent('reloadHome', refetch)
 
   const viewPolicersModalRef = useRef<ModalRootHandles>(null);
   const createNoticeModalRef = useRef<ModalRootHandles>(null);
