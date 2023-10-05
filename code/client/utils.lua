@@ -79,12 +79,13 @@ function takePhoteFromCell(resp)
 						local Response = json.decode(data)
 						local imageURL = Response.attachments[1].url
 
+						CellCamActivate(false, false)
+						DestroyMobilePhone()
+
 						resp(imageURL)
 					end)
 
 					phoneOpen = false
-					CellCamActivate(false, false)
-					DestroyMobilePhone()
 				end
 			end
 				
