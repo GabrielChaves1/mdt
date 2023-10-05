@@ -1,11 +1,11 @@
-import { darken, lighten, transparentize } from "polished";
+import { transparentize } from "polished";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  flex: 1;
   width: 100%;
   display: flex;
   gap: 2rem;
+  flex: 1;
   justify-content: space-between;
 `
 
@@ -13,6 +13,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+`
+
+export const Return = styled.div`
+  width: max-content;
 `
 
 export const LeftContent = styled.div`
@@ -46,27 +50,40 @@ export const ImageSelectorBox = styled.div`
 export const ImageSelector = styled.button`
   /* flex: 1; */
   height: 10rem;
-  width: 10rem;
+  flex: 1;
   border: solid .1rem ${({theme}) => theme.border.primary};
   background: none;
   outline: none;
   border-radius: .6rem;
   transition: all .15s ease-in-out;
+  position: relative;
+  overflow: hidden;
 
   img {
-    height: 10rem;
-    width: 10rem;
+    height: 100%;
+    width: 100%;
     object-fit: contain;
+    border-radius: inherit;
   }
 
   &:hover {
-    background: ${({theme}) => transparentize(.98, theme.colors.ripple)};
     transform: scale(1.05);
   }
+`
 
-  &:active {
-    background: ${({theme}) => transparentize(.94, theme.colors.ripple)};
-  }
+export const ImageSelectorDelete = styled.button`
+  position: absolute;
+  right: .5rem;
+  top: .75rem;
+  background: ${({theme}) => theme.bg.primary};
+  z-index: 2;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  border: solid .1rem ${({theme}) => theme.border.primary};
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 1rem .3rem ${({theme}) => theme.bg.primary};
 `
 
 export const ExtenuatoryArea = styled.div`
@@ -171,4 +188,10 @@ export const ImagePreview = styled.img`
   border: solid .1rem ${({theme}) => theme.border.primary};
   border-radius: .6rem;
   object-fit: contain;
+`
+
+export const PreviewTrigger = styled.div`
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 `

@@ -11,7 +11,7 @@ export const Container = styled.button<{
   display: flex;
   justify-content: ${props => props.position};
   align-items: center;
-  gap: 1.6rem;
+  gap: 1.2rem;
   font-size: 1.6rem;
   color: #FFF;
   font-weight: 400;

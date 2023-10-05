@@ -8,7 +8,7 @@ interface AnimatorProps {
 
 export default function Animator({ children }: AnimatorProps) {
   return (
-    <motion.div {...animations.fade}>
+    <motion.div {...animations.fade} style={{ height: '100%' }}>
       {children}
     </motion.div>
   )

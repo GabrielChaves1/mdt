@@ -51,7 +51,7 @@ export const TitleArea = styled.div`
 export const CloseButton = styled.button`
   position: absolute;
   right: 2rem;
-  top: 2.5rem;
+  top: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;

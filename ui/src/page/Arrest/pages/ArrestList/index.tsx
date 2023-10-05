@@ -67,27 +67,26 @@ export default function ArrestList() {
           </Link>
         </Banner.Root>
 
-        <S.TableArea>
-          <Table.Root headColumns={["Prisioneiro", "Tempo", "Multa", "Data", "Ações"]}>
-            {isLoading ? (
-              <Loading />
-            ) : (
-              <>
-                {items.map((item, i) => (
-                  <Table.Row key={i}>
-                    <Table.Item>{item?.nome}</Table.Item>
-                    <Table.Item>{item?.tempo} meses</Table.Item>
-                    <Table.Item>R$ {item?.valor_multa.toLocaleString('pt-br')}</Table.Item>
-                    <Table.Item>{formatDate(item?.data)}</Table.Item>
-                    <Table.Item>
-                      <Action icon={Eye} size='sm' onClick={handleViewDetails} label='Ver detalhes' />
-                    </Table.Item>
-                  </Table.Row>
-                ))}
-              </>
-            )}
-          </Table.Root>
-        </S.TableArea>
+        <Table.Root headColumns={["Prisioneiro", "Tempo", "Multa", "Data", "Ações"]}>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <>
+              {items.map((item, i) => (
+                <Table.Row key={i}>
+                  <Table.Item>{item?.nome}</Table.Item>
+                  <Table.Item>{item?.tempo} meses</Table.Item>
+                  <Table.Item>R$ {item?.valor_multa.toLocaleString('pt-br')}</Table.Item>
+                  <Table.Item>{formatDate(item?.data)}</Table.Item>
+                  <Table.Item>
+                    <Action icon={Eye} size='sm' onClick={handleViewDetails} label='Ver detalhes' />
+                  </Table.Item>
+                </Table.Row>
+              ))}
+            </>
+          )}
+        </Table.Root>
+        
         <Pagination
           amountOfPages={amountOfPages}
           currentPage={currentPage}

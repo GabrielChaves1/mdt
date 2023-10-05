@@ -1,6 +1,6 @@
 import Banner from "@/components/Banner";
 import Button from "@/components/Button";
-import { ArrowLeftToLine, Banknote, Clock, Plus, Search } from "lucide-react";
+import { ArrowLeftToLine, Banknote, Clock, Plus, Search, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
 import * as S from "./styles";
@@ -11,22 +11,39 @@ import Switch from "@/components/Switch";
 import Card from "@/components/Card";
 import Checkbox from "@/components/Checkbox";
 import Animator from "@/components/Animator";
-import { SelectorField } from "@/components/SelectorField";
-import { useRef, useState } from "react";
+import SelectorField from "@/components/SelectorField";
+import { MouseEvent, useRef, useState } from "react";
 import fetchNui from "@/utils/fetchNui";
 import Modal from "@/components/Modal";
 import { ModalRootHandles } from "@/components/Modal/ModalRoot";
 import ArrestIcon from '@/assets/arrest.webp';
 
+const IMAGE_SLOTS = 3;
+
 export default function NewArrest() {
   const { colors } = useTheme();
   const imagePreviewModalRef = useRef<ModalRootHandles>(null);
 
-  const [imagesPrision, setImagesPrision] = useState<string[]>([]);
+  const [violators, setViolators] = useState<any[]>([]);
+  const [officers, setOfficers] = useState<any[]>([]);
+  const [images, setImages] = useState<string[]>([]);
+  const [imageInPreview, setImageInPreview] = useState<string>();
+
+  const emptyImageSlots = IMAGE_SLOTS - images.length;
 
   async function handleCamShoot() {
-    const img = await fetchNui<string>("phoneCamShoot", undefined)
-    setImagesPrision((prevState) => [...prevState, img]);
+    const img = await fetchNui<string>("phoneCamShoot");
+    setImages((prevState) => [...prevState, img]);
+  }
+
+  function handlePreviewImage(event: MouseEvent<HTMLDivElement>, image: string) {
+    event.stopPropagation();
+    setImageInPreview(image);
+    imagePreviewModalRef.current?.openModal();
+  }
+
+  function handleDeleteImage(image: string) {
+    setImages((prevState) => prevState.filter(el => el !== image));
   }
 
   return (
@@ -34,17 +51,19 @@ export default function NewArrest() {
       <Modal.Root ref={imagePreviewModalRef}>
         <Modal.Header title="Preview da Imagem" />
         <Modal.Content>
-          <S.ImagePreview />
+          <S.ImagePreview src={imageInPreview} />
         </Modal.Content>
       </Modal.Root>
 
       <S.Container>
-        <Link to="/arrest">
-          <Button variant="secondary">
-            <ArrowLeftToLine size={'1.6rem'} color={colors.icon} />
-            Voltar
-          </Button>
-        </Link>
+        <S.Return>
+          <Link to="/arrest">
+            <Button variant="secondary">
+              <ArrowLeftToLine size={'1.6rem'} color={colors.icon} />
+              Voltar
+            </Button>
+          </Link>
+        </S.Return>
 
         <Banner.Root icon={ArrestIcon}>
           <Banner.Header>
@@ -57,7 +76,11 @@ export default function NewArrest() {
             <Input.Root>
               <Input.Label>Infrator</Input.Label>
               <Input.Content>
-                <SelectorField placeholder="Nenhum infrator anexado" />
+                <SelectorField
+                  onQuery={() => fetchNui("getNearestPlayers")}
+                  onUpdate={(list: any[]) => setViolators(list)}
+                  placeholder="ID"
+                  type="number" />
               </Input.Content>
             </Input.Root>
 
@@ -65,13 +88,19 @@ export default function NewArrest() {
               <Input.Label>Imagens do Infrator</Input.Label>
               <Input.Content>
                 <S.ImageSelectorBox>
-                  <S.ImageSelector onClick={handleCamShoot}>
-                    <Plus size={'3rem'} color={colors.icon} />
-                  </S.ImageSelector>
-
-                  {imagesPrision?.map((srcImg) => (
-                    <S.ImageSelector onClick={() => imagePreviewModalRef.current?.openModal()}>
-                      <img src={srcImg} />
+                  {images?.map((srcImg) => (
+                    <S.ImageSelector>
+                      <S.ImageSelectorDelete onClick={() => handleDeleteImage(srcImg)}>
+                        <X size={'1.2rem'} color="#FFF" />
+                      </S.ImageSelectorDelete>
+                      <S.PreviewTrigger onClick={(event) => handlePreviewImage(event, srcImg)}>
+                        <img src={srcImg} />
+                      </S.PreviewTrigger>
+                    </S.ImageSelector>
+                  ))}
+                  {[...Array(emptyImageSlots)].map(() => (
+                    <S.ImageSelector onClick={handleCamShoot}>
+                      <Plus size={'3rem'} color={colors.icon} />
                     </S.ImageSelector>
                   ))}
                 </S.ImageSelectorBox>
@@ -81,7 +110,10 @@ export default function NewArrest() {
             <Input.Root>
               <Input.Label>Oficiais envolvidos</Input.Label>
               <Input.Content>
-                <SelectorField placeholder="Nenhum oficial anexado" />
+                <SelectorField
+                  onQuery={() => fetchNui("getNearestPlayers")}
+                  onUpdate={(list: any[]) => setOfficers(list)}
+                  placeholder="ID" />
               </Input.Content>
             </Input.Root>
 
