@@ -16,6 +16,7 @@ import { useRef, useState } from "react";
 import fetchNui from "@/utils/fetchNui";
 import Modal from "@/components/Modal";
 import { ModalRootHandles } from "@/components/Modal/ModalRoot";
+import ArrestIcon from '@/assets/arrest.webp';
 
 export default function NewArrest() {
   const { colors } = useTheme();
@@ -45,7 +46,7 @@ export default function NewArrest() {
           </Button>
         </Link>
 
-        <Banner.Root>
+        <Banner.Root icon={ArrestIcon}>
           <Banner.Header>
             <Banner.Title>Aplicar prisão</Banner.Title>
           </Banner.Header>

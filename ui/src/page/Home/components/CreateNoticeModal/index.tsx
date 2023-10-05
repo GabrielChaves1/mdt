@@ -11,6 +11,7 @@ import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup"
 import { ShieldAlert } from "lucide-react";
 import { useTheme } from "styled-components";
+import { useNuiEvent } from "@/hooks/useNuiEvent";
 
 const schema = yup.object({
   title: yup.string().required("O título é obrigatório!").max(60, "Máximo de 60 caracteres").nonNullable(),
@@ -35,7 +36,9 @@ const CreateNoticeModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClos
 
   async function onSubmit(data: FormData) {
     const res = await fetchNui("createNotice", data, true);
-    onClose();
+    if(res){
+      onClose();
+    }
   }
 
   return (

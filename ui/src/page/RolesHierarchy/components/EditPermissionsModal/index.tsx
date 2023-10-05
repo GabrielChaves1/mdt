@@ -20,14 +20,7 @@ const EditPermissionsModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onC
     var _role = data?.group;
     setRole(_role);
 
-    const perms = await fetchNui<Permission[]>("getPermissionsGroup", _role?.group, [
-      {
-        index: 'teste',
-        display: 'Promover',
-        description: 'Promover Membros',
-        active: true
-      }
-    ])
+    const perms = await fetchNui<Permission[]>("getPermissionsGroup", _role?.group)
     if(perms.length <= 0) return;
 
     perms.forEach(perm => {

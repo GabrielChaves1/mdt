@@ -13,10 +13,12 @@ interface VisibilityProviderValue {
 }
 
 export const VisibilityProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
+  const [opacity, setOpacity] = useState<number>(100);
   const navigate = useNavigate();
 
   useNuiEvent<boolean>('setVisible', setVisible)
+  useNuiEvent<number>('setOpacity', setOpacity)
   
   const close = () => {
     fetchNui("close");
@@ -49,7 +51,9 @@ export const VisibilityProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         close
       }}
     >
-    {children}
+    <div style={{ opacity }}>
+      {children}
+    </div>
   </VisibilityCtx.Provider>)
 }
 
