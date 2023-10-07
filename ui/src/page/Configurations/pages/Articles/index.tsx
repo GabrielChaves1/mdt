@@ -6,12 +6,20 @@ import Table from '@/components/Table';
 import { ArrowLeftToLine, Pencil, Plus, Trash } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from 'styled-components';
+import usePaginate from '@/hooks/usePaginate';
+import { ModalRootHandles } from '@/components/Modal/ModalRoot';
+import { useRef } from 'react';
+import CreateArticleModal from '../../components/CreateArticleModal';
 
 export default function Articles() {
+  const { amountOfPages, currentPage, items, totalOfItems, viewedItems, paginate } = usePaginate(13, 1, []);
   const { colors } = useTheme();  
+  const createArticleModalRef = useRef<ModalRootHandles>(null);
 
   return (
     <S.Wrapper>
+      <CreateArticleModal ref={createArticleModalRef} />      
+
       <S.Return>
         <Link to="/config">
           <Button variant="secondary">
@@ -25,7 +33,7 @@ export default function Articles() {
         <Banner.Header>
           <Banner.Title>Configurar artigos criminais</Banner.Title>
         </Banner.Header>
-        <Banner.Action>
+        <Banner.Action onClick={() => createArticleModalRef.current?.openModal()}>
           <Plus size={'1.6rem'} color='#FFF'/>
           Criar Novo
         </Banner.Action>

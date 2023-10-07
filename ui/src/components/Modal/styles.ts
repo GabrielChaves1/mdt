@@ -20,7 +20,6 @@ export const Wrapper = styled(motion.div)`
   background: ${({theme}) => darken(.01,theme.bg.primary)};
   border-radius: .6rem;
   border: solid .2rem ${({theme}) => theme.border.primary};
-  box-shadow: 0 0rem 1rem 0 ${({theme}) => transparentize(.965, theme.colors.ripple)};
   position: relative;
   display: flex;
   flex-direction: column;
@@ -31,8 +30,8 @@ export const Wrapper = styled(motion.div)`
 export const Header = styled.header`
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 1.5rem;
   position: relative;
 `
 
@@ -79,4 +78,10 @@ export const CloseTrigger = styled.div`
   left: 0;
   top: 0;
   background: rgba(0,0,0, .22);
+`
+
+export const Separator = styled.div`
+  width: 100%;
+  height: .1rem;
+  background: ${({theme}) => theme.border.primary};
 `

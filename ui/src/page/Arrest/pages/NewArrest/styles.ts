@@ -98,7 +98,7 @@ export const ExtenuatoryArea = styled.div`
 `
 
 export const ExtenuatoryTitle = styled.p`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 400;
   color: ${({theme}) => theme.text.title};
 `
@@ -123,9 +123,9 @@ export const Extenuatory = styled.div`
   border-radius: .6rem;
 
   p {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 400;
-    color: ${({theme}) => theme.text.title};
+    color: ${({theme}) => theme.text.subtitle};
   }
 `
 

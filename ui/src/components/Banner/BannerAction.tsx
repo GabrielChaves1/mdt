@@ -1,14 +1,13 @@
-import { ReactNode } from 'react'
-import * as S from './styles'
+import { ButtonHTMLAttributes, ReactNode } from 'react'
 import Button from "../Button"
 
-interface BannerActionProps {
+interface BannerActionProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
 }
 
-export default function BannerAction({ children }: BannerActionProps) {
+export default function BannerAction({ children, ...props }: BannerActionProps) {
   return (
-    <Button variant='primary'>
+    <Button variant='primary' {...props}>
       {children}
     </Button>
   )

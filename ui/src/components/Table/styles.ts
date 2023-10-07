@@ -25,7 +25,7 @@ export const Head = styled.div`
 `
 
 export const HeadOption = styled.p`
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: ${({theme}) => theme.text.title};
   font-weight: 400;
   display: flex;
