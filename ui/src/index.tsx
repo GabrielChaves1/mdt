@@ -10,11 +10,12 @@ import Aside from "./components/Aside";
 import RoutesList from "./routes";
 import Container from "./components/Container";
 import Loading from "./components/Loading";
+import RadialMenu from "./components/RadialMenu";
 
 debugData([
 	{
 		action: 'setVisible',
-		data: true
+		data: false
 	},
 ])
 
@@ -47,6 +48,10 @@ const App: React.FC = () => {
 							</S.Wrapper>
 						</motion.div>
 					)}
+
+					<AnimatePresence>
+						<RadialMenu />
+					</AnimatePresence>
 				</AnimatePresence>
 			</ThemeProvider>
 		</>

@@ -11,7 +11,7 @@ vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
 RegisterCommand("test", function()
   SetNuiFocus(true, true)
-  SendNUIMessage({ action = "setVisible", data = true })
+  -- SendNUIMessage({ action = "setVisible", data = true })
 end)
 
 local registerNUICallbacks = {

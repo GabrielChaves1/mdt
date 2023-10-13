@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
 import { darken, lighten } from "polished";
-import styled, { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
     * {
@@ -24,8 +23,8 @@ export const GlobalStyles = createGlobalStyle`
     body {
         width: 100vw;
         height: 100vh;
-        /* background-image: url("https://cdn.discordapp.com/attachments/1040406525589590088/1122946486964064266/Rectangle_1.png");
-        background-size: 100% 100%; */
+        background-image: url("https://cdn.discordapp.com/attachments/1040406525589590088/1122946486964064266/Rectangle_1.png");
+        background-size: 100% 100%;
         display: grid;
         place-items: center;
     }

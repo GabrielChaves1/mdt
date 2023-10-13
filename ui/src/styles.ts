@@ -38,4 +38,5 @@ export const Content = styled.div`
   width: 100%;
   position: relative;
   background: ${({theme}) => theme.bg.primary};
+  overflow: hidden;
 `

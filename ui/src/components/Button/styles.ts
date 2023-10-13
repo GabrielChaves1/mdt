@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { ButtonSize, ButtonVariant } from ".";
 
 export const Container = styled.button<{
-  fill: boolean, 
+  filled: boolean, 
   position: 'flex-start' | 'center' | 'flex-end',
   size?: ButtonSize,
   variant: ButtonVariant
@@ -12,7 +12,7 @@ export const Container = styled.button<{
   justify-content: ${props => props.position};
   align-items: center;
   gap: 1.2rem;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: #FFF;
   font-weight: 400;
   padding: 1.2rem 1.6rem;
@@ -25,7 +25,7 @@ export const Container = styled.button<{
   transition: all .2s ease-in-out;
   overflow: hidden;
 
-  ${props => props.fill && css`
+  ${props => props.filled && css`
     width: 100%;
   `}
 

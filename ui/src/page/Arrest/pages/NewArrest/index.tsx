@@ -17,12 +17,15 @@ import fetchNui from "@/utils/fetchNui";
 import Modal from "@/components/Modal";
 import { ModalRootHandles } from "@/components/Modal/ModalRoot";
 import ArrestIcon from '@/assets/arrest.webp';
+import Action from "@/components/Action";
+import Inventory from "@/components/Inventory";
 
 const IMAGE_SLOTS = 3;
 
 export default function NewArrest() {
   const { colors } = useTheme();
   const imagePreviewModalRef = useRef<ModalRootHandles>(null);
+  const itemSelectorModalRef = useRef<ModalRootHandles>(null);
 
   const [violators, setViolators] = useState<any[]>([]);
   const [officers, setOfficers] = useState<any[]>([]);
@@ -48,6 +51,8 @@ export default function NewArrest() {
 
   return (
     <Animator>
+      <Inventory ref={itemSelectorModalRef}/>
+
       <Modal.Root ref={imagePreviewModalRef}>
         <Modal.Header title="Preview da Imagem" />
         <Modal.Content>
@@ -125,27 +130,11 @@ export default function NewArrest() {
             </Input.Root>
           </S.LeftContent>
           <S.RightContent>
-            <S.ExtenuatoryArea>
-              <S.ExtenuatoryTitle>Atenuantes</S.ExtenuatoryTitle>
-              <S.ExtenuatoryList>
-                <S.Extenuatory>
-                  <p>Réu Primário (-50%)</p>
-                  <Switch />
-                </S.Extenuatory>
-                <S.Extenuatory>
-                  <p>Presença de Advogado (-20%)</p>
-                  <Switch />
-                </S.Extenuatory>
-                <S.Extenuatory>
-                  <p>Colaboração</p>
-                  <Switch />
-                </S.Extenuatory>
-                <S.Extenuatory>
-                  <p>Réu Confesso</p>
-                  <Switch />
-                </S.Extenuatory>
-              </S.ExtenuatoryList>
-            </S.ExtenuatoryArea>
+            <S.ActionsList>
+              <Button position="center" fill variant="secondary" size="md">Adicionar Atenuantes</Button>
+              <Button position="center" fill variant="secondary" size="md" onClick={() => itemSelectorModalRef.current?.openModal()}>Apreender Itens</Button>
+              <Button position="center" fill variant="primary" size="md">Prender</Button>
+            </S.ActionsList>
             <Card.Root>
               <Card.Header>
                 <Card.Column>

@@ -13,6 +13,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  height: 100%;
 `
 
 export const Return = styled.div`
@@ -88,12 +89,9 @@ export const ImageSelectorDelete = styled.button`
 
 export const ExtenuatoryArea = styled.div`
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
-  padding: 2.5rem 2rem 2.5rem 2.5rem;
-  border: solid .1rem ${({theme}) => theme.border.primary};
-  border-radius: .6rem;
-  width: 100%;
   position: relative;
 `
 
@@ -103,31 +101,38 @@ export const ExtenuatoryTitle = styled.p`
   color: ${({theme}) => theme.text.title};
 `
 
-export const ExtenuatoryList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  height: 15.5rem;
-  overflow: auto;
-  padding-right: .5rem;
+export const ActionsList = styled.div`
   width: 100%;
-  position: relative;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(3, auto);
 `
 
-export const Extenuatory = styled.div`
-  display: flex;
-  padding: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  border: solid .1rem ${({theme}) => theme.border.primary};
-  border-radius: .6rem;
+// export const ExtenuatoryList = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1rem;
+//   height: 15.5rem;
+//   overflow: auto;
+//   padding-right: .5rem;
+//   width: 100%;
+//   position: relative;
+// `
 
-  p {
-    font-size: 1.3rem;
-    font-weight: 400;
-    color: ${({theme}) => theme.text.subtitle};
-  }
-`
+// export const Extenuatory = styled.div`
+//   display: flex;
+//   padding: 1rem;
+//   align-items: center;
+//   justify-content: space-between;
+//   border: solid .1rem ${({theme}) => theme.border.primary};
+//   border-radius: .6rem;
+
+//   p {
+//     font-size: 1.3rem;
+//     font-weight: 400;
+//     color: ${({theme}) => theme.text.subtitle};
+//   }
+// `
 
 export const CrimeList = styled.div`
   display: flex;
@@ -153,7 +158,7 @@ export const CrimeNameBox = styled.div`
   gap: 2rem;
 
   p {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: ${({theme}) => theme.text.title};
     font-weight: 400;
     max-width: 25rem;
@@ -176,7 +181,7 @@ export const CrimeSpec = styled.div`
   padding: .4rem .8rem;
   border: solid .1rem ${({theme}) => theme.border.primary};
   border-radius: .6rem;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 400;
   color: ${({theme}) => theme.text.title};
 `
