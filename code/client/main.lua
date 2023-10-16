@@ -8,20 +8,24 @@ src = {}
 Tunnel.bindInterface(GetCurrentResourceName(), src)
 
 vSERVER = Tunnel.getInterface(GetCurrentResourceName())
+nuiOpen = false
 
 RegisterCommand("test", function()
+  nuiOpen = true
+
   SetNuiFocus(true, true)
   SendNUIMessage({ action = "setVisible", data = true })
 end)
 
 RegisterCommand("tr", function()
-  SetNuiFocus(true, true)
-  SendNUIMessage({ action = "openRadial", data = true })
+  
 end)
 
 local registerNUICallbacks = {
   ["close"] = function(data, cb)
     SetNuiFocus(false, false)
+    nuiOpen = false
+
     cb(true)
   end,
 
@@ -114,6 +118,16 @@ Citizen.CreateThread(function()
     RegisterNUICallback(i, function(data, cb)
       handler(data, cb)
     end)
+  end
+
+  while true do
+    Citizen.Wait(5)
+
+    if IsControlPressed(0, 38) and not nuiOpen then
+      SetNuiFocus(true, true)
+      SendNUIMessage({ action = "openRadial", data = true })
+      nuiOpen = true
+    end
   end
 end)
 
