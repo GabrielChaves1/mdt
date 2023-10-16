@@ -53,6 +53,29 @@ function src.getInitialData()
     }
 end
 
+function src.getOfficerData()
+    local source  = source
+    local user_id = zof.getUserId(source)
+
+    local sUser_id = tostring(user_id)
+    local org = playersOrg[sUser_id]
+
+    if not org then return end
+
+    local officer = cacheOrgs[org].officers[sUser_id]
+    if not officer then return end
+
+    local nextCargo = cargosOrgs[officer.cargo].nextCargo
+
+    return {
+        officer = officer.nome,
+        cargo = orgsConfigList[org].hierarchy[officer.cargo].displayName,
+        xp = officer.pontos,
+        xpToUp = nextCargo.expUp,
+        img = vCLIENT.getHeadshot(source, tonumber(source))
+    }
+end
+
 function src.getOnlineOfficers()
     local source = source
     local user_id = zof.getUserId(source)
@@ -91,11 +114,15 @@ function initOrgsFromDb()
             if not cargosOrgs[cargo] then cargosOrgs[cargo] = {} end
             if not cargosOrgs[v.offServiceSet] then cargosOrgs[v.offServiceSet] = {} end
 
+            local nextCargo = getNextCargo(info.hierarchy, v)
+
             cargosOrgs[cargo].org = org
             cargosOrgs[cargo].cargo = cargo
+            cargosOrgs[cargo].nextCargo = nextCargo
 
             cargosOrgs[v.offServiceSet].org = org
             cargosOrgs[v.offServiceSet].cargo = cargo
+            cargosOrgs[v.offServiceSet].nextCargo = nextCargo
         end
 
         local rows = zof.query("mdt/mdt_hierarquia/getFromOrg", { org = org })
@@ -111,6 +138,50 @@ function initOrgsFromDb()
             end
         end
     end
+
+    print("LOADED CACHE")
+end
+
+function getNextCargo(hierarchy, infoCargo)
+    local nextCargo = nil
+    for i, k in pairs(hierarchy) do
+        if (infoCargo.position - 1) == k.position then
+            nextCargo = { cargo = i, expUp = infoCargo.exp }
+            goto continue
+        end
+    end
+
+    if nextCargo == nil then
+        nextCargo = { cargo = cargo, expUp = infoCargo.exp }
+    end
+
+    ::continue::
+    return nextCargo
+end
+
+function src.setXpPlayer(recevieXp, pUser_id)
+    local source = source
+    local user_id = zof.getUserId(source)
+    if user_id == nil then user_id = pUser_id end
+    local sUser_id = tostring(user_id)
+
+    local org = playersOrg[sUser_id]
+    if not org then return end
+
+    local officer = cacheOrgs[org].officers[sUser_id]
+    if not officer then return end
+
+    local newXp = officer.pontos + recevieXp
+    local nextCargo = cargosOrgs[officer.cargo].nextCargo
+
+    if newXp >= nextCargo.expUp then
+        -- UP DE CARGO
+        zof.query("mdt/mdt_hierarquia/updateCargoPlayer", { user_id = user_id, cargo = nextCargo.cargo })
+        cacheOrgs[org].officers[sUser_id].cargo = nextCargo.cargo
+    end
+
+    zof.query("mdt/mdt_hierarquia/updateXpPlayer", { user_id = user_id, xp = newXp })
+    cacheOrgs[org].officers[sUser_id].pontos = newXp
 end
 
 function addPlayerOrg(infos)
@@ -205,7 +276,6 @@ function src.getOfficersGroup(group)
 
     if not org then return end
     if not group then return end
-    
 
     local officers = cacheOrgs[org].officers
     local officersGroup = {}
@@ -343,6 +413,10 @@ function src.deleteWarningOrg(id)
     return
 end
 
+function src.getPrisions()
+    return zof.query("mdt/mdt_historico_penal/getAll", {})
+end
+
 function src.arrestBandit(details)
     local source = source
     local user_id = zof.getUserId(source)
@@ -350,6 +424,9 @@ function src.arrestBandit(details)
     if details.banditUserId then
         local banditSource = zof.getUserSource(details.banditUserId)
         if not banditSource then print("arrestBandit player offline") return end -- player offline
+
+        local preso = zof.query("mdt/mdt_presos/getAll", { user_id = details.banditUserId })
+        if #preso > 0 then print("este player já está preso") return end
 
         details.user_id = parseInt(details.banditUserId)
         details.name = zof.getName(details.banditUserId)
@@ -363,11 +440,9 @@ function src.arrestBandit(details)
     end
 end
 
-function src.getPrisions()
-    return zof.query("mdt/mdt_historico_penal/getAll", {})
-end
-
 function src.registerArrestBandit(details)
+    src.setXpPlayer(actionsXp.prender, details.id_officer)
+
     prisonsTotalCount = prisonsTotalCount + 1
 
     local valorMulta = 0
@@ -387,7 +462,7 @@ function src.registerArrestBandit(details)
         valor_multa = valorMulta,
         tempo = tempoTotal,
         codigos_penais = json.encode(codigosPenais),
-        data = os.time(),
+        data = os.date(),
         descricao = details.descricao,
         oficiais = json.encode(details.oficiais),
         imgs = json.encode(details.imgs),
@@ -492,7 +567,7 @@ function src.deleteCodigoPenal(id)
 end
 
 Citizen.CreateThread(function()
-    Citizen.Wait(5000)
+    Citizen.Wait(2000)
 
     initOrgsFromDb()
 

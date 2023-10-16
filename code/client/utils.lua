@@ -255,3 +255,29 @@ function carregarObjeto(ped, dict, anim, prop, flag, hand)
 
 	Citizen.InvokeNative(0xAD738C3085FE7E11, object, true, true)
 end
+
+function src.getHeadshot(pid)
+    if IsPedheadshotValid(pid) then
+		UnregisterPedheadshot(pid)
+	end
+
+    local ped = GetPlayerPed(GetPlayerFromServerId(pid))
+
+    if not DoesEntityExist(ped) then
+        return false
+    end
+
+    local handle, timer = RegisterPedheadshot(ped), GetGameTimer() + 5000
+    while not IsPedheadshotReady(handle) or not IsPedheadshotValid(handle) do
+        Wait(50)
+
+        if GetGameTimer() >= timer then
+            return false
+        end
+    end
+
+    local txd = GetPedheadshotTxdString(handle)
+    local url = string.format("https://nui-img/%s/%s", txd, txd)
+
+    return url
+end

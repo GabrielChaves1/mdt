@@ -25,6 +25,11 @@ local registerNUICallbacks = {
     cb(resp)
   end,
 
+  ["getOfficerData"] = function(data, cb)
+    local resp = vSERVER.getOfficerData()
+    cb(resp)
+  end,
+  
   ["getOnlineOfficers"] = function(data, cb)
     local resp = vSERVER.getOnlineOfficers()
     cb(resp)
