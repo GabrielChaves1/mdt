@@ -26,9 +26,10 @@ export default function RolesHierarchy() {
       },
     ],
   })
+  
   const { amountOfPages, currentPage, items, totalOfItems, viewedItems, paginate } = usePaginate<GroupHierarchy>(13, 1, data);
   
-  const sortedPositionGroup = data?.sort((a, b) => a.position - b.position);
+  const sortedPositionGroup = items?.sort((a, b) => a.position - b.position);
 
   const editPermissionsModalRef = useRef<ModalRootHandles>(null);
   const showPolicersModalRef = useRef<ModalRootHandles>(null);

@@ -83,7 +83,7 @@ export const Input = styled.input`
   border: none;
   outline: none;
   font-size: 1.2rem;
-  width: 11.7rem;
+  width: 5.5rem;
   text-align: center;
   padding: 0 .5rem;
   font-weight: 400;
@@ -98,6 +98,15 @@ export const Item = styled.span`
   font-size: 1.2rem;
   font-weight: 400;
   color: #FFF;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+
+  button {
+    background: none;
+    border: none;
+    outline: none;
+  }
 `
 
 export const QueryListContainer = styled.div`

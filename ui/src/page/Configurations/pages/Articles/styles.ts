@@ -4,6 +4,9 @@ import styled from "styled-components";
 export const Wrapper = styled(Container)`
   display: flex;
   flex-direction: column;
-  height: 100%;
-  position: relative;
+  gap: 2rem;
+`
+
+export const Return = styled.div`
+  width: max-content;
 `

@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
 import { darken, lighten } from "polished";
-import styled, { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
     * {

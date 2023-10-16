@@ -1,5 +1,4 @@
 import Container from "@/components/Container";
-import { transparentize } from "polished";
 import styled from "styled-components";
 
 export const Wrapper = styled(Container)`

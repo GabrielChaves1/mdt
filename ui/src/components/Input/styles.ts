@@ -12,7 +12,7 @@ export const Header = styled.div`
 `
 
 export const Label = styled.p`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: ${props => props.theme.text.title};
   font-weight: 400;
 `

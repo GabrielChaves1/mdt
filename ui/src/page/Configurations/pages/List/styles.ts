@@ -18,6 +18,7 @@ export const ConfigItem = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1.2rem 3rem;
+  height: 6rem;
   border: solid .1rem ${({theme}) => theme.border.primary};
   border-radius: .6rem;
 

@@ -9,9 +9,7 @@ import fetchNui from "@/utils/fetchNui";
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup"
-import { ShieldAlert } from "lucide-react";
-import { useTheme } from "styled-components";
-import { useNuiEvent } from "@/hooks/useNuiEvent";
+import ErrorMessage from "@/components/ErrorMessage";
 
 const schema = yup.object({
   title: yup.string().required("O título é obrigatório!").max(60, "Máximo de 60 caracteres").nonNullable(),
@@ -24,8 +22,6 @@ type FormData = {
 }
 
 const CreateNoticeModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClose }, ref) => {
-  const { colors } = useTheme();
-
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
     resolver: yupResolver(schema)
   });
@@ -48,20 +44,15 @@ const CreateNoticeModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClos
         <form onSubmit={handleSubmit(onSubmit)}>
           <S.Column>
             {errors.title && (
-              <p>
-                <ShieldAlert size={'1.6rem'} color={colors.error} />
-                {errors.title?.message}
-              </p>
+              <ErrorMessage message={errors.title?.message!} />
             )}
             <TextField
               {...register("title", { required: true, maxLength: 60 })}
               autoFocus
               placeholder="Título do aviso" />
+              
             {errors.description && (
-              <p>
-                <ShieldAlert size={'1.6rem'} color={colors.error} />
-                {errors.description?.message}
-              </p>
+              <ErrorMessage message={errors.description?.message!} />
             )}
             <Textarea
               {...register("description", { required: true })}

@@ -3,24 +3,28 @@ import Button from "@/components/Button";
 import { ArrowLeftToLine } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
+import * as S from './styles';
+import Animator from "@/components/Animator";
 
 export default function CourseDetails() {
   const { colors } = useTheme();
 
   return (
-    <>
-      <Link to="/courses">
-        <Button variant="secondary">
-          <ArrowLeftToLine size={'1.6rem'} color={colors.icon}/>
-          Voltar
-        </Button>
-      </Link>
+    <Animator>
+      <S.Content>
+        <Link to="/courses">
+          <Button variant="secondary">
+            <ArrowLeftToLine size={'1.6rem'} color={colors.icon}/>
+            Voltar
+          </Button>
+        </Link>
 
-      <Banner.Root>
-        <Banner.Header>
-          <Banner.Title>Detalhes do curso</Banner.Title>
-        </Banner.Header>
-      </Banner.Root>
-    </>
+        <Banner.Root>
+          <Banner.Header>
+            <Banner.Title>Detalhes do curso</Banner.Title>
+          </Banner.Header>
+        </Banner.Root>
+      </S.Content>
+    </Animator>
   )
 }

@@ -1,13 +1,14 @@
-import { ForwardedRef, InputHTMLAttributes, forwardRef, useEffect, useMemo, useRef, useState } from 'react';
+import { InputHTMLAttributes, useEffect, useRef, useState } from 'react';
 import * as S from './styles';
 import { useTheme } from 'styled-components';
-import { ChevronDown, LoaderIcon } from 'lucide-react';
+import { ChevronDown, LoaderIcon, X } from 'lucide-react';
 import fetchNui from '@/utils/fetchNui';
 
 const WAITING_TIME = 800
 
 interface SelectorFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-
+  onUpdate: (updatedList: any[]) => void
+  onQuery: () => Promise<any>
 }
 
 interface ResponseDTO {
@@ -15,7 +16,7 @@ interface ResponseDTO {
   label: string
 }
 
-export const SelectorField = forwardRef(({ ...props }: SelectorFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
+export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorFieldProps) {
   const { colors } = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
   const [input, setInput] = useState<string>('');
@@ -38,16 +39,13 @@ export const SelectorField = forwardRef(({ ...props }: SelectorFieldProps, ref: 
     }
   }, [input]);
 
+  useEffect(() => onUpdate(selectedItems), [selectedItems])
+
   async function handleFind() {
     setIsTyping(false);
     setInput('');
 
-    const res = await fetchNui<ResponseDTO[]>("getNearestPlayers", undefined, [
-      {
-        id: 1,
-        label: "Droyen"
-      }
-    ]);
+    const res = await onQuery();
 
     setCanWrite(false);
     setResults(res);
@@ -69,17 +67,21 @@ export const SelectorField = forwardRef(({ ...props }: SelectorFieldProps, ref: 
     setSelectedItems((prevState) => [...prevState, item]);
   }
 
+  function handleRemoveItem(id: number) {
+    setSelectedItems((prevState) => prevState.filter(el => el.id !== id));
+  }
 
   return (
     <>
       <S.Area>
-        <S.SelectedList onClick={handleOpenInputBox}>
+        <S.SelectedList onMouseLeave={() => setCanWrite(false)} onClick={handleOpenInputBox}>
           {canWrite && (
             <S.CreateItem>
               <S.Input
+                {...props}
                 value={input}
                 onChange={({ target }) => setInput(target.value)}
-                onBlur={() => setCanWrite(false)} ref={inputRef} placeholder="ID" />
+                 ref={inputRef} />
             </S.CreateItem>
           )}
 
@@ -88,7 +90,10 @@ export const SelectorField = forwardRef(({ ...props }: SelectorFieldProps, ref: 
           ) : (
             <>
               {selectedItems?.map(item => (
-                <S.Item key={item.id}>{item.label}</S.Item>
+                <S.Item key={item.id}>
+                  {item.label}
+                  <button onClick={() => handleRemoveItem(item.id)}><X size={'1rem'} color='#FFF'/></button>
+                </S.Item>
               ))}
             </>
           )}
@@ -119,4 +124,4 @@ export const SelectorField = forwardRef(({ ...props }: SelectorFieldProps, ref: 
       </S.Area>
     </>
   )
-})
+}

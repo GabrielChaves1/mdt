@@ -1,11 +1,11 @@
-import { darken, lighten, transparentize } from "polished";
+import { transparentize } from "polished";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  flex: 1;
   width: 100%;
   display: flex;
   gap: 2rem;
+  flex: 1;
   justify-content: space-between;
 `
 
@@ -13,6 +13,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  height: 100%;
+`
+
+export const Return = styled.div`
+  width: max-content;
 `
 
 export const LeftContent = styled.div`
@@ -46,71 +51,88 @@ export const ImageSelectorBox = styled.div`
 export const ImageSelector = styled.button`
   /* flex: 1; */
   height: 10rem;
-  width: 10rem;
+  flex: 1;
   border: solid .1rem ${({theme}) => theme.border.primary};
   background: none;
   outline: none;
   border-radius: .6rem;
   transition: all .15s ease-in-out;
+  position: relative;
+  overflow: hidden;
 
   img {
-    height: 10rem;
-    width: 10rem;
+    height: 100%;
+    width: 100%;
     object-fit: contain;
+    border-radius: inherit;
   }
 
   &:hover {
-    background: ${({theme}) => transparentize(.98, theme.colors.ripple)};
     transform: scale(1.05);
   }
+`
 
-  &:active {
-    background: ${({theme}) => transparentize(.94, theme.colors.ripple)};
-  }
+export const ImageSelectorDelete = styled.button`
+  position: absolute;
+  right: .5rem;
+  top: .75rem;
+  background: ${({theme}) => theme.bg.primary};
+  z-index: 2;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  border: solid .1rem ${({theme}) => theme.border.primary};
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 1rem .3rem ${({theme}) => theme.bg.primary};
 `
 
 export const ExtenuatoryArea = styled.div`
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
-  padding: 2.5rem 2rem 2.5rem 2.5rem;
-  border: solid .1rem ${({theme}) => theme.border.primary};
-  border-radius: .6rem;
-  width: 100%;
   position: relative;
 `
 
 export const ExtenuatoryTitle = styled.p`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 400;
   color: ${({theme}) => theme.text.title};
 `
 
-export const ExtenuatoryList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  height: 15.5rem;
-  overflow: auto;
-  padding-right: .5rem;
+export const ActionsList = styled.div`
   width: 100%;
-  position: relative;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(3, auto);
 `
 
-export const Extenuatory = styled.div`
-  display: flex;
-  padding: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  border: solid .1rem ${({theme}) => theme.border.primary};
-  border-radius: .6rem;
+// export const ExtenuatoryList = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1rem;
+//   height: 15.5rem;
+//   overflow: auto;
+//   padding-right: .5rem;
+//   width: 100%;
+//   position: relative;
+// `
 
-  p {
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: ${({theme}) => theme.text.title};
-  }
-`
+// export const Extenuatory = styled.div`
+//   display: flex;
+//   padding: 1rem;
+//   align-items: center;
+//   justify-content: space-between;
+//   border: solid .1rem ${({theme}) => theme.border.primary};
+//   border-radius: .6rem;
+
+//   p {
+//     font-size: 1.3rem;
+//     font-weight: 400;
+//     color: ${({theme}) => theme.text.subtitle};
+//   }
+// `
 
 export const CrimeList = styled.div`
   display: flex;
@@ -136,7 +158,7 @@ export const CrimeNameBox = styled.div`
   gap: 2rem;
 
   p {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: ${({theme}) => theme.text.title};
     font-weight: 400;
     max-width: 25rem;
@@ -159,7 +181,7 @@ export const CrimeSpec = styled.div`
   padding: .4rem .8rem;
   border: solid .1rem ${({theme}) => theme.border.primary};
   border-radius: .6rem;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 400;
   color: ${({theme}) => theme.text.title};
 `
@@ -171,4 +193,10 @@ export const ImagePreview = styled.img`
   border: solid .1rem ${({theme}) => theme.border.primary};
   border-radius: .6rem;
   object-fit: contain;
+`
+
+export const PreviewTrigger = styled.div`
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 `

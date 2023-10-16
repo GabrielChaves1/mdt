@@ -5,6 +5,7 @@ import Course from '../../components/Course';
 import Pagination from '@/components/Pagination';
 import Banner from '@/components/Banner';
 import CourseIcon from '@/assets/book.webp';
+import Animator from '@/components/Animator';
 
 export default function CourseList() {
   const itemsPerPage = 12
@@ -42,27 +43,29 @@ export default function CourseList() {
   ])
 
   return (
-    <S.Content>
-      <Banner.Root icon={CourseIcon}>
-        <Banner.Header>
-          <Banner.Title>Cursos Disponíveis</Banner.Title>
-        </Banner.Header>
-      </Banner.Root>
+    <Animator>
+      <S.Content>
+        <Banner.Root icon={CourseIcon}>
+          <Banner.Header>
+            <Banner.Title>Cursos Disponíveis</Banner.Title>
+          </Banner.Header>
+        </Banner.Root>
 
-      <S.Grid>
-        {items?.map((course) => (
-          <Course key={course.id} {...course} />
-        ))}
+        <S.Grid>
+          {items?.map((course) => (
+            <Course key={course.id} {...course} />
+          ))}
 
-        {[...new Array(itemsPerPage - items.length)].map((_, i) => <S.EmptySlot key={i}/>)}
-      </S.Grid>
-      <Pagination
-        amountOfPages={amountOfPages}
-        currentPage={currentPage}
-        itemsBeingViewed={viewedItems}
-        onPaginate={(page: number) => paginate(page)}
-        totalOfItems={totalOfItems}
-      />
-    </S.Content>
+          {[...new Array(itemsPerPage - items.length)].map((_, i) => <S.EmptySlot key={i}/>)}
+        </S.Grid>
+        <Pagination
+          amountOfPages={amountOfPages}
+          currentPage={currentPage}
+          itemsBeingViewed={viewedItems}
+          onPaginate={(page: number) => paginate(page)}
+          totalOfItems={totalOfItems}
+        />
+      </S.Content>
+    </Animator>
   )
 }
