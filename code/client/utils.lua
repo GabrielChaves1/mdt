@@ -58,6 +58,22 @@ function takePhoteFromCell(resp)
 	
 		while phoneOpen do
 			Citizen.Wait(0)
+
+			if IsControlJustPressed(0, 142) then
+				if webhook.saveImagesScreenShotBasic then
+					exports['screenshot-basic']:requestScreenshotUpload(tostring(webhook.saveImagesScreenShotBasic), 'files[]', { encoding = 'jpg' }, function(data)
+						local Response = json.decode(data)
+						local imageURL = Response.attachments[1].url
+
+						CellCamActivate(false, false)
+						DestroyMobilePhone()
+
+						resp(imageURL)
+					end)
+
+					phoneOpen = false
+				end
+			end
 			
 			if IsControlJustPressed(0, 27) then
 				frontCam = not frontCam
@@ -72,23 +88,7 @@ function takePhoteFromCell(resp)
 
 				resp(false)
 			end
-			
-			if IsControlJustPressed(0, 142) then
-				if webhook.saveImagesScreenShotBasic then
-					exports['screenshot-basic']:requestScreenshotUpload(tostring(webhook.saveImagesScreenShotBasic), 'files[]', { encoding = 'png' }, function(data)
-						local Response = json.decode(data)
-						local imageURL = Response.attachments[1].url
 
-						CellCamActivate(false, false)
-						DestroyMobilePhone()
-
-						resp(imageURL)
-					end)
-
-					phoneOpen = false
-				end
-			end
-				
 			HideHudComponentThisFrame(7)
 			HideHudComponentThisFrame(8)
 			HideHudComponentThisFrame(9)

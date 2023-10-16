@@ -11,7 +11,12 @@ vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
 RegisterCommand("test", function()
   SetNuiFocus(true, true)
-  -- SendNUIMessage({ action = "setVisible", data = true })
+  SendNUIMessage({ action = "setVisible", data = true })
+end)
+
+RegisterCommand("tr", function()
+  SetNuiFocus(true, true)
+  SendNUIMessage({ action = "openRadial", data = true })
 end)
 
 local registerNUICallbacks = {
@@ -36,11 +41,11 @@ local registerNUICallbacks = {
   end,
 
   ["phoneCamShoot"] = function(data, cb)
-    -- SendNUIMessage({ action = "setVisible", data = false })
+    SendNUIMessage({ action = "setOpacity", data = 0 })
     SetNuiFocus(false, false)
 
     takePhoteFromCell(function(img)
-      -- SendNUIMessage({ action = "setVisible", data = true })
+      SendNUIMessage({ action = "setOpacity", data = 100 })
       SetNuiFocus(true, true)
 
       cb(img)
@@ -90,6 +95,18 @@ local registerNUICallbacks = {
     local resp = vSERVER.sendMessageChatOrg(data.msg, data.org)
     cb(resp)
   end,
+
+  ["getCodigoPenal"] = function(data, cb)
+    local resp = vSERVER.getAllCodigoPenal()
+    cb(resp)
+  end,
+
+  ["onCreateArticle"] = function(data, cb)
+    data.insert = true
+    
+    vSERVER.insertOrUpdateCodigoPenal(data)
+  end,
+  
 }
 
 Citizen.CreateThread(function()

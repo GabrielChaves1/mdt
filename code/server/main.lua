@@ -531,10 +531,10 @@ end
 
 function src.insertOrUpdateCodigoPenal(details)
     local infos = {
-        nome_codigo = details.nome_codigo,
-        descricao = details.descricao,
-        tempo = details.tempo,
-        multa = details.multa
+        nome_codigo = details.name,
+        descricao = details.description,
+        tempo = details.time,
+        multa = details.fine
     }
 
     if details.insert then
