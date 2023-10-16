@@ -77,22 +77,23 @@ export const Items = styled.div`
   border-radius: 50%;
 `
 
-export const Item = styled.div<{itemId: number, selected: boolean}>`
+export const Item = styled.div<{itemId: number, amount: number, selected: boolean}>`
   position: absolute;
   width: 12rem;
   height: 12rem;
   background: ${({theme}) =>  transparentize(.05, theme.bg.primary)};
-  left: 0;
-  border-radius: 50%;
-  transform-origin: 29rem;
-  transform: rotate(calc(360deg / 8 * ${props => props.itemId}));
-  transition: .2s cubic-bezier(.75,.34,.43,.88);
+  left: 1rem;
+  transform-origin: 28rem;
+  transform: rotate(calc((360deg / ${props => props.amount}) * ${props => props.itemId}));
+  transition: .2s cubic-bezier(.75,.34,.43, .88);
   border: solid 1rem ${({theme}) => transparentize(.1, darken(.03, theme.bg.primary))};
+  border-radius: 50%;
 
   ${props => props.selected && css`
     background: ${({theme}) => darken(.02, theme.bg.primary)};
-    transform: rotate(calc(360deg / 8 * ${props.itemId})) translateX(-.5rem) scale(1.1);
+    transform: rotate(calc((360deg / ${props.amount}) * ${props.itemId})) translateX(-.5rem) scale(1.1);
     border-color: ${({theme}) => theme.colors.primary};
+    z-index: 10;
   
     img {
       -webkit-filter: grayscale(0%) !important;
@@ -108,7 +109,7 @@ export const Item = styled.div<{itemId: number, selected: boolean}>`
     transform: translate(-50%,-50%);
     left: 1.5rem;
     top: 1.5rem;
-    transform: rotate(calc((360deg / -8) * ${props => props.itemId}));
+    transform: rotate(calc((360deg / -${props => props.amount}) * ${props => props.itemId}));
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
   }

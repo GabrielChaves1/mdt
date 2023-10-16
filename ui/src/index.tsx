@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import { debugData } from "@/utils/debugData";
 import { useVisibility } from "@/contexts/VisibilityContext";
 import * as S from "./styles";
@@ -11,17 +11,27 @@ import RoutesList from "./routes";
 import Container from "./components/Container";
 import Loading from "./components/Loading";
 import RadialMenu from "./components/RadialMenu";
+import { useNuiEvent } from "./hooks/useNuiEvent";
 
 debugData([
 	{
 		action: 'setVisible',
 		data: false
 	},
+	{
+		action: 'openRadial',
+		data: true
+	}
 ])
 
 const App: React.FC = () => {
 	const { visible } = useVisibility();
 	const { theme } = useThemeManager();
+	const [radialOpened, setRadialOpened] = useState<boolean>(false);
+
+	useNuiEvent('openRadial', (data) => {
+    setRadialOpened(data);
+  })
 
 	return (
 		<>
@@ -50,7 +60,9 @@ const App: React.FC = () => {
 					)}
 
 					<AnimatePresence>
-						<RadialMenu />
+						{radialOpened && (
+							<RadialMenu />
+						)}
 					</AnimatePresence>
 				</AnimatePresence>
 			</ThemeProvider>
