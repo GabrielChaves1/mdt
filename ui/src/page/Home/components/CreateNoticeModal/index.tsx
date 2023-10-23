@@ -5,11 +5,11 @@ import { Textarea } from "@/components/Textarea/styles";
 import { forwardRef } from "react";
 import * as S from "./styles";
 import Button from "@/components/Button";
-import fetchNui from "@/utils/fetchNui";
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup"
 import ErrorMessage from "@/components/ErrorMessage";
+import fetchNui from "@/utils/fetchNui";
 
 const schema = yup.object({
   title: yup.string().required("O título é obrigatório!").max(60, "Máximo de 60 caracteres").nonNullable(),

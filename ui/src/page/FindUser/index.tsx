@@ -6,7 +6,7 @@ import { TextField } from '@/components/TextField';
 import Button from '@/components/Button';
 import SearchIcon from '@/assets/search.webp';
 
-export default function User() {
+export default function FindUser() {
   return (
     <S.Wrapper>
       <Banner.Root icon={SearchIcon}>

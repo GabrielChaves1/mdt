@@ -53,7 +53,7 @@ export default function Home() {
           data: Date.now(),
           id_autor: 1,
           autor: "Droyen Patrulheiro"
-        }
+        },
       ],
     
       permissions: ["CAN_CREATE_NOTICE"]
@@ -84,7 +84,7 @@ export default function Home() {
   return (
     <S.Wrapper>
       <OnlinePolicersModal ref={viewPolicersModalRef} />
-      <CreateNoticeModal onClose={() => viewPolicersModalRef.current?.closeModal()} ref={createNoticeModalRef} />
+      <CreateNoticeModal onClose={() => createNoticeModalRef.current?.closeModal()} ref={createNoticeModalRef} />
 
       <div style={{gridArea: "banner"}}>
         <Banner.Root style={{ height: '100%' }}>

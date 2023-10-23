@@ -1,13 +1,12 @@
 import Banner from "@/components/Banner";
 import Button from "@/components/Button";
 import { ArrowLeftToLine, Banknote, Clock, Plus, Search, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "styled-components";
 import * as S from "./styles";
 import Input from "@/components/Input";
 import { TextField } from "@/components/TextField";
 import { Textarea } from "@/components/Textarea";
-import Switch from "@/components/Switch";
 import Card from "@/components/Card";
 import Checkbox from "@/components/Checkbox";
 import Animator from "@/components/Animator";
@@ -17,13 +16,14 @@ import fetchNui from "@/utils/fetchNui";
 import Modal from "@/components/Modal";
 import { ModalRootHandles } from "@/components/Modal/ModalRoot";
 import ArrestIcon from '@/assets/arrest.webp';
-import Action from "@/components/Action";
 import Inventory from "@/components/Inventory";
 
 const IMAGE_SLOTS = 3;
 
 export default function NewArrest() {
   const { colors } = useTheme();
+  const navigate = useNavigate();
+
   const imagePreviewModalRef = useRef<ModalRootHandles>(null);
   const itemSelectorModalRef = useRef<ModalRootHandles>(null);
 
@@ -62,12 +62,10 @@ export default function NewArrest() {
 
       <S.Container>
         <S.Return>
-          <Link to="/arrest">
-            <Button variant="secondary">
-              <ArrowLeftToLine size={'1.6rem'} color={colors.icon} />
-              Voltar
-            </Button>
-          </Link>
+          <Button onClick={() => navigate(-1)} variant="secondary">
+            <ArrowLeftToLine size={'1.6rem'} color={colors.icon} />
+            Voltar
+          </Button>
         </S.Return>
 
         <Banner.Root icon={ArrestIcon}>

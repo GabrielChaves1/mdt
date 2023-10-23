@@ -4,55 +4,26 @@ import ArrestIcon from '@/assets/arrest.webp'
 import ConfigIcon from '@/assets/config.webp'
 import NotepadIcon from '@/assets/notepad.webp'
 import BookIcon from '@/assets/book.webp'
-import SearchIcon from '@/assets/search.webp'
 import CrownIcon from '@/assets/crown.webp'
 import CalendarIcon from '@/assets/calendar.webp'
-import AnnounceIcon from '@/assets/announce.webp'
 import { motion } from 'framer-motion';
-
-interface Item {
-  image: string
-  name: string
-  description: string
-}
+import RadialMenuItem from '@/types/RadialMenuItem';
+import { isEnvBrowser } from '@/utils/misc';
+import fetchNui from '@/utils/fetchNui';
+import { useNuiEvent } from '@/hooks/useNuiEvent';
 
 export default function RadialMenu() {
   const centerRef = useRef<HTMLDivElement>(null);
   const [angle, setAngle] = useState<number>(0);
   const [selectedItem, setSelectedItem] = useState<number>(0);
-  const [items, setItems] = useState<Item[]>([
-    {
-      name: "Algemar Jogador",
-      description: "Algemar o jogador mais próximo de você",
-      image: ArrestIcon
-    },
-    {
-      name: "Segurar Jogador",
-      description: "Segurar o jogador mais próximo",
-      image: CalendarIcon
-    },
-    {
-      name: "Abrir Tablet",
-      description: "Abrir o tablet policial",
-      image: ConfigIcon
-    },
-    {
-      name: "Segurar Jogador",
-      description: "Segurar o jogador mais próximo",
-      image: CrownIcon
-    },
-    {
-      name: "Abrir Tablet",
-      description: "Abrir o tablet policial",
-      image: NotepadIcon
-    },
-    {
-      name: "Abrir Tablet",
-      description: "Abrir o tablet policial",
-      image: BookIcon
-    },
-  ]);
-  
+  const [items, setItems] = useState<RadialMenuItem[]>([]);
+  const [visible, setVisible] = useState<boolean>(false);
+
+	useNuiEvent<RadialMenuItem[]>('openRadial', (data) => {
+		setItems(data);
+    setVisible(true);
+	})
+
   const itemsAmount = items.length;
 
   function calculateAngleDegrees(x: number, y: number): number {
@@ -99,6 +70,29 @@ export default function RadialMenu() {
   },[selectedItem])
 
   useEffect(() => {
+    if(!visible) return;
+
+		const keyUpHandler = (e: any) => {
+			if (["e", "E", "Escape"].includes(e.key)) {
+				if (!isEnvBrowser()) {
+					fetchNui("onSelectRadialItem", { ...items[selectedItem] });
+          setItems([]);
+          setVisible(false);
+				} else {
+          setItems([]);
+          setVisible(false);
+        }
+			}
+		}
+
+		window.addEventListener("keyup", keyUpHandler)
+
+		return () => window.removeEventListener("keyup", keyUpHandler)
+	}, [])
+
+  useEffect(() => {
+    if(!visible) return;
+
     window.addEventListener("keydown", onKeyboardKeyDown)
 
     return () => {
@@ -107,6 +101,8 @@ export default function RadialMenu() {
   }, [selectedItem])
 
   useEffect(() => {
+    if(!visible) return;
+
     window.addEventListener("mousemove", onMouseMove)
     
     return () => {
@@ -114,11 +110,13 @@ export default function RadialMenu() {
     }
   }, [])
 
+  if(!visible) return <></>;
+
   return (
     <motion.div
-      initial={{opacity: 0}}
-      animate={{opacity: 1}}
-      exit={{opacity: 0}}>
+      initial={{opacity: 0, scale: .5}}
+      animate={{opacity: 1, scale: 1}}
+      exit={{opacity: 0, scale: .5, transition: { duration: .1 }}}>
       <S.Container>
         <S.Items>
           {items && items?.map((item, i) => (
@@ -130,13 +128,13 @@ export default function RadialMenu() {
         <S.Wrapper ref={centerRef}>
           <S.Indicator angle={angle} />
           <S.Content>
-              {selectedItem !== undefined ? (
+              {selectedItem !== undefined && (
                 <>
                   <S.Title>{items[selectedItem]?.name || ""}</S.Title>
                   <S.Description>{items[selectedItem]?.description || ""}</S.Description>
                   <S.Image src={items[selectedItem]?.image}/>
                 </>
-              ) : <></>}
+              )}
           </S.Content>
         </S.Wrapper>
       </S.Container>

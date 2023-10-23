@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense } from "react";
 import { debugData } from "@/utils/debugData";
 import { useVisibility } from "@/contexts/VisibilityContext";
 import * as S from "./styles";
@@ -11,50 +11,28 @@ import RoutesList from "./routes";
 import Container from "./components/Container";
 import Loading from "./components/Loading";
 import RadialMenu from "./components/RadialMenu";
-import { useNuiEvent } from "./hooks/useNuiEvent";
-import fetchNui from "./utils/fetchNui";
-import { isEnvBrowser } from "./utils/misc";
-import { useNavigate } from "react-router-dom";
 
-debugData([
+debugData<any>([
 	{
 		action: 'setVisible',
-		data: false
-	},
-	{
-		action: 'openRadial',
 		data: true
-	}
+	},
+	// {
+	// 	action: 'openRadial',
+	// 	data: [
+	// 		{
+	// 			name: "Teste",
+	// 			image: "",
+	// 			description: "aaa",
+	// 			key: "testando"
+	// 		}
+	// 	]
+	// },
 ])
 
 const App: React.FC = () => {
 	const { visible } = useVisibility();
 	const { theme } = useThemeManager();
-	const [radialOpened, setRadialOpened] = useState<boolean>(false);
-
-	const navigate = useNavigate();
-
-	useNuiEvent('openRadial', (data) => {
-    	setRadialOpened(data);
-  	})
-
-	useEffect(() => {
-		if(!radialOpened) return;
-
-		const keyUpHandler = (e: any) => {
-			if (["e", "E", "Escape"].includes(e.key)) {
-				if (!isEnvBrowser()) {
-					fetchNui("close");
-					setRadialOpened(false);
-				} else setRadialOpened(!radialOpened);
-					navigate("/");
-			}
-		}
-
-		document.addEventListener("keyup", keyUpHandler)
-
-		return () => document.removeEventListener("keyup", keyUpHandler)
-	}, [radialOpened])
 
 	return (
 		<>
@@ -83,9 +61,7 @@ const App: React.FC = () => {
 					)}
 
 					<AnimatePresence>
-						{radialOpened && (
-							<RadialMenu />
-						)}
+						<RadialMenu />
 					</AnimatePresence>
 				</AnimatePresence>
 			</ThemeProvider>

@@ -35,7 +35,7 @@ export default function Articles() {
 
   return (
     <S.Wrapper>
-      <CreateArticleModal ref={createArticleModalRef} />      
+      <CreateArticleModal onClose={() => createArticleModalRef.current?.closeModal()} ref={createArticleModalRef} />      
 
       <S.Return>
         <Link to="/config">

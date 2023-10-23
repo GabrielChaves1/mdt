@@ -1,5 +1,5 @@
 import { darken, transparentize } from "polished";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const UserBox = styled.div`
   display: flex;
@@ -8,6 +8,7 @@ export const UserBox = styled.div`
   gap: 1rem;
   width: 100%;
   margin: 1.5rem 0;
+  cursor: pointer;
 `
 
 export const UserDataBox = styled.div`
@@ -39,16 +40,18 @@ export const ProgressBar = styled.div`
   background: ${({theme}) => darken(.03, theme.bg.primary)};
 `
 
-export const Fill = styled.div`
+export const Fill = styled.div<{percentage: number, required: number}>`
   height: 100%;
-  width: 50%;
+  width: ${props => props.percentage+"%"};
   max-width: 100%;
   background: ${({theme}) => theme.colors.primary};
   border-radius: inherit;
   z-index: 2;
 
   &::before {
-    content: attr(data-exp) "/" attr(data-required) " exp";
+    ${props => css`
+      content: "${props.percentage}/${props.required} exp";
+    `}
     font-size: 1rem;
     font-weight: 400;
     color: #FFF;

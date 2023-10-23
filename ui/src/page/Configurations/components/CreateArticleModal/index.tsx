@@ -1,6 +1,6 @@
 import Modal from "@/components/Modal";
 import { forwardRef, useState } from "react";
-import { ModalRootHandles } from "@/components/Modal/ModalRoot";
+import { ModalHostProps, ModalRootHandles } from "@/components/Modal/ModalRoot";
 import { TextField } from "@/components/TextField";
 import Slider from "@/components/Slider";
 import * as S from './styles';
@@ -22,7 +22,7 @@ const schema = yup.object({
   description: yup.string().required("A descrição é obrigatória!").max(255, "Máximo de 255 caracteres").nonNullable()
 })
 
-const CreateArticleModal = forwardRef<ModalRootHandles>((_, ref) => {
+const CreateArticleModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClose }, ref) => {
   const { handleSubmit, register, formState: { errors }, reset } = useForm<FormData>({
     resolver: yupResolver(schema)
   });
@@ -39,6 +39,7 @@ const CreateArticleModal = forwardRef<ModalRootHandles>((_, ref) => {
       time: prisionTime,
       fine
     })
+    if(onClose) onClose();
   }
 
   function onOpen() {

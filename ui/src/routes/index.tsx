@@ -1,12 +1,13 @@
 import React, { lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import CourseDetails from '@/page/Courses/pages/CourseDetails';
-import ArrestList from '@/page/Arrest/pages/ArrestList';
-import NewArrest from '@/page/Arrest/pages/NewArrest';
 
+const CourseDetails = lazy(() => import('@/page/Courses/pages/CourseDetails'));
+const ArrestList = lazy(() => import('@/page/Arrest/pages/ArrestList'));
+const NewArrest = lazy(() => import('@/page/Arrest/pages/NewArrest'));
+const Profile = lazy(() => import('@/page/Profile'));
 const Home = lazy(() => import('@/page/Home'));
 const Arrest = lazy(() => import('@/page/Arrest'));
-const User = lazy(() => import("@/page/User"));
+const FindUser = lazy(() => import("@/page/FindUser"));
 const RolesHierarchy = lazy(() => import("@/page/RolesHierarchy"));
 const Configurations = lazy(() => import("@/page/Configurations"));
 const ConfigurationList = lazy(() => import("@/page/Configurations/pages/List"));
@@ -23,7 +24,8 @@ const RoutesList: React.FC = () => {
                 <Route path='/arrest/' element={<ArrestList />} />
                 <Route path='/arrest/new' element={<NewArrest />} />
             </Route>
-            <Route path='user' element={<User />} />
+            <Route path='user' element={<FindUser />} />
+            <Route path='user/:id' element={<Profile />} />
             <Route path='roles-hierarchy' element={<RolesHierarchy />} />
             <Route path='config' element={<Configurations />}>
                 <Route path='/config/' element={<ConfigurationList />} />

@@ -79,8 +79,7 @@ export const PlayerItem = styled.div`
 
 export const PostsArea = styled.div`
   padding: 1.5rem;
-  max-height: 26.55rem;
-  flex: 1;
+  height: 53.5rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
