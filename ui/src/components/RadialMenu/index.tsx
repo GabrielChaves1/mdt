@@ -26,9 +26,9 @@ export default function RadialMenu() {
 
   const itemsAmount = items.length;
 
-  function calculateAngleDegrees(x: number, y: number): number {
+  const calculateAngleDegrees = useCallback((x: number, y: number): number => {
     return Math.atan2(y, x) * (180 / Math.PI);
-  }
+  },[])
 
   const clamp = useCallback((num: number, min: number, max: number): number => Math.min(Math.max(num, min), max), []);
 
@@ -88,7 +88,7 @@ export default function RadialMenu() {
 		window.addEventListener("keyup", keyUpHandler)
 
 		return () => window.removeEventListener("keyup", keyUpHandler)
-	}, [])
+	}, [visible])
 
   useEffect(() => {
     if(!visible) return;
@@ -98,7 +98,7 @@ export default function RadialMenu() {
     return () => {
       window.removeEventListener("keydown", onKeyboardKeyDown)
     }
-  }, [selectedItem])
+  }, [selectedItem, visible])
 
   useEffect(() => {
     if(!visible) return;
@@ -108,7 +108,7 @@ export default function RadialMenu() {
     return () => {
       window.removeEventListener("mousemove", onMouseMove)
     }
-  }, [])
+  }, [visible])
 
   if(!visible) return <></>;
 

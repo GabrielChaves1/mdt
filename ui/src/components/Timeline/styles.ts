@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 export const Wrapper = styled.div`
   flex: 1;
   height: 60rem;
-  background: ${({theme}) => darken(.01, theme.bg.primary)};
+  background: ${({theme}) => darken(.015, theme.bg.primary)};
   border: solid .1rem ${({theme}) => theme.border.primary};
   border-left: none;
   position: relative;

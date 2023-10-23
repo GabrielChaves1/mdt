@@ -14,20 +14,16 @@ import RadialMenu from "./components/RadialMenu";
 
 debugData<any>([
 	{
-		action: 'setVisible',
-		data: true
+		action: 'openRadial',
+		data: [
+			{
+				name: "Teste",
+				image: "",
+				description: "aaa",
+				key: "testando"
+			}
+		]
 	},
-	// {
-	// 	action: 'openRadial',
-	// 	data: [
-	// 		{
-	// 			name: "Teste",
-	// 			image: "",
-	// 			description: "aaa",
-	// 			key: "testando"
-	// 		}
-	// 	]
-	// },
 ])
 
 const App: React.FC = () => {
