@@ -7,7 +7,7 @@ Citizen.CreateThread(function()
             org VARCHAR(100),
             perms TEXT,
             PRIMARY KEY (cargo, org)
-        );
+        )
 
         CREATE TABLE IF NOT EXISTS mdt_hierarquia(
             user_id INT,
@@ -20,7 +20,7 @@ Citizen.CreateThread(function()
             time_ptr INT,
             dt_entrada INT,
             PRIMARY KEY (user_id)
-        );
+        )
 
         CREATE TABLE IF NOT EXISTS mdt_codigo_penal(
             id INT AUTO_INCREMENT,
@@ -29,7 +29,7 @@ Citizen.CreateThread(function()
             tempo INT,
             multa INT,
             PRIMARY KEY (id)
-        );
+        )
 
         CREATE TABLE IF NOT EXISTS mdt_veiculos_detidos(
             user_id INT,
@@ -40,7 +40,7 @@ Citizen.CreateThread(function()
             img TEXT,
             oficial INT,
             PRIMARY KEY (user_id)
-        );
+        )
 
         CREATE TABLE IF NOT EXISTS mdt_cursos(
             id_curso INT AUTO_INCREMENT,
@@ -52,13 +52,13 @@ Citizen.CreateThread(function()
             pre_requisitos TEXT,
             data INT,
             PRIMARY KEY (id_curso)
-        );
+        )
 
         CREATE TABLE IF NOT EXISTS mdt_curso_perm(
             id_curso INT,
             permissao VARCHAR(255),
             PRIMARY KEY (id_curso)
-        );
+        )
 
         CREATE TABLE IF NOT EXISTS mdt_historico_penal(
             id INT AUTO_INCREMENT,
@@ -73,7 +73,7 @@ Citizen.CreateThread(function()
             imgs TEXT,
             is_multa INT,
             PRIMARY KEY (id)
-        );
+        )
 
         CREATE TABLE IF NOT EXISTS mdt_historico_acoes(
             id INT AUTO_INCREMENT,
@@ -82,7 +82,7 @@ Citizen.CreateThread(function()
             data INT,
             ganha INT,
             PRIMARY KEY (id)
-        );
+        )
 
         CREATE TABLE IF NOT EXISTS mdt_unidades(
             id INT AUTO_INCREMENT,
@@ -90,7 +90,7 @@ Citizen.CreateThread(function()
             nome VARCHAR(100),
             emblema TEXT,
             PRIMARY KEY (id)
-        );
+        )
 
         CREATE TABLE IF NOT EXISTS mdt_avisos(
             id INT AUTO_INCREMENT,
@@ -101,7 +101,7 @@ Citizen.CreateThread(function()
             id_autor INT,
             org VARCHAR(100),
             PRIMARY KEY (id)
-        );
+        )
 
         CREATE TABLE IF NOT EXISTS mdt_presos(
             user_id INT,
@@ -112,7 +112,7 @@ Citizen.CreateThread(function()
             autor VARCHAR(100),
             id_autor INT,
             PRIMARY KEY (user_id)
-        );
+        )
     ]])
 
     zof.prepare("mdt/drop_all_tables", [[

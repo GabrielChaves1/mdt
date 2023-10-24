@@ -32,7 +32,7 @@ export default function RadialMenu() {
 
   const clamp = useCallback((num: number, min: number, max: number): number => Math.min(Math.max(num, min), max), []);
 
-  const onMouseMove = useCallback((event: MouseEvent) => {
+  const onMouseMove = (event: MouseEvent) => {
     const center = {
       x: window.innerWidth / 2,
       y: window.innerHeight / 2
@@ -54,7 +54,7 @@ export default function RadialMenu() {
     }
 
     setAngle(clamp(angle, -180, 180));
-  }, [])
+  }
 
   const onKeyboardKeyDown = useCallback(({key}: KeyboardEvent) => {
     if(key === "Tab"){

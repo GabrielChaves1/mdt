@@ -17,10 +17,6 @@ RegisterCommand("test", function()
   SendNUIMessage({ action = "setVisible", data = true })
 end)
 
-RegisterCommand("tr", function()
-  
-end)
-
 local registerNUICallbacks = {
   ["close"] = function(data, cb)
     SetNuiFocus(false, false)
@@ -126,6 +122,7 @@ Citizen.CreateThread(function()
     if IsControlPressed(0, 38) and not nuiOpen then
       SetNuiFocus(true, true)
       SendNUIMessage({ action = "openRadial", data = true })
+      SetCursorLocation(0.5, 0.5)
       nuiOpen = true
     end
   end
