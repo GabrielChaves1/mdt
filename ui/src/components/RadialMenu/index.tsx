@@ -75,7 +75,7 @@ export default function RadialMenu() {
 		const keyUpHandler = (e: any) => {
 			if (["e", "E", "Escape"].includes(e.key)) {
 				if (!isEnvBrowser()) {
-					fetchNui("onSelectRadialItem", { ...items[selectedItem] });
+          fetchNui("onSelectRadialItem", { ...items[selectedItem] });
           setItems([]);
           setVisible(false);
 				} else {
@@ -88,11 +88,11 @@ export default function RadialMenu() {
 		window.addEventListener("keyup", keyUpHandler)
 
 		return () => window.removeEventListener("keyup", keyUpHandler)
-	}, [visible])
+	}, [selectedItem, visible])
 
   useEffect(() => {
     if(!visible) return;
-
+    
     window.addEventListener("keydown", onKeyboardKeyDown)
 
     return () => {
