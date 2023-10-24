@@ -12,7 +12,6 @@ nuiOpen = false
 
 RegisterCommand("test", function()
   nuiOpen = true
-
   SetNuiFocus(true, true)
   SendNUIMessage({ action = "setVisible", data = true })
 end)
@@ -106,7 +105,17 @@ local registerNUICallbacks = {
     
     vSERVER.insertOrUpdateCodigoPenal(data)
   end,
-  
+
+  ["onSelectRadialItem"] = function(data, cb)
+    if radialFunctionsExec[data.key] then
+      radialFunctionsExec[data.key]()
+
+      if data.notRemoveFocus then return end
+    end
+
+    SetNuiFocus(false, false)
+    nuiOpen = false
+  end,
 }
 
 Citizen.CreateThread(function()
@@ -121,8 +130,9 @@ Citizen.CreateThread(function()
 
     if IsControlPressed(0, 38) and not nuiOpen then
       SetNuiFocus(true, true)
-      SendNUIMessage({ action = "openRadial", data = true })
+      SendNUIMessage({ action = "openRadial", data = radialOptions })
       SetCursorLocation(0.5, 0.5)
+
       nuiOpen = true
     end
   end
