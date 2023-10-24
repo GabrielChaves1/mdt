@@ -13,6 +13,7 @@ client_scripts {
   "code/client/utils.lua",
   
   "code/client/prision.lua",
+  "code/client/radialOptions.lua",
 }
 
 server_scripts {
