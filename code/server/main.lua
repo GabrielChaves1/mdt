@@ -133,7 +133,7 @@ function src.getOfficerData(fullProfile)
             cargo = orgsConfigList[org].hierarchy[officer.cargo].displayName,
             xp = officer.pontos,
             xpToUp = nextCargo.expUp,
-            img = vCLIENT.getHeadshot(source, tonumber(source))
+            img = "https://imgur.com/R4W3z7i.png"
         }
     end
 
@@ -145,7 +145,7 @@ function src.getOfficerData(fullProfile)
         xpToUp = nextCargo.expUp,
         cursos = {},
         timeline = cacheOrgs[org].officers[sUser_id].timeline,
-        img = vCLIENT.getHeadshot(source, tonumber(source))
+        img = "https://imgur.com/R4W3z7i.png" -- vCLIENT.getHeadshot(source, tonumber(source))
     }
 end
 
