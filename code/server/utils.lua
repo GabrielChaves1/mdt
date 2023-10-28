@@ -41,6 +41,7 @@ Citizen.CreateThread(function()
             `org` VARCHAR(100) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `unidade` VARCHAR(100) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `cursos` TEXT NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+            `timeline` TEXT NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `pontos` INT(11) NULL DEFAULT NULL,
             `time_ptr` INT(11) NULL DEFAULT NULL,
             `dt_entrada` INT(11) NULL DEFAULT NULL,
@@ -130,10 +131,11 @@ Citizen.CreateThread(function()
 
     zof.prepare("mdt/mdt_hierarquia/getFromOrg", [[ SELECT * FROM mdt_hierarquia WHERE org = @org ]])
     zof.prepare("mdt/mdt_hierarquia/getPlayer", [[ SELECT * FROM mdt_hierarquia WHERE user_id = @user_id ]])
-    zof.prepare("mdt/mdt_hierarquia/insert", [[ INSERT INTO mdt_hierarquia(user_id, nome, cargo, org, unidade, cursos, pontos, time_ptr, dt_entrada) VALUES(@user_id, @nome, @cargo, @org, @unidade, @cursos, @pontos, @time_ptr, @dt_entrada) ]])
+    zof.prepare("mdt/mdt_hierarquia/insert", [[ INSERT INTO mdt_hierarquia(user_id, nome, cargo, org, unidade, cursos, pontos, time_ptr, dt_entrada, timeline) VALUES(@user_id, @nome, @cargo, @org, @unidade, @cursos, @pontos, @time_ptr, @dt_entrada, @timeline) ]])
     zof.prepare("mdt/mdt_hierarquia/deletePlayer", [[ DELETE FROM mdt_hierarquia WHERE user_id = @user_id ]])
     zof.prepare("mdt/mdt_hierarquia/updateXpPlayer", [[ UPDATE mdt_hierarquia SET pontos = @xp WHERE user_id = @user_id ]])
     zof.prepare("mdt/mdt_hierarquia/updateCargoPlayer", [[ UPDATE mdt_hierarquia SET cargo = @cargo WHERE user_id = @user_id ]])
+    zof.prepare("mdt/mdt_hierarquia/updateTimelinePlayer", [[ UPDATE mdt_hierarquia SET timeline = @timeline WHERE user_id = @user_id ]])
 
     zof.prepare("mdt/mdt_avisos/insert", "INSERT INTO mdt_avisos(titulo, descricao, data, autor, id_autor, org) VALUES(@titulo, @descricao, @data, @autor, @id_autor, @org)")
     zof.prepare("mdt/mdt_avisos/delete", "DELETE FROM mdt_avisos WHERE id = @id")

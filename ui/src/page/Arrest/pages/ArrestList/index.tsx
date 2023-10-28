@@ -14,6 +14,7 @@ import Loading from "@/components/Loading";
 import IPrision from "@/types/Prision";
 import { Link } from "react-router-dom";
 import Animator from "@/components/Animator";
+import formatDate from "@/utils/formatDate";
 
 export default function ArrestList() {
   const { data, isLoading } = useQuery<IPrision[]>(['getPrisions'], () => fetchNui("getPrisions"), {
@@ -42,16 +43,6 @@ export default function ArrestList() {
 
   const handleViewDetails = () => {
     viewDetailModalRef.current?.openModal();
-  }
-
-  const formatDate = (data: number) => {
-    const date = new Date(data);
-
-    const day = date.getDate();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-
-    return `${day}/${month}/${year}`
   }
 
   return (

@@ -17,6 +17,9 @@ import Modal from "@/components/Modal";
 import { ModalRootHandles } from "@/components/Modal/ModalRoot";
 import ArrestIcon from '@/assets/arrest.webp';
 import Inventory from "@/components/Inventory";
+import { useQuery } from "@tanstack/react-query";
+import IPenalCode from "@/types/PenalCode";
+import Loading from "@/components/Loading";
 
 const IMAGE_SLOTS = 3;
 
@@ -26,6 +29,26 @@ export default function NewArrest() {
 
   const imagePreviewModalRef = useRef<ModalRootHandles>(null);
   const itemSelectorModalRef = useRef<ModalRootHandles>(null);
+
+  const { data, isLoading } = useQuery<IPenalCode[]>(['getCodigoPenal'], () => fetchNui("getCodigoPenal"), {
+    initialData: [
+      {
+        id: 1,
+        nome_codigo: "teste",
+        descricao: "testte",
+        tempo: 5,
+        multa: 10000
+      },
+
+      {
+        id: 2,
+        nome_codigo: "teste 2",
+        descricao: "testte 2",
+        tempo: 15,
+        multa: 5000
+      },
+    ],
+  })
 
   const [violators, setViolators] = useState<any[]>([]);
   const [officers, setOfficers] = useState<any[]>([]);
@@ -114,7 +137,7 @@ export default function NewArrest() {
               <Input.Label>Oficiais envolvidos</Input.Label>
               <Input.Content>
                 <SelectorField
-                  onQuery={() => fetchNui("getNearestPlayers")}
+                  onQuery={() => fetchNui("getNearestOfficersPlayers")}
                   onUpdate={(list: any[]) => setOfficers(list)}
                   placeholder="ID" />
               </Input.Content>
@@ -144,22 +167,31 @@ export default function NewArrest() {
               <Card.Separator />
               <Card.Content>
                 <S.CrimeList>
-                  <S.Crime>
-                    <S.CrimeNameBox>
-                      <Checkbox />
-                      <p title="ART 150 - Tentativa de Homicídio Testando Aviso Lembrete">ART 150 - Tentativa de Homicídio Testando Aviso Lembrete</p>
-                    </S.CrimeNameBox>
-                    <S.CrimeSpecsBox>
-                      <S.CrimeSpec>
-                        <Clock color={colors.icon} size={'1.4rem'} />
-                        15 meses
-                      </S.CrimeSpec>
-                      <S.CrimeSpec>
-                        <Banknote color={colors.icon} size={'1.6rem'} />
-                        R$ 0
-                      </S.CrimeSpec>
-                    </S.CrimeSpecsBox>
-                  </S.Crime>
+                {isLoading ? (
+                    <Loading />
+                  ) : (
+                    <>
+                      {data.map((item, i) => (
+                        <S.Crime>
+                          <S.CrimeNameBox>
+                            <Checkbox />
+                            <p title={item?.nome_codigo}>{item?.nome_codigo}</p>
+                          </S.CrimeNameBox>
+                          <S.CrimeSpecsBox>
+                            <S.CrimeSpec>
+                              <Clock color={colors.icon} size={'1.4rem'} />
+                              {item?.tempo} meses
+                            </S.CrimeSpec>
+                            <S.CrimeSpec>
+                              <Banknote color={colors.icon} size={'1.6rem'} />
+                              R$ {item?.multa}
+                            </S.CrimeSpec>
+                          </S.CrimeSpecsBox>
+                        </S.Crime>
+                      ))}
+                    </>
+                  )}
+                  
                 </S.CrimeList>
               </Card.Content>
             </Card.Root>

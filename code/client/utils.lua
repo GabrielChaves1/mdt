@@ -281,3 +281,144 @@ function src.getHeadshot(pid)
 
     return url
 end
+
+local anims = {}
+local anim_ids = Tools.newIDGenerator()
+
+function src.carregarAnim(dict)
+	RequestAnimDict(dict)
+
+	while not HasAnimDictLoaded(dict) do
+		Citizen.Wait(10)
+	end
+end
+
+function src.stopAnim(upper)
+	anims = {}
+
+	if upper then
+		ClearPedSecondaryTask(PlayerPedId())
+	else
+		ClearPedTasks(PlayerPedId())
+	end
+end
+
+function src.playAnim(upper, seq, looping, ax, ay, az)
+    ax = ax or 0
+    ay = ay or 0
+    az = az or 0
+
+	if seq.task then
+		src.stopAnim(true)
+
+		local ped = PlayerPedId()
+		if seq.task == "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER" then
+			local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(), true))
+			TaskStartScenarioAtPosition(ped,seq.task,x,y,z-1, GetEntityHeading(ped),0,0,false)
+		else
+			TaskStartScenarioInPlace(ped,seq.task,0,not seq.play_exit)
+		end
+	else
+		src.stopAnim(upper)
+
+		local flags = 0
+		if upper then flags = flags+48 end
+		if looping then flags = flags+1 end
+
+		Citizen.CreateThread(function()
+			local id = anim_ids:gen()
+			anims[id] = true
+
+			for k, v in pairs(seq) do
+				local dict = v[1]
+				local name = v[2]
+				local loops = v[3] or 1
+
+				for i=1,loops do
+					if anims[id] then
+						local first = (k == 1 and i == 1)
+						local last = (k == #seq and i == loops)
+
+						RequestAnimDict(dict)
+						local i = 0
+						while not HasAnimDictLoaded(dict) and i < 1000 do
+						Citizen.Wait(10)
+						RequestAnimDict(dict)
+						i = i + 1
+					end
+
+					if HasAnimDictLoaded(dict) and anims[id] then
+						local inspeed = 3.0
+						local outspeed = -3.0
+						if not first then inspeed = 2.0 end
+						if not last then outspeed = 2.0 end
+
+                        if ax ~= 0 or ay ~= 0 or az ~= 0 then
+                            TaskPlayAnimAdvanced(PlayerPedId(), dict, name, ax, ay, az, 0, 0, 0, inspeed, outspeed, 0, flags, 0)
+                        else
+                            TaskPlayAnim(PlayerPedId(), dict, name, inspeed, outspeed, -1, flags, 0, ax, ay, az)
+                        end
+
+						
+					end
+						Citizen.Wait(1)
+						while GetEntityAnimCurrentTime(PlayerPedId(),dict,name) <= 0.95 and IsEntityPlayingAnim(PlayerPedId(),dict,name,3) and anims[id] do
+							Citizen.Wait(1)
+						end
+					end
+				end
+			end
+			
+			anim_ids:free(id)
+			anims[id] = nil
+		end)
+	end
+end
+
+function getPlayers()
+    local players = {}
+
+    for i = 0, 1000 do
+        if NetworkIsPlayerActive(i) then
+            table.insert(players, i)
+        end
+    end
+
+    return players
+end
+
+function src.getNearestPlayers(radius)
+	local r = {}
+	local ped = GetPlayerPed(i)
+	local pid = PlayerId()
+	local px, py, pz = tvRP.getPosition()
+
+	for k,v in pairs(getPlayers()) do
+		local player = GetPlayerFromServerId(k)
+		if player ~= pid and NetworkIsPlayerConnected(player) then
+			local oped = GetPlayerPed(player)
+			local x,y,z = table.unpack(GetEntityCoords(oped,true))
+			local distance = GetDistanceBetweenCoords(x,y,z,px,py,pz,true)
+			if distance <= radius then
+				r[GetPlayerServerId(player)] = distance
+			end
+		end
+	end
+	
+	return r
+end
+
+function src.getNearestPlayer(radius)
+	local p = nil
+	local players = src.getNearestPlayers(radius)
+	local min = radius + 0.0001
+
+	for k,v in pairs(players) do
+		if v < min then
+			min = v
+			p = k
+		end
+	end
+
+	return p
+end

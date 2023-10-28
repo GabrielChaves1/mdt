@@ -3,6 +3,9 @@ import * as S from './styles'
 import { useTheme } from 'styled-components'
 import { Calendar, PartyPopper, Trophy } from 'lucide-react'
 import { motion, useAnimation, useInView } from 'framer-motion'
+import ITimeline from '@/types/Timeline'
+import formatDate from '@/utils/formatDate'
+import getIconLucide from '@/utils/getIconLucide'
 
 interface TimelineItemProps {
   direction: 'left' | 'right'
@@ -48,7 +51,7 @@ const TimelineItem = memo(({ icon: Icon, direction, title, color, createdAt }: T
   )
 })
 
-export default function Timeline() {
+export default function Timeline({ timeline }: { timeline: ITimeline[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [movingScroll, setMovingScroll] = useState<boolean>(false);
 
@@ -62,14 +65,11 @@ export default function Timeline() {
     <S.Wrapper onMouseLeave={() => setMovingScroll(false)}>
       <S.MidLine />
       <S.List ref={scrollRef} onMouseMove={onMouseMove} onMouseDown={() => setMovingScroll(true)} onMouseUp={() => setMovingScroll(false)}>
-        <TimelineItem icon={PartyPopper} direction='left' color="orange" createdAt='20/06/2023' title='Promovido a **Cabo**' />
-        <TimelineItem icon={Trophy} direction='right' createdAt='01/07/2023' title='Concluiu o curso da **Policia Civil**' />
-        <TimelineItem icon={Trophy} direction='left' createdAt='29/06/2023' title='Concluiu o curso de **Pericia**' />
-        <TimelineItem icon={Trophy} direction='right' createdAt='01/07/2023' title='Concluiu o curso de **Drop Tático**' />
-        <TimelineItem icon={Trophy} direction='left' createdAt='29/06/2023' title='Concluiu o curso de **Investigação**' />
-        <TimelineItem icon={Trophy} direction='right' createdAt='27/06/2023' title='Concluiu o curso de **Abordagem**' />
-        <TimelineItem icon={PartyPopper} direction='left' color="orange" createdAt='20/06/2023' title='Promovido a **Soldado**' />
-        <TimelineItem icon={Calendar} direction='right' createdAt='10/06/2023' title='Entrou na **Corporação**' />
+        {
+          timeline.map((item, i) => (
+            <TimelineItem icon={getIconLucide(item?.icon)} direction={i % 2 == 0 ? 'right' : 'left'} color={item?.color} createdAt={formatDate(item?.date)} title={item?.title} />
+          ))
+        }
       </S.List>
     </S.Wrapper>
   )

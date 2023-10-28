@@ -27,80 +27,6 @@ permissionsTablet = {
     ["CAN_REGISTER_UNJAIL"] = { display = "Soltar Indivíduo", description = "Com essa permissão o usuário poderá SOLTAR qualquer cidadão preso" },
 }
 
-function src.getInitialData()
-    local source  = source
-    local user_id = zof.getUserId(source)
-
-    local sUser_id = tostring(user_id)
-    local org = playersOrg[sUser_id]
-
-    if not org then return end
-
-    return {
-        officer = {
-            id = user_id,
-            name = zof.getName(user_id),
-        },
-    
-        canStartPatrol = true,
-        totalOfPrisions = #mdtPresos,
-        totalOfFines = 52,
-        totalOfWorkingOfficers = officersOnlineCount[org] or 0,
-    
-        notices = zof.query("mdt/mdt_avisos/getFromOrg", { org = org }),
-    
-        permissions = cargosOrgs[cacheOrgs[org].officers[sUser_id].cargo].perms
-    }
-end
-
-function src.getOfficerData()
-    local source  = source
-    local user_id = zof.getUserId(source)
-
-    local sUser_id = tostring(user_id)
-    local org = playersOrg[sUser_id]
-
-    if not org then return end
-
-    local officer = cacheOrgs[org].officers[sUser_id]
-    if not officer then return end
-
-    local nextCargo = cargosOrgs[officer.cargo].nextCargo
-
-    return {
-        officer = officer.nome,
-        cargo = orgsConfigList[org].hierarchy[officer.cargo].displayName,
-        xp = officer.pontos,
-        xpToUp = nextCargo.expUp,
-        img = vCLIENT.getHeadshot(source, tonumber(source))
-    }
-end
-
-function src.getOnlineOfficers()
-    local source = source
-    local user_id = zof.getUserId(source)
-    local sUser_id = tostring(user_id)
-
-    local org = playersOrg[sUser_id]
-    if not org then return {} end
-
-    local officersOnline = {}
-    for i, v in pairs(cacheOrgs[org].officers) do
-        if v.online then
-            local cargo = cargosOrgs[v.cargo].cargo
-
-            table.insert(officersOnline, {
-                user_id = v.user_id,
-                nome = v.nome,
-                cargo = orgsConfigList[org].hierarchy[cargo].displayName,
-                org = org
-            })
-        end
-    end
-
-    return officersOnline
-end
-
 function initOrgsFromDb()
     for org, info in pairs(orgsConfigList) do
         if not cacheOrgs[org] then 
@@ -132,6 +58,8 @@ function initOrgsFromDb()
                 v.online = zof.getUserSource(v.user_id) ~= nil
     
                 if v.online then officersOnlineCount[org] = (officersOnlineCount[org] or 0) + 1 end
+
+                v.timeline = json.decode(v.timeline or json.encode({}))
     
                 cacheOrgs[org].officers[sUser_id] = v
                 playersOrg[sUser_id] = org
@@ -140,6 +68,110 @@ function initOrgsFromDb()
     end
 
     print("LOADED CACHE")
+end
+
+function src.getInitialData()
+    local source  = source
+    local user_id = zof.getUserId(source)
+
+    local sUser_id = tostring(user_id)
+    local org = playersOrg[sUser_id]
+
+    if not org then return end
+
+    return {
+        officer = {
+            id = user_id,
+            name = zof.getName(user_id),
+        },
+    
+        canStartPatrol = true,
+        totalOfPrisions = #mdtPresos,
+        totalOfFines = 52,
+        totalOfWorkingOfficers = officersOnlineCount[org] or 0,
+    
+        notices = zof.query("mdt/mdt_avisos/getFromOrg", { org = org }),
+    
+        permissions = cargosOrgs[cacheOrgs[org].officers[sUser_id].cargo].perms
+    }
+end
+
+function src.setItemTimeline(user_id, item)
+    local sUser_id = tostring(user_id)
+    local org = playersOrg[sUser_id]
+
+    if not org then return end
+    if not cacheOrgs[org] then return end
+    if not cacheOrgs[org].officers[sUser_id] then return end
+
+    local newTimeline = cacheOrgs[org].officers[sUser_id].timeline
+    if not newTimeline then newTimeline = {} end
+
+    table.insert(newTimeline, item)
+    zof.query("mdt/mdt_hierarquia/updateTimelinePlayer", { user_id = user_id, timeline = json.encode(newTimeline) })
+
+    cacheOrgs[org].officers[sUser_id].timeline = newTimeline
+end
+
+function src.getOfficerData(fullProfile)
+    local source = source
+    local user_id = zof.getUserId(source)
+
+    local sUser_id = tostring(user_id)
+    local org = playersOrg[sUser_id]
+
+    if not org then return end
+
+    local officer = cacheOrgs[org].officers[sUser_id]
+    if not officer then return end
+
+    local nextCargo = cargosOrgs[officer.cargo].nextCargo
+
+    if not fullProfile then
+        return {
+            officer = officer.nome,
+            cargo = orgsConfigList[org].hierarchy[officer.cargo].displayName,
+            xp = officer.pontos,
+            xpToUp = nextCargo.expUp,
+            img = vCLIENT.getHeadshot(source, tonumber(source))
+        }
+    end
+
+    return {
+        officer = officer.nome,
+        cargo = orgsConfigList[org].hierarchy[officer.cargo].displayName,
+        nextCargo = orgsConfigList[org].hierarchy[nextCargo.cargo].displayName,
+        xp = officer.pontos,
+        xpToUp = nextCargo.expUp,
+        cursos = {},
+        timeline = cacheOrgs[org].officers[sUser_id].timeline,
+        img = vCLIENT.getHeadshot(source, tonumber(source))
+    }
+end
+
+function src.getOnlineOfficers()
+    local source = source
+    local user_id = zof.getUserId(source)
+    local sUser_id = tostring(user_id)
+
+    local org = playersOrg[sUser_id]
+    if not org then return {} end
+
+    local officersOnline = {}
+    for i, v in pairs(cacheOrgs[org].officers) do
+        if v.online then
+            local cargo = cargosOrgs[v.cargo].cargo
+
+            table.insert(officersOnline, {
+                user_id = v.user_id,
+                nome = v.nome,
+                cargo = orgsConfigList[org].hierarchy[cargo].displayName,
+                org = org
+            })
+        end
+    end
+
+    return officersOnline
 end
 
 function getNextCargo(hierarchy, infoCargo)
@@ -178,6 +210,8 @@ function src.setXpPlayer(recevieXp, pUser_id)
         -- UP DE CARGO
         zof.query("mdt/mdt_hierarquia/updateCargoPlayer", { user_id = user_id, cargo = nextCargo.cargo })
         cacheOrgs[org].officers[sUser_id].cargo = nextCargo.cargo
+
+        src.setItemTimeline(user_id, { date = os.date(), title = "Promovido para **" .. orgsConfigList[org].hierarchy[nextCargo.cargo].displayName .. "**", icon = "PartyPopper" })
     end
 
     zof.query("mdt/mdt_hierarquia/updateXpPlayer", { user_id = user_id, xp = newXp })
@@ -201,12 +235,16 @@ function addPlayerOrg(infos)
     local newInfosPlayer = { 
         user_id = infos.user_id, cargo = infos.cargo, 
         org = infos.org, unidade = infos.org, cursos = json.encode({}), 
-        pontos = 0, time_ptr = 0, dt_entrada = os.time(), nome = zof.getName(infos.user_id), online = true
+        pontos = 0, time_ptr = 0, dt_entrada = os.time(), nome = zof.getName(infos.user_id), online = true,
+        timeline = json.encode({
+            { color = "orange", date = os.date(), title = "Entrou na **Corporação**", icon = "PartyPopper" }
+        })
     }
 
     officersOnlineCount[infos.org] = (officersOnlineCount[infos.org] or 0) + 1
 
     zof.query("mdt/mdt_hierarquia/insert", newInfosPlayer)
+
     cacheOrgs[infos.org].officers[sUser_id] = newInfosPlayer
     playersOrg[sUser_id] = infos.org
 end
@@ -217,6 +255,7 @@ function removePlayerOrg(user_id)
     
     zof.query("mdt/mdt_hierarquia/delete", { user_id = user_id })
     cacheOrgs[org].officers[sUser_id] = nil
+
     playersOrg[sUser_id] = nil
 end
 
@@ -396,7 +435,7 @@ function src.createWarningOrg(details)
         data = os.time(), org = org
     })
 
-    return
+    return true
 end
 
 function src.deleteWarningOrg(id)
@@ -411,6 +450,47 @@ function src.deleteWarningOrg(id)
     zof.execute("mdt/mdt_avisos/delete", { id = id })
 
     return
+end
+
+function src.getPlayersProximity()
+    local source  = source
+
+    local players = vCLIENT.getNearestPlayers(source, 10)
+    local listPlayers = {}
+
+    for s, v in pairs(players) do
+        if s then
+            local id = zof.getUserId(s)
+            table.insert(listPlayers, { id = id, label = zof.getName(id) })
+        end
+    end
+
+    return listPlayers
+end
+
+function src.getPlayersOfficersProximity()
+    local source  = source
+    local user_id = zof.getUserId(source)
+    
+    local players = vCLIENT.getNearestPlayers(source, 10)
+    local listPlayers = {}
+
+    table.insert(listPlayers, { id = user_id, label = zof.getName(user_id) })
+
+    print(user_id, json.encode(listPlayers))
+
+    for s, v in pairs(players) do
+        if s then
+            local id = zof.getUserId(s)
+            local org = playersOrg[tostring(id)]
+
+            if org ~= nil then
+                table.insert(listPlayers, { id = id, label = zof.getName(id) })
+            end
+        end
+    end
+
+    return listPlayers
 end
 
 function src.getPrisions()

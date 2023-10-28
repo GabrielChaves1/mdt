@@ -1,5 +1,6 @@
 Tunnel = module("vrp", "lib/Tunnel")
 Proxy = module("vrp", "lib/Proxy")
+Tools = module("vrp", "lib/Tools")
 
 vRP = Proxy.getInterface("vRP")
 vRPclient = Tunnel.getInterface("vRP")
@@ -26,17 +27,22 @@ local registerNUICallbacks = {
 
   ["getInitialData"] = function(data, cb)
     local resp = vSERVER.getInitialData()
-    cb(resp)
+    if resp then cb(resp) end
   end,
 
   ["getOfficerData"] = function(data, cb)
     local resp = vSERVER.getOfficerData()
-    cb(resp)
+    if resp then cb(resp) end
+  end,
+
+  ["getProfileOfficer"] = function(data, cb)
+    local resp = vSERVER.getOfficerData(true)
+    if resp then cb(resp) end
   end,
   
   ["getOnlineOfficers"] = function(data, cb)
     local resp = vSERVER.getOnlineOfficers()
-    cb(resp)
+    if resp then cb(resp) end
   end,
 
   ["phoneCamShoot"] = function(data, cb)
@@ -53,17 +59,17 @@ local registerNUICallbacks = {
 
   ["getHierarchy"] = function(data, cb)
     local resp = vSERVER.getHierarchy()
-    cb(resp)
+    if resp then cb(resp) end
   end,
 
   ["getPermissionsGroup"] = function(data, cb)
     local resp = vSERVER.getPermissionsGroup(data)
-    cb(resp)
+    if resp then cb(resp) end
   end,
 
   ["getOfficersGroup"] = function(data, cb)
     local resp = vSERVER.getOfficersGroup(data)
-    cb(resp)
+    if resp then cb(resp) end
   end,
 
   ["insertOrUpdatePermissionsGroup"] = function(data, cb)
@@ -72,32 +78,32 @@ local registerNUICallbacks = {
 
   ["markOfficerOnMap"] = function(data, cb)
     local resp = vSERVER.markOfficerOnMap(data)
-    cb(resp)
+    if resp then cb(resp) end
   end,
 
   ["getPrisions"] = function(data, cb)
     local resp = vSERVER.getPrisions()
-    cb(resp)
+    if resp then cb(resp) end
   end,
 
   ["createNotice"] = function(data, cb)
     local resp = vSERVER.createWarningOrg(data)
-    cb(resp)
+    if resp then cb(resp) end
   end,
 
   ["getMessagesChatOrg"] = function(data, cb)
     local resp = vSERVER.getMessagesChatOrg(data.org)
-    cb(resp)
+    if resp then cb(resp) end
   end,
 
   ["sendMessageChatOrg"] = function(data, cb)
     local resp = vSERVER.sendMessageChatOrg(data.msg, data.org)
-    cb(resp)
+    if resp then cb(resp) end
   end,
 
   ["getCodigoPenal"] = function(data, cb)
     local resp = vSERVER.getAllCodigoPenal()
-    cb(resp)
+    if resp then cb(resp) end
   end,
 
   ["onCreateArticle"] = function(data, cb)
@@ -116,10 +122,24 @@ local registerNUICallbacks = {
     SetNuiFocus(false, false)
     nuiOpen = false
   end,
+
+  ["getNearestPlayers"] = function(data, cb)
+    print("getNearestPlayers")
+
+    local players = vSERVER.getPlayersProximity()
+    if players then cb(players) end
+  end,
+
+  ["getNearestOfficersPlayers"] = function(data, cb)
+    print("getNearestOfficersPlayers")
+
+    local players = vSERVER.getPlayersOfficersProximity()
+    if players then cb(players) end
+  end,
 }
 
 Citizen.CreateThread(function()
-  for i, handler in pairs(registerNUICallbacks) do 
+  for i, handler in pairs(registerNUICallbacks) do  
     RegisterNUICallback(i, function(data, cb)
       handler(data, cb)
     end)
@@ -130,6 +150,7 @@ Citizen.CreateThread(function()
 
     if IsControlPressed(0, 38) and not nuiOpen then
       SetNuiFocus(true, true)
+
       SendNUIMessage({ action = "openRadial", data = radialOptions })
       SetCursorLocation(0.5, 0.5)
 

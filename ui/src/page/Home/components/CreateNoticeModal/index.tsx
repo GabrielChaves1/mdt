@@ -32,9 +32,8 @@ const CreateNoticeModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClos
 
   async function onSubmit(data: FormData) {
     const res = await fetchNui("createNotice", data, true);
-    if(res){
-      onClose();
-    }
+    if(res)
+      if(onClose) onClose();
   }
 
   return (

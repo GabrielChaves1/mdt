@@ -1,5 +1,5 @@
 actionsXp = {
-    prender = 50 -- XP RECEBIDA AO REALIZAR UMA PRISÃO
+    prender = 60 -- XP RECEBIDA AO REALIZAR UMA PRISÃO
 }
 
 radialOptions = {
