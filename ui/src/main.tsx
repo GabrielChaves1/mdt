@@ -6,8 +6,9 @@ import { HashRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'styled-components';
 import { ThemeManager, useThemeManager } from './contexts/ThemeContext';
+import { StrictMode } from 'react';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 const Wrapper = () => {
     const { theme } = useThemeManager();
@@ -21,13 +22,15 @@ const Wrapper = () => {
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <HashRouter>
-        <QueryClientProvider client={queryClient}>
-            <VisibilityProvider>
-                <ThemeManager>
-                    <Wrapper />
-                </ThemeManager>
-            </VisibilityProvider>
-        </QueryClientProvider>
-    </HashRouter>
+    <StrictMode>
+        <HashRouter>
+            <QueryClientProvider client={queryClient}>
+                <VisibilityProvider>
+                    <ThemeManager>
+                        <Wrapper />
+                    </ThemeManager>
+                </VisibilityProvider>
+            </QueryClientProvider>
+        </HashRouter>
+    </StrictMode>
 );

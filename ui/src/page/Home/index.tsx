@@ -15,6 +15,7 @@ import fetchNui from '@/utils/fetchNui';
 import Notice from './components/Notice';
 import Loading from '@/components/Loading';
 import { useNuiEvent } from '@/hooks/useNuiEvent';
+import { queryClient } from '@/main';
 
 interface DataResponse {
   officer: {
@@ -33,7 +34,7 @@ interface DataResponse {
 }
 
 export default function Home() {
-  const { data, isLoading, refetch } = useQuery<DataResponse>(['getInitialData'], () => fetchNui("getInitialData"), {
+  const { data, isLoading } = useQuery<DataResponse>(['getInitialData'], () => fetchNui("getInitialData"), {
     initialData: {
       officer: {
         id: 1,
@@ -60,7 +61,19 @@ export default function Home() {
     }
   })
 
-  useNuiEvent('reloadHome', refetch)
+  useNuiEvent('createNotice', (data) => {
+    queryClient.setQueryData<DataResponse>(['getInitialData'], (prev) => {
+      if(!prev) return prev;
+
+      return {
+        ...prev,
+        notices: [
+          ...prev.notices,
+          data
+        ]
+      }
+    });
+  })
 
   const viewPolicersModalRef = useRef<ModalRootHandles>(null);
   const createNoticeModalRef = useRef<ModalRootHandles>(null);

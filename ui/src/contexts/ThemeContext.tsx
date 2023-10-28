@@ -17,7 +17,7 @@ export const ThemeManager = ({ children }: { children: ReactNode }) => {
     setTheme(theme);
     localStorage.setItem("theme", theme.title);
   }
-  
+
   return (
     <ThemeContext.Provider value={{
       theme,
