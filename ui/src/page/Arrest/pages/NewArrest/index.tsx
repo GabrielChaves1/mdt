@@ -59,7 +59,7 @@ export default function NewArrest() {
 
   async function handleCamShoot() {
     const img = await fetchNui<string>("phoneCamShoot");
-    setImages((prevState) => [...prevState, img]);
+    setImages((prev) => ([...prev, img]));
   }
 
   function handlePreviewImage(event: MouseEvent<HTMLDivElement>, image: string) {
@@ -69,7 +69,7 @@ export default function NewArrest() {
   }
 
   function handleDeleteImage(image: string) {
-    setImages((prevState) => prevState.filter(el => el !== image));
+    setImages((prev) => prev.filter(el => el !== image));
   }
 
   return (
@@ -146,7 +146,7 @@ export default function NewArrest() {
             <Input.Root>
               <Input.Label>Descrição</Input.Label>
               <Input.Content>
-                <Textarea style={{ height: '21.75rem' }} placeholder="Digite aqui..." />
+                <Textarea style={{ height: '22.75rem' }} placeholder="Digite aqui..." />
               </Input.Content>
             </Input.Root>
           </S.LeftContent>
@@ -191,8 +191,18 @@ export default function NewArrest() {
                       ))}
                     </>
                   )}
-                  
                 </S.CrimeList>
+                <S.CrimesCounterBox>
+                  <p>Soma Total:</p>
+                  <S.CrimeCounter>
+                    <Clock size={'1.4rem'} color={colors.icon} />
+                    <p>50 meses (-50%)</p>
+                  </S.CrimeCounter>
+                  <S.CrimeCounter>
+                    <Banknote size={'1.6rem'} color={colors.icon} />
+                    <p>R$ 150.000,00</p>
+                  </S.CrimeCounter>
+                </S.CrimesCounterBox>
               </Card.Content>
             </Card.Root>
           </S.RightContent>

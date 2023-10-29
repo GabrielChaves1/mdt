@@ -55,6 +55,14 @@ export default function Home() {
           id_autor: 1,
           autor: "Droyen Patrulheiro"
         },
+        {
+          id: 1,
+          titulo: "Não colocar itens no baú",
+          descricao: "Não coloquem itens no baú temporariamente",
+          data: Date.now(),
+          id_autor: 1,
+          autor: "Droyen Patrulheiro"
+        },
       ],
     
       permissions: ["CAN_CREATE_NOTICE"]

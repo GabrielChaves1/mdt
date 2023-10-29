@@ -1,4 +1,4 @@
-import { transparentize } from "polished";
+import { darken, transparentize } from "polished";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -139,7 +139,7 @@ export const CrimeList = styled.div`
   flex-direction: column;
   gap: .6rem;
   padding: 2rem;
-  height: 29rem;
+  height: 44.3rem;
   overflow: auto;
 `
 
@@ -199,4 +199,34 @@ export const PreviewTrigger = styled.div`
   width: 100%;
   height: 100%;
   z-index: 2;
+`
+
+export const CrimesCounterBox = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  width: 100%;
+  border: solid .1rem ${({theme}) => theme.border.primary};
+  border-radius: 0 0 .6rem .6rem;
+  padding: 1.2rem 2rem;
+  background: ${({theme}) => transparentize(.98,theme.colors.ripple)};
+
+  p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: ${({theme}) => theme.text.title};
+  }
+`
+
+export const CrimeCounter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .7rem;
+
+  p {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: ${({theme}) => theme.text.title};
+  }
 `

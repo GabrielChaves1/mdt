@@ -7,7 +7,7 @@ export const Container = styled.div`
   padding: 1rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 `
 
 export const Title = styled.p`
@@ -25,4 +25,17 @@ export const Author = styled.span`
 export const Header = styled.div`
   display: flex;
   flex-direction: column;
+`
+
+export const Actions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+`
+
+export const Description = styled.p`
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  color: ${({theme}) => theme.text.title};
+  width: 43rem;
 `
