@@ -15,6 +15,8 @@ import fetchNui from '@/utils/fetchNui';
 import IPenalCode from '@/types/PenalCode';
 import Pagination from '@/components/Pagination';
 import Loading from '@/components/Loading';
+import { queryClient } from '@/main';
+import { useNuiEvent } from '@/hooks/useNuiEvent';
 
 export default function Articles() {
   const { data, isLoading } = useQuery<IPenalCode[]>(['getCodigoPenal'], () => fetchNui("getCodigoPenal"), {
@@ -32,6 +34,22 @@ export default function Articles() {
   const { amountOfPages, currentPage, items, totalOfItems, viewedItems, paginate } = usePaginate(13, 1, data);
   const { colors } = useTheme();
   const createArticleModalRef = useRef<ModalRootHandles>(null);
+
+  useNuiEvent('createArticle', (item: IPenalCode) => {
+    queryClient.setQueryData(['getCodigoPenal'], ((prev: any) => ({
+      ...prev,
+      item
+    })))
+  })
+
+  async function handleDeleteArticle(item: IPenalCode) {
+    const res = await fetchNui("deleteArticle", item)
+    if(!res) return;
+
+    queryClient.setQueryData(['getCodigoPenal'], ((prev: any) => {
+      return prev.filter((article: IPenalCode) => article.id !== item.id);
+    }));
+  }
 
   return (
     <S.Wrapper>
@@ -67,7 +85,7 @@ export default function Articles() {
                 <Table.Item>{item.tempo} meses</Table.Item>
                 <Table.Item>R$ {item.multa}</Table.Item>
                 <Table.Item>
-                  <Action icon={Trash} size='sm' label='Deletar Artigo' />
+                  <Action onClick={() => handleDeleteArticle(item)} icon={Trash} size='sm' label='Deletar Artigo' />
                   <Action icon={Pencil} size='sm' label='Editar Artigo' />
                 </Table.Item>
               </Table.Row>

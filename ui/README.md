@@ -22,7 +22,7 @@
 
 ### Configuração dos Artigos Criminais
 - [ ] Implementar botão de edição do artigo
-- [ ] Implementar backend para o botão de deletar
+- [ X ] Implementar backend para o botão de deletar
 - [ ] Ajustar a dialog de create/update para colocar a input que o player consiga digitar o valor além do slider
-- [ ] Ajustar para atualizar a lista de artigos após criar/editar
+- [ X ] Ajustar para atualizar a lista de artigos após criar/editar
 
