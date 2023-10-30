@@ -6,12 +6,12 @@
 - [ X ] Ajustar a visualização dos detalhes do aviso
 
 ### Tela de prisão
-- [ ] Ajustar a busca de player do infrator e do policial
+- [ X ] Ajustar a busca de player do infrator e do policial
 - [ ] No combo do policial criar sistema para buscar o policial que está com o tablet aberto e deixar por default ele selecionado
 - [ ] Colocar olhino com tooltip para visualizar os detalhes do artigo criminal
 - [ ] Ajustar a dialog de atenuantes
 - [ X ] Na parte de crimes colocar o totalizador no final somando a multa e o tempo
-- [ ] Criar o filtro de pesquisa dos crimes
+- [ X ] Criar o filtro de pesquisa dos crimes
 - [ X ] Ajustar o scroll da lista de crimes para pegar a box toda
 - [ ] Ajustar o sistema de apreender itens
 

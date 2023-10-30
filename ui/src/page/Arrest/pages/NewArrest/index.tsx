@@ -50,10 +50,13 @@ export default function NewArrest() {
     ],
   })
 
+  const [search, setSearch] = useState('');
   const [violators, setViolators] = useState<any[]>([]);
   const [officers, setOfficers] = useState<any[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [imageInPreview, setImageInPreview] = useState<string>();
+
+  const filteredCrimes = data.filter((item) => item.nome_codigo.toLowerCase().includes(search.toLowerCase()));
 
   const emptyImageSlots = IMAGE_SLOTS - images.length;
 
@@ -162,7 +165,12 @@ export default function NewArrest() {
                   <Card.Title>Selecionar Crimes</Card.Title>
                   <Card.Subtitle>Lista de artigos criminais</Card.Subtitle>
                 </Card.Column>
-                <TextField placeholder="Pesquisar crime" icon={Search} style={{ width: '10rem' }} />
+                <TextField 
+                  placeholder="Pesquisar crime" 
+                  onChange={({ target }) => setSearch(target.value)} 
+                  value={search}
+                  icon={Search} 
+                  style={{ width: '10rem' }} />
               </Card.Header>
               <Card.Separator />
               <Card.Content>
@@ -171,8 +179,8 @@ export default function NewArrest() {
                     <Loading />
                   ) : (
                     <>
-                      {data.map((item, i) => (
-                        <S.Crime>
+                      {filteredCrimes.map((item, i) => (
+                        <S.Crime key={i}>
                           <S.CrimeNameBox>
                             <Checkbox />
                             <p title={item?.nome_codigo}>{item?.nome_codigo}</p>

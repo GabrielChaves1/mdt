@@ -3,6 +3,7 @@ import * as S from './styles'
 import Button from '@/components/Button';
 import INotice from '@/types/Notice';
 import fetchNui from '@/utils/fetchNui';
+import { queryClient } from '@/main';
 
 function Notice({ autor, id_autor, descricao, id, titulo, data }: INotice) {
   const [opened, setOpened] = useState<boolean>(false);
@@ -12,8 +13,14 @@ function Notice({ autor, id_autor, descricao, id, titulo, data }: INotice) {
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
 
-  function handleDeleteNotice() {
-    fetchNui('deleteNotice', { id })
+  async function handleDeleteNotice() {
+    const res = await fetchNui('deleteNotice', { id })
+    if(!res) return;
+
+    queryClient.setQueryData(['getInitialData'], (prev: any) => ({
+      ...prev,
+      notices: prev.notices.filter((notice: INotice) => notice.id !== id)
+    }));
   }
 
   return (

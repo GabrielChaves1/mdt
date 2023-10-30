@@ -1,35 +1,31 @@
 import { InputHTMLAttributes, Reducer, useEffect, useReducer, useRef, useState } from 'react';
 import * as S from './styles';
 import { useTheme } from 'styled-components';
-import { ChevronDown, LoaderIcon, X } from 'lucide-react';
+import { ChevronDown, ChevronUp, LoaderIcon, X } from 'lucide-react';
 
 const WAITING_TIME = 800
 
-interface SelectorFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  onUpdate: (updatedList: any[]) => void
-  onQuery: () => Promise<any>
-}
-
-interface ResponseDTO {
+interface ItemProps {
   id: number
   label: string
 }
 
+interface SelectorFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+  onUpdate: (next: ItemProps[]) => void
+  onQuery: () => Promise<ItemProps[]>
+}
+
 type SelectorStates = {
-  input: string
-  isTyping: boolean
-  canWrite: boolean
-  results: ResponseDTO[]
-  selectedItems: ResponseDTO[]
+  finding: boolean
+  results: ItemProps[]
+  selectedItems: ItemProps[]
 }
 
 export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorFieldProps) {
   const { colors } = useTheme();
 
   const [{
-    canWrite, 
-    input, 
-    isTyping, 
+    finding,
     results, 
     selectedItems
   }, setSelector] = useReducer<Reducer<SelectorStates, Partial<SelectorStates>>>(
@@ -37,47 +33,29 @@ export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorF
       return { ...prev, ...next }
     },
     {
-      input: '',
-      isTyping: false,
-      canWrite: false,
+      finding: false,
       results: [],
       selectedItems: []
     }
   )
 
-  const inputRef = useRef<HTMLInputElement>(null);
-  
   const hasResults = results.length > 0;
   const noItemsSelected = selectedItems.length <= 0;
 
-  useEffect(() => {
-    if (input.length > 0) {
-      setSelector({ isTyping: true });
-      const delayDebounceFn = setTimeout(handleFind, WAITING_TIME)
-
-      return () => clearTimeout(delayDebounceFn)
-    } else {
-      setSelector({ isTyping: false });
-    }
-  }, [input]);
-
   useEffect(() => onUpdate(selectedItems), [selectedItems])
 
-  async function handleFind() {
-    const res = await onQuery();
-    setSelector({ canWrite: false, results: res, input: '', isTyping: false });
+  async function handleFindList() {
+    setSelector({ finding: true });
+
+    const res = await onQuery().catch(() => {
+      setSelector({ finding: false });
+      return [];
+    });
+    
+    setSelector({ results: res, finding: false });
   }
 
-  function handleOpenInputBox() {
-    if (canWrite) return;
-    setSelector({ canWrite: true });
-
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 50);
-  }
-
-  function handleSelectQueryItem(item: ResponseDTO) {
+  function handleSelectQueryItem(item: ItemProps) {
     const itemAlreadyExists = selectedItems.find(el => el.id === item.id);
     if(itemAlreadyExists) return;
 
@@ -91,18 +69,8 @@ export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorF
   return (
     <>
       <S.Area>
-        <S.SelectedList onMouseLeave={() => setSelector({ canWrite: false, isTyping: false, input: '' })} onClick={handleOpenInputBox}>
-          {canWrite && (
-            <S.CreateItem>
-              <S.Input
-                {...props}
-                value={input}
-                onChange={({ target }) => setSelector({ input: target.value })}
-                ref={inputRef} />
-            </S.CreateItem>
-          )}
-
-          {(noItemsSelected && !canWrite) ? (
+        <S.SelectedList>
+          {(noItemsSelected) ? (
             <p>Nada anexado...</p>
           ) : (
             <>
@@ -117,7 +85,7 @@ export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorF
           
         </S.SelectedList>
         {hasResults && (
-          <S.QueryListContainer onMouseLeave={() => setSelector({ results: [] })}>
+          <S.QueryListContainer>
             <S.QueryList>
               {results.map((item) => (
                 <S.QueryItem 
@@ -129,14 +97,22 @@ export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorF
             </S.QueryList>
           </S.QueryListContainer>
         )}
-        {isTyping ? (
+        {finding ? (
           <S.Button disabled>
             <LoaderIcon size={'1.6rem'} color={colors.icon} />
           </S.Button>
         ) : (
-          <S.Button>
-            <ChevronDown size={'1.6rem'} color={colors.icon} />
-          </S.Button>
+          <>
+            {hasResults ? (
+              <S.Button onClick={() => setSelector({ finding: false, results: [] })}>
+                <ChevronUp size={'1.6rem'} color={colors.icon} />
+              </S.Button>
+            ) : (
+              <S.Button onClick={handleFindList}>
+                <ChevronDown size={'1.6rem'} color={colors.icon} />
+              </S.Button>
+            )}
+          </>
         )}
       </S.Area>
     </>

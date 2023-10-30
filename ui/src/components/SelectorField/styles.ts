@@ -60,7 +60,6 @@ export const SelectedList = styled.div`
   height: 100%;
   overflow: auto;
   justify-content: flex-start;
-  cursor: pointer;
 
   p {
     font-size: 1.4rem;
@@ -115,6 +114,7 @@ export const QueryListContainer = styled.div`
   left: 0;
   width: 100%;
   height: calc(100% + 14rem);
+  pointer-events: none;
 `
 
 export const QueryList = styled.div`
@@ -132,6 +132,7 @@ export const QueryList = styled.div`
   display: flex;
   flex-direction: column;
   gap: .5rem;
+  pointer-events: all;
 `
 
 export const QueryItem = styled.button`

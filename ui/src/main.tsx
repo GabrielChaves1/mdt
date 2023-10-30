@@ -22,15 +22,13 @@ const Wrapper = () => {
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-        <HashRouter>
-            <QueryClientProvider client={queryClient}>
-                <VisibilityProvider>
-                    <ThemeManager>
-                        <Wrapper />
-                    </ThemeManager>
-                </VisibilityProvider>
-            </QueryClientProvider>
-        </HashRouter>
-    </StrictMode>
+    <HashRouter>
+        <QueryClientProvider client={queryClient}>
+            <VisibilityProvider>
+                <ThemeManager>
+                    <Wrapper />
+                </ThemeManager>
+            </VisibilityProvider>
+        </QueryClientProvider>
+    </HashRouter>
 );
