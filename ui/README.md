@@ -8,12 +8,12 @@
 ### Tela de prisão
 - [ X ] Ajustar a busca de player do infrator e do policial
 - [ ] No combo do policial criar sistema para buscar o policial que está com o tablet aberto e deixar por default ele selecionado
-- [ ] Colocar olhino com tooltip para visualizar os detalhes do artigo criminal
+- [ X ] Colocar olhino com tooltip para visualizar os detalhes do artigo criminal
 - [ ] Ajustar a dialog de atenuantes
 - [ X ] Na parte de crimes colocar o totalizador no final somando a multa e o tempo
 - [ X ] Criar o filtro de pesquisa dos crimes
 - [ X ] Ajustar o scroll da lista de crimes para pegar a box toda
-- [ ] Ajustar o sistema de apreender itens
+- [ X ] Ajustar o sistema de apreender itens
 
 ### Hierarquia
 - [ ] Mudar nome da tela de "hierarquia de cargos" só para hierarquia
@@ -23,6 +23,6 @@
 ### Configuração dos Artigos Criminais
 - [ ] Implementar botão de edição do artigo
 - [ X ] Implementar backend para o botão de deletar
-- [ ] Ajustar a dialog de create/update para colocar a input que o player consiga digitar o valor além do slider
+- [ X ] Ajustar a dialog de create/update para colocar a input que o player consiga digitar o valor além do slider
 - [ X ] Ajustar para atualizar a lista de artigos após criar/editar
 

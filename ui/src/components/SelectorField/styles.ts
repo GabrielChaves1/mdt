@@ -60,6 +60,7 @@ export const SelectedList = styled.div`
   height: 100%;
   overflow: auto;
   justify-content: flex-start;
+  cursor: pointer;
 
   p {
     font-size: 1.4rem;

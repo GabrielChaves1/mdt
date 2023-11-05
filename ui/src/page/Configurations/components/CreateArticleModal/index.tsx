@@ -63,14 +63,35 @@ const CreateArticleModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClo
             <S.SliderArea>
               <S.SliderValues>
                 <p>Tempo de prisão</p>
-                <span>{formattedPrisionTime} meses</span>
+                <div>
+                  <S.SliderInput 
+                    defaultValue={0}
+                    allowNegativeValue={false}
+                    allowDecimals={false}
+                    groupSeparator="."
+                    max={150}
+                    value={prisionTime}
+                    maxLength={150}
+                    onValueChange={(value, name) => setPrisionTime(Number(value) || 0)} />
+                  <span>meses</span>
+                </div>
               </S.SliderValues>
               <Slider min={0} max={150} step={1} value={[prisionTime]} onValueChange={(value: number[]) => setPrisionTime(value[0])} />
             </S.SliderArea>
             <S.SliderArea>
               <S.SliderValues>
                 <p>Valor em multa</p>
-                <span>{formattedFine}</span>
+                <S.SliderInput 
+                  defaultValue={0}
+                  allowNegativeValue={false}
+                  decimalsLimit={2}
+                  prefix="R$"
+                  decimalSeparator=","
+                  groupSeparator="."
+                  max={500000}
+                  value={fine}
+                  maxLength={500000}
+                  onValueChange={(value, name) => setFine(Number(value) || 0)} />
               </S.SliderValues>
               <Slider min={0} max={500000} step={1000} value={[fine]} onValueChange={(value: number[]) => setFine(value[0])} />
             </S.SliderArea>

@@ -1,3 +1,4 @@
+import CurrencyInput from "react-currency-input-field";
 import styled from "styled-components";
 
 export const Sliders = styled.div`
@@ -19,6 +20,13 @@ export const SliderValues = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+  }
 
   p {
     font-weight: 400;
@@ -44,4 +52,14 @@ export const Column = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+`
+
+export const SliderInput = styled(CurrencyInput)`
+  background: none;
+  font-weight: 400;
+  font-size: 1.4rem;
+  color: ${({theme}) => theme.text.subtitle};
+  border: none;
+  text-align: end;
+  width: 10rem;
 `

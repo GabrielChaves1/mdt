@@ -1,6 +1,6 @@
 import Banner from "@/components/Banner";
 import Button from "@/components/Button";
-import { ArrowLeftToLine, Banknote, Clock, Plus, Search, X } from "lucide-react";
+import { ArrowLeftToLine, Banknote, Clock, Eye, Plus, Search, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "styled-components";
 import * as S from "./styles";
@@ -20,6 +20,7 @@ import Inventory from "@/components/Inventory";
 import { useQuery } from "@tanstack/react-query";
 import IPenalCode from "@/types/PenalCode";
 import Loading from "@/components/Loading";
+import Action from "@/components/Action";
 
 const IMAGE_SLOTS = 3;
 
@@ -55,6 +56,7 @@ export default function NewArrest() {
   const [officers, setOfficers] = useState<any[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [imageInPreview, setImageInPreview] = useState<string>();
+  const [detainedItems, setDetainedItems] = useState();
 
   const filteredCrimes = data.filter((item) => item.nome_codigo.toLowerCase().includes(search.toLowerCase()));
 
@@ -77,7 +79,7 @@ export default function NewArrest() {
 
   return (
     <Animator>
-      <Inventory ref={itemSelectorModalRef}/>
+      <Inventory onUpdateItems={(items) => {}} onClose={() => itemSelectorModalRef.current?.closeModal()} ref={itemSelectorModalRef}/>
 
       <Modal.Root ref={imagePreviewModalRef}>
         <Modal.Header title="Preview da Imagem" />
@@ -186,6 +188,7 @@ export default function NewArrest() {
                             <p title={item?.nome_codigo}>{item?.nome_codigo}</p>
                           </S.CrimeNameBox>
                           <S.CrimeSpecsBox>
+                            <Action label="Ver detalhes" icon={Eye} size="sm" />
                             <S.CrimeSpec>
                               <Clock color={colors.icon} size={'1.4rem'} />
                               {item?.tempo} meses

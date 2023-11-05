@@ -69,7 +69,7 @@ export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorF
   return (
     <>
       <S.Area>
-        <S.SelectedList>
+        <S.SelectedList onClick={handleFindList}>
           {(noItemsSelected) ? (
             <p>Nada anexado...</p>
           ) : (
@@ -82,8 +82,8 @@ export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorF
               ))}
             </>
           )}
-          
         </S.SelectedList>
+
         {hasResults && (
           <S.QueryListContainer>
             <S.QueryList>
@@ -97,6 +97,7 @@ export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorF
             </S.QueryList>
           </S.QueryListContainer>
         )}
+
         {finding ? (
           <S.Button disabled>
             <LoaderIcon size={'1.6rem'} color={colors.icon} />

@@ -1,5 +1,5 @@
 import { darken, transparentize } from "polished";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ export const InventoryTitle = styled.p`
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, auto);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1rem;
   flex: 1;
   height: 100%;
@@ -37,7 +37,7 @@ export const Grid = styled.div`
   overflow: hidden auto;
 `
 
-export const Item = styled.button`
+export const Item = styled.button<{selected: boolean}>`
   width: 10rem;
   height: 10rem;
   border: .1rem solid ${({theme}) => theme.border.primary};
@@ -46,10 +46,27 @@ export const Item = styled.button`
   background: none;
   transition: .15s ease-in-out;
   
-  &:hover {
-    background: ${({theme}) => darken(.03, theme.bg.primary)};
-  }
+  ${props => props.selected ? css`
+    background: ${({theme}) => darken(.05, theme.bg.primary)};
 
+    img, p {
+      opacity: .2;
+    }
+  ` : css`
+    &:hover {
+      background: ${({theme}) => darken(.03, theme.bg.primary)};
+    }
+  `}
+`
+
+export const Locked = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 5;
 `
 
 export const Image = styled.img`
@@ -74,4 +91,8 @@ export const Title = styled.p`
   overflow: hidden;
   text-align: center;
   color: ${({theme}) => theme.text.title};
+`
+
+export const Actions = styled.div`
+  align-self: flex-end;
 `
