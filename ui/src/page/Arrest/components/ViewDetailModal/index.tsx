@@ -1,47 +1,66 @@
 import Modal from "@/components/Modal";
 import { ModalRootHandles } from "@/components/Modal/ModalRoot";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import * as S from './styles';
 import { Banknote, Clock, Forward } from "lucide-react";
 import { useTheme } from "styled-components";
+import IPrision from "@/types/Prision";
+import { useLocation, useNavigate } from "react-router-dom";
+import IPenalCode from "@/types/PenalCode";
+import fetchNui from "@/utils/fetchNui";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "@/components/Loading";
+import IOfficer from "@/types/Prision";
 
 const ViewDetailsModal = forwardRef<ModalRootHandles>((_, ref) => {
-
+  const navigate = useNavigate();
   const { colors } = useTheme();
 
+  const [ prisionInfo, setPrisionInfo ] = useState<IPrision>({} as IPrision);
+
+  const [ crimesCometidos, setCrimesCometidos ] = useState<IPenalCode[]>([]);
+
+  async function onOpen(data: { prision: IPrision }) {
+    data.prision.codigos_penais = JSON.parse(data?.prision.codigos_penais.toString()) as number[]
+    data.prision.oficiais = JSON.parse(data?.prision.oficiais.toString()) as IOfficer[]
+
+    setPrisionInfo(data?.prision)
+
+    const crimes = await fetchNui<IPenalCode[]>("getCrimesFromIds", data?.prision?.codigos_penais)
+    setCrimesCometidos(crimes)
+  }
+
+  const handleViewDetailsOfficer = (id: number) => {
+    navigate(`/user/${id}`);
+  }
+
   return (
-    <Modal.Root ref={ref}>
+    <Modal.Root onOpen={onOpen} ref={ref}>
       <Modal.Header title="Documentos da Prisão" subtitle="Você está visualizando os dados contidos na prisão" />
       <Modal.Content>
         <S.UserBox>
           <S.ImageBox>
-            <S.Image src="https://cdn.ome.lt/XmNgZkW2CggS6RGXiEz55spbmQs=/970x360/smart/uploads/conteudo/fotos/gta-franklin-selfie-topo.jpg"/>
+            <S.Image src={prisionInfo?.mugshot}/>
           </S.ImageBox>
           <S.PrisionData>
-            <S.Username>John Doe #5123</S.Username>
+            <S.Username>{prisionInfo?.nome} #{prisionInfo?.user_id}</S.Username>
             <S.ArrestedBy>
               <p>Preso por:</p>
               <S.Policers>
-                <S.Policer>
-                  Droyen
-                  <Forward size={'1.4rem'}/>
-                </S.Policer>
-                <S.Policer>
-                  Droyen
-                  <Forward size={'1.4rem'}/>
-                </S.Policer>
-                <S.Policer>
-                  Droyen
-                  <Forward size={'1.4rem'}/>
-                </S.Policer>
-                <S.Policer>
-                  Droyen
-                  <Forward size={'1.4rem'}/>
-                </S.Policer>
+                {
+                  prisionInfo?.oficiais ? (
+                    prisionInfo?.oficiais?.map((x) => (
+                      <S.Policer onClick={() => { handleViewDetailsOfficer(x?.id) }}>
+                      {x?.label}
+                      <Forward size={'1.4rem'}/>
+                    </S.Policer>
+                    ))
+                  ): <br/>
+                }
               </S.Policers>
             </S.ArrestedBy>
             <S.Reason>
-              <b>Motivo da prisão:</b> Tentativa de fuga e ofensas aos oficiais da guarnição Roubo a caixa eletrônico e tentativa de homicidio, estava portando 2x ak-47, 1x lockpick, 250x munições de ak-47 e 1 pistola mk2
+              <b>Motivo da prisão:</b> {prisionInfo?.descricao}
             </S.Reason>
           </S.PrisionData>
         </S.UserBox>
@@ -52,29 +71,38 @@ const ViewDetailsModal = forwardRef<ModalRootHandles>((_, ref) => {
           </S.CrimesHeader>
           <S.CrimesList>
             <S.Scroll>
-              <S.Crime>
-                <p>Tentativa de Homicidio</p>
-                <S.CrimeBadges>
-                  <S.CrimeBadge>
-                    <Clock size={'1.4rem'} color={colors.icon} />
-                    15 meses
-                  </S.CrimeBadge>
-                  <S.CrimeBadge>
-                    <Banknote size={'1.4rem'} color={colors.icon} />
-                    R$ 250.000
-                  </S.CrimeBadge>
-                </S.CrimeBadges>
-              </S.Crime>
+              {
+                crimesCometidos?.length > 0 ? (
+                  crimesCometidos.map((x) => (
+                    <S.Crime>
+                      <p>{x?.nome_codigo}</p>
+                      <S.CrimeBadges>
+                        <S.CrimeBadge>
+                          <Clock size={'1.4rem'} color={colors.icon} />
+                          {x?.tempo} meses
+                        </S.CrimeBadge>
+
+                        <S.CrimeBadge>
+                          <Banknote size={'1.4rem'} color={colors.icon} />
+                          R$ {x?.multa}
+                        </S.CrimeBadge>
+                      </S.CrimeBadges>
+                    </S.Crime>
+                  ))
+                ): <></>
+              }
+              
             </S.Scroll>
+
             <S.CrimesCounterBox>
               <p>Soma Total:</p>
               <S.CrimeCounter>
                 <Clock size={'1.4rem'} color={colors.icon} />
-                <p>50 meses (-50%)</p>
+                <p>{prisionInfo?.tempo} meses</p>
               </S.CrimeCounter>
               <S.CrimeCounter>
                 <Banknote size={'1.6rem'} color={colors.icon} />
-                <p>R$ 150.000,00</p>
+                <p>R$ {prisionInfo?.valor_multa}</p>
               </S.CrimeCounter>
             </S.CrimesCounterBox>
           </S.CrimesList>

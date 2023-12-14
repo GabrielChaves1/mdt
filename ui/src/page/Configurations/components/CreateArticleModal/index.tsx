@@ -30,8 +30,8 @@ const CreateArticleModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClo
   const [prisionTime, setPrisionTime ] = useState<number>(0);
   const [fine, setFine] = useState<number>(0);
   
-  const formattedPrisionTime = prisionTime.toLocaleString('pt-br');
-  const formattedFine = `R$ ${fine.toLocaleString('pt-br')}`;
+  // const formattedPrisionTime = prisionTime.toLocaleString('pt-br');
+  // const formattedFine = `R$ ${fine.toLocaleString('pt-br')}`;
 
   async function onSubmit(data: FormData) {
     fetchNui("onCreateArticle", {
@@ -68,7 +68,6 @@ const CreateArticleModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClo
                     defaultValue={0}
                     allowNegativeValue={false}
                     allowDecimals={false}
-                    groupSeparator="."
                     max={150}
                     value={prisionTime}
                     maxLength={150}
@@ -86,8 +85,6 @@ const CreateArticleModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClo
                   allowNegativeValue={false}
                   decimalsLimit={2}
                   prefix="R$"
-                  decimalSeparator=","
-                  groupSeparator="."
                   max={500000}
                   value={fine}
                   maxLength={500000}

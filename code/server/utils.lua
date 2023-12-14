@@ -6,7 +6,7 @@ Citizen.CreateThread(function()
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `titulo` VARCHAR(100) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `descricao` VARCHAR(255) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
-            `data` INT(11) NULL DEFAULT NULL,
+            `data` VARCHAR(100) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `autor` VARCHAR(100) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `id_autor` INT(11) NULL DEFAULT NULL,
             `org` VARCHAR(100) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
@@ -30,7 +30,7 @@ Citizen.CreateThread(function()
             `participantes` TEXT NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `img` TEXT NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `pre_requisitos` TEXT NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
-            `data` INT(11) NULL DEFAULT NULL,
+            `data` VARCHAR(100) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             PRIMARY KEY (`id_curso`) USING BTREE
         ) COLLATE='latin1_swedish_ci' ENGINE=InnoDB;
 
@@ -52,7 +52,7 @@ Citizen.CreateThread(function()
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `oficial_responsavel` INT(11) NULL DEFAULT NULL,
             `escalados` TEXT NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
-            `data` INT(11) NULL DEFAULT NULL,
+            `data` VARCHAR(100) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `ganha` INT(11) NULL DEFAULT NULL,
             PRIMARY KEY (`id`) USING BTREE
         ) COLLATE='latin1_swedish_ci' ENGINE=InnoDB;
@@ -64,10 +64,11 @@ Citizen.CreateThread(function()
             `valor_multa` INT(11) NULL DEFAULT NULL,
             `tempo` INT(11) NULL DEFAULT NULL,
             `codigos_penais` TEXT NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
-            `data` INT(11) NULL DEFAULT NULL,
+            `data` VARCHAR(100) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `descricao` TEXT NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `oficiais` TEXT NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `imgs` TEXT NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+            `mugshot` TEXT NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
             `is_multa` INT(11) NULL DEFAULT NULL,
             PRIMARY KEY (`id`) USING BTREE
         ) COLLATE='latin1_swedish_ci' ENGINE=InnoDB;
@@ -110,10 +111,11 @@ Citizen.CreateThread(function()
         ) COLLATE='latin1_swedish_ci' ENGINE=InnoDB;
     ]])
 
+    -- DROP TABLE IF EXISTS mdt_codigo_penal;
+
     zof.prepare("mdt/drop_all_tables", [[
         DROP TABLE IF EXISTS mdt_perms_cargos;
         DROP TABLE IF EXISTS mdt_hierarquia;
-        DROP TABLE IF EXISTS mdt_codigo_penal;
         DROP TABLE IF EXISTS mdt_veiculos_detidos;
         DROP TABLE IF EXISTS mdt_cursos;
         DROP TABLE IF EXISTS mdt_curso_perm;
@@ -124,7 +126,6 @@ Citizen.CreateThread(function()
         DROP TABLE IF EXISTS mdt_presos;
     ]])
 
-    
     zof.prepare("mdt/mdt_perms_cargos/getAll", "SELECT * FROM mdt_perms_cargos")
     zof.prepare("mdt/mdt_perms_cargos/insert", "INSERT INTO mdt_perms_cargos(cargo, org, perms) VALUES(@cargo, @org, @perms)")
     zof.prepare("mdt/mdt_perms_cargos/update", "UPDATE mdt_perms_cargos SET perms = @perms WHERE cargo = @cargo AND org = @org")
@@ -141,7 +142,8 @@ Citizen.CreateThread(function()
     zof.prepare("mdt/mdt_avisos/delete", "DELETE FROM mdt_avisos WHERE id = @id")
     zof.prepare("mdt/mdt_avisos/getFromOrg", "SELECT * FROM mdt_avisos WHERE org = @org")
 
-    zof.prepare("mdt/mdt_historico_penal/insert", "INSERT INTO mdt_historico_penal(user_id, nome, valor_multa, tempo, codigos_penais, data, descricao, oficiais, imgs, is_multa) VALUES(@user_id, @nome, @valor_multa, @tempo, @codigos_penais, @data, @descricao, @oficiais, @imgs, @is_multa)")
+    zof.prepare("mdt/mdt_historico_penal/insert", "INSERT INTO mdt_historico_penal(user_id, nome, valor_multa, tempo, codigos_penais, data, descricao, oficiais, imgs, mugshot, is_multa) VALUES(@user_id, @nome, @valor_multa, @tempo, @codigos_penais, @data, @descricao, @oficiais, @imgs, @mugshot, @is_multa)")
+    zof.prepare("mdt/mdt_historico_penal/get", "SELECT * FROM mdt_historico_penal WHERE id = @id")
     zof.prepare("mdt/mdt_historico_penal/getAll", "SELECT * FROM mdt_historico_penal")
     zof.prepare("mdt/mdt_historico_penal/getLastIdInserted", "SELECT id FROM mdt_historico_penal ORDER BY id DESC LIMIT 1")
 

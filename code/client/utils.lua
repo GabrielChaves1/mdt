@@ -391,7 +391,8 @@ function src.getNearestPlayers(radius)
 	local r = {}
 	local ped = GetPlayerPed(i)
 	local pid = PlayerId()
-	local px, py, pz = tvRP.getPosition()
+
+	local px, py, pz = table.unpack(GetEntityCoords(ped, true))
 
 	for k,v in pairs(getPlayers()) do
 		local player = GetPlayerFromServerId(k)

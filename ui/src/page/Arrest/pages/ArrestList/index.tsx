@@ -20,20 +20,30 @@ export default function ArrestList() {
   const { data, isLoading } = useQuery<IPrision[]>(['getPrisions'], () => fetchNui("getPrisions"), {
     initialData: [
       {
+        id: 1,
         user_id: 1,
         nome: "Th Pirituba",
         tempo: 100,
-        valor_multa: 0,
-        data: Date.now()
-      },
+        valor_multa: 2,
+        data: Date.now(),
+        descricao: "Testando motivo",
+        mugshot: "https://cdn.ome.lt/XmNgZkW2CggS6RGXiEz55spbmQs=/970x360/smart/uploads/conteudo/fotos/gta-franklin-selfie-topo.jpg",
+        codigos_penais: [1],
+        oficiais: [ { id:1, label: "Nico 16 toneladas" } ]
+      } as IPrision,
 
       {
+        id: 2,
         user_id: 1,
-        nome: "Th Pirituba",
+        nome: "Droyen Osasco",
         tempo: 100,
         valor_multa: 1000,
-        data: Date.now()
-      },
+        data: Date.now(),
+        descricao: "Testando motivo novamente",
+        mugshot: "https://cdn.ome.lt/XmNgZkW2CggS6RGXiEz55spbmQs=/970x360/smart/uploads/conteudo/fotos/gta-franklin-selfie-topo.jpg",
+        codigos_penais: [3, 5],
+        oficiais: [ { id:1, label: "Decrypt Pica Mucha" } ]
+      } as IPrision,
     ],
   })
 
@@ -41,8 +51,8 @@ export default function ArrestList() {
 
   const viewDetailModalRef = useRef<ModalRootHandles>(null);
 
-  const handleViewDetails = () => {
-    viewDetailModalRef.current?.openModal();
+  const handleViewDetails = (prision: IPrision) => {
+    viewDetailModalRef.current?.openModal({ prision: prision });
   }
 
   return (
@@ -53,9 +63,17 @@ export default function ArrestList() {
           <Banner.Header>
             <Banner.Title>Últimas prisões</Banner.Title>
           </Banner.Header>
-          <Link to="/arrest/new">
-            <Banner.Action>Nova Prisão</Banner.Action>
-          </Link>
+          
+          <S.LinkedButton>
+            <Link to="/arrest/new">
+              <Banner.Action>Nova Prisão</Banner.Action>
+            </Link>
+
+            <Link to="/arrest/inPrision">
+              <Banner.Action>Presos</Banner.Action>
+            </Link>
+          </S.LinkedButton>
+          
         </Banner.Root>
 
         <Table.Root headColumns={["Prisioneiro", "Tempo", "Multa", "Data", "Ações"]}>
@@ -70,7 +88,7 @@ export default function ArrestList() {
                   <Table.Item>R$ {item?.valor_multa.toLocaleString('pt-br')}</Table.Item>
                   <Table.Item>{formatDate(item?.data)}</Table.Item>
                   <Table.Item>
-                    <Action icon={Eye} size='sm' onClick={handleViewDetails} label='Ver detalhes' />
+                    <Action icon={Eye} size='sm' onClick={() => { handleViewDetails(item) }} label='Ver detalhes' />
                   </Table.Item>
                 </Table.Row>
               ))}

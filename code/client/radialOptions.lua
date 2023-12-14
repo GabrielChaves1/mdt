@@ -7,12 +7,14 @@ radialFunctionsExec = {
     end,
 
     ["abrir_tablet"] = function()
-        print("open tablet")
+        local resp = vSERVER.getInitialData()
 
-        
-
-        SetNuiFocus(true, true)
-        SendNUIMessage({ action = "setVisible", data = true })
+        if resp then
+            print("open tablet")
+            nuiOpen = true
+            SetNuiFocus(true, true)
+            SendNUIMessage({ action = "setVisible", data = true })
+        end
     end,
 }
 

@@ -17,6 +17,7 @@ import Pagination from '@/components/Pagination';
 import Loading from '@/components/Loading';
 import { queryClient } from '@/main';
 import { useNuiEvent } from '@/hooks/useNuiEvent';
+import formatNumber from '@/utils/formatNumber';
 
 export default function Articles() {
   const { data, isLoading } = useQuery<IPenalCode[]>(['getCodigoPenal'], () => fetchNui("getCodigoPenal"), {
@@ -43,7 +44,7 @@ export default function Articles() {
   })
 
   async function handleDeleteArticle(item: IPenalCode) {
-    const res = await fetchNui("deleteArticle", item)
+    const res = await fetchNui("deleteArticle", item.id)
     if(!res) return;
 
     queryClient.setQueryData(['getCodigoPenal'], ((prev: any) => {
@@ -81,9 +82,9 @@ export default function Articles() {
           <>
             {items.map((item, i) => (
               <Table.Row key={item.id}>
-                <Table.Item>{item.descricao}</Table.Item>
+                <Table.Item>{item.nome_codigo}</Table.Item>
                 <Table.Item>{item.tempo} meses</Table.Item>
-                <Table.Item>R$ {item.multa}</Table.Item>
+                <Table.Item>R$ {formatNumber(item.multa)}</Table.Item>
                 <Table.Item>
                   <Action onClick={() => handleDeleteArticle(item)} icon={Trash} size='sm' label='Deletar Artigo' />
                   <Action icon={Pencil} size='sm' label='Editar Artigo' />

@@ -1,3 +1,4 @@
+import PrisionList from '@/page/Arrest/pages/PrisionList';
 import React, { lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ const RoutesList: React.FC = () => {
             <Route path='arrest' element={<Arrest />}>
                 <Route path='/arrest/' element={<ArrestList />} />
                 <Route path='/arrest/new' element={<NewArrest />} />
+                <Route path='/arrest/inPrision' element={<PrisionList />} />
             </Route>
             <Route path='user' element={<FindUser />} />
             <Route path='user/:id' element={<Profile />} />

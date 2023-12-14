@@ -20,6 +20,7 @@ import Inventory from "@/components/Inventory";
 import { useQuery } from "@tanstack/react-query";
 import IPenalCode from "@/types/PenalCode";
 import Loading from "@/components/Loading";
+import formatNumber from "@/utils/formatNumber";
 import Action from "@/components/Action";
 
 const IMAGE_SLOTS = 3;
@@ -56,9 +57,11 @@ export default function NewArrest() {
   const [officers, setOfficers] = useState<any[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [imageInPreview, setImageInPreview] = useState<string>();
-  const [detainedItems, setDetainedItems] = useState();
+  const [description, setDescription] = useState('');
 
-  const filteredCrimes = data.filter((item) => item.nome_codigo.toLowerCase().includes(search.toLowerCase()));
+  const setOffencesValue = data.filter((item) => item.nome_codigo.toLowerCase().includes(search.toLowerCase()))
+  const [offences, setOffences] = useState<any[]>(setOffencesValue);
+  const [selectedOffences, setSelectedOffences] = useState<any[]>([]);
 
   const emptyImageSlots = IMAGE_SLOTS - images.length;
 
@@ -75,6 +78,42 @@ export default function NewArrest() {
 
   function handleDeleteImage(image: string) {
     setImages((prev) => prev.filter(el => el !== image));
+  }
+
+  function handleManageOffences(checked: boolean, offence: any) {
+    const indexPerm = offences.indexOf(offence);
+    let _offences = [...offences];
+
+    _offences[indexPerm].active = checked;
+    setOffences(_offences);
+
+    if(checked) {
+      setSelectedOffences((prevState) => [...prevState, offence]);
+      return;
+    }
+
+    const _selectedOffences = _offences.filter(x => x.active);
+    setSelectedOffences(_selectedOffences);
+  }
+
+  function handleSubmit() {
+    fetchNui("jailPlayer", { 
+      violators: violators,
+      officers: officers, 
+      images: images,
+      offences: selectedOffences,
+      tempo: selectedOffences.reduce((sum, offence) => { return sum + offence?.tempo }, 0),
+      multa: selectedOffences.reduce((sum, offence) => { return sum + offence?.multa }, 0),
+      fianca: selectedOffences.reduce((sum, offence) => { return sum + offence?.fianca }, 0),
+      desc: description
+    });
+
+    navigate(-1)
+  }
+
+  const handleShowInventory = (id: number) => {
+    // if(id)
+      itemSelectorModalRef.current?.openModal({ user_id: id })
   }
 
   return (
@@ -142,7 +181,7 @@ export default function NewArrest() {
               <Input.Label>Oficiais envolvidos</Input.Label>
               <Input.Content>
                 <SelectorField
-                  onQuery={() => fetchNui("getNearestOfficersPlayers")}
+                  onQuery={() => fetchNui("getNearestPlayers")}
                   onUpdate={(list: any[]) => setOfficers(list)}
                   placeholder="ID" />
               </Input.Content>
@@ -151,15 +190,20 @@ export default function NewArrest() {
             <Input.Root>
               <Input.Label>Descrição</Input.Label>
               <Input.Content>
-                <Textarea style={{ height: '22.75rem' }} placeholder="Digite aqui..." />
+                <Textarea 
+                  style={{ height: '22.75rem' }} 
+                  placeholder="Digite aqui..." 
+                  onChange={({ target }) => setDescription(target.value)} 
+                  value={description}
+                />
               </Input.Content>
             </Input.Root>
           </S.LeftContent>
           <S.RightContent>
             <S.ActionsList>
               <Button position="center" fill variant="secondary" size="md">Adicionar Atenuantes</Button>
-              <Button position="center" fill variant="secondary" size="md" onClick={() => itemSelectorModalRef.current?.openModal()}>Apreender Itens</Button>
-              <Button position="center" fill variant="primary" size="md">Prender</Button>
+              <Button position="center" fill variant="secondary" size="md" onClick={() => handleShowInventory(violators[0]?.id)}>Apreender Itens</Button>
+              <Button position="center" fill variant="primary" size="md" onClick={handleSubmit}>Prender</Button>
             </S.ActionsList>
             <Card.Root>
               <Card.Header>
@@ -167,11 +211,11 @@ export default function NewArrest() {
                   <Card.Title>Selecionar Crimes</Card.Title>
                   <Card.Subtitle>Lista de artigos criminais</Card.Subtitle>
                 </Card.Column>
-                <TextField 
+                <TextField
                   placeholder="Pesquisar crime" 
-                  onChange={({ target }) => setSearch(target.value)} 
+                  onChange={({ target }) => { setSearch(target.value); setOffences(data.filter((item) => item.nome_codigo.toLowerCase().includes(search.toLowerCase())))} } 
                   value={search}
-                  icon={Search} 
+                  icon={Search}
                   style={{ width: '10rem' }} />
               </Card.Header>
               <Card.Separator />
@@ -181,10 +225,13 @@ export default function NewArrest() {
                     <Loading />
                   ) : (
                     <>
-                      {filteredCrimes.map((item, i) => (
+                      {offences.map((item, i) => (
                         <S.Crime key={i}>
                           <S.CrimeNameBox>
-                            <Checkbox />
+                            <Checkbox 
+                              checked={item?.active}
+                              onCheckedChange={(checked: any) => handleManageOffences(checked, item)}
+                            />
                             <p title={item?.nome_codigo}>{item?.nome_codigo}</p>
                           </S.CrimeNameBox>
                           <S.CrimeSpecsBox>
@@ -195,7 +242,7 @@ export default function NewArrest() {
                             </S.CrimeSpec>
                             <S.CrimeSpec>
                               <Banknote color={colors.icon} size={'1.6rem'} />
-                              R$ {item?.multa}
+                              R$ {formatNumber(item?.multa)}
                             </S.CrimeSpec>
                           </S.CrimeSpecsBox>
                         </S.Crime>
@@ -207,11 +254,11 @@ export default function NewArrest() {
                   <p>Soma Total:</p>
                   <S.CrimeCounter>
                     <Clock size={'1.4rem'} color={colors.icon} />
-                    <p>50 meses (-50%)</p>
+                    <p>{ selectedOffences.reduce((sum, value) => { return sum + value?.tempo }, 0) } meses</p>
                   </S.CrimeCounter>
                   <S.CrimeCounter>
                     <Banknote size={'1.6rem'} color={colors.icon} />
-                    <p>R$ 150.000,00</p>
+                    <p>R$ {formatNumber(selectedOffences.reduce((sum, value) => { return sum + value?.multa }, 0))}</p>
                   </S.CrimeCounter>
                 </S.CrimesCounterBox>
               </Card.Content>

@@ -42,13 +42,17 @@ function initOrgsFromDb()
 
             local nextCargo = getNextCargo(info.hierarchy, v)
 
-            cargosOrgs[cargo].org = org
-            cargosOrgs[cargo].cargo = cargo
-            cargosOrgs[cargo].nextCargo = nextCargo
+            cargosOrgs[cargo] = { 
+                org = org,
+                cargo = cargo,
+                nextCargo = nextCargo
+            }
 
-            cargosOrgs[v.offServiceSet].org = org
-            cargosOrgs[v.offServiceSet].cargo = cargo
-            cargosOrgs[v.offServiceSet].nextCargo = nextCargo
+            cargosOrgs[v.offServiceSet] = {
+                org = org,
+                cargo = cargo,
+                nextCargo = nextCargo
+            }
         end
 
         local rows = zof.query("mdt/mdt_hierarquia/getFromOrg", { org = org })
@@ -77,7 +81,19 @@ function src.getInitialData()
     local sUser_id = tostring(user_id)
     local org = playersOrg[sUser_id]
 
-    if not org then return end
+    if not org then
+        local myGroups = zof.getUserGroups(user_id)
+        for i, v in pairs(myGroups) do
+            if cargosOrgs[i] then
+                org = addPlayerOrg({ user_id = user_id, org = cargosOrgs[i].org, cargo = i, permissions = (cargosOrgs[i].perms or {}) })
+                Citizen.Wait(1000)
+
+                goto continue
+            end
+        end
+    end
+
+    ::continue::
 
     return {
         officer = {
@@ -91,7 +107,6 @@ function src.getInitialData()
         totalOfWorkingOfficers = officersOnlineCount[org] or 0,
     
         notices = zof.query("mdt/mdt_avisos/getFromOrg", { org = org }),
-    
         permissions = cargosOrgs[cacheOrgs[org].officers[sUser_id].cargo].perms
     }
 end
@@ -235,7 +250,7 @@ function addPlayerOrg(infos)
     local newInfosPlayer = { 
         user_id = infos.user_id, cargo = infos.cargo, 
         org = infos.org, unidade = infos.org, cursos = json.encode({}), 
-        pontos = 0, time_ptr = 0, dt_entrada = os.time(), nome = zof.getName(infos.user_id), online = true,
+        pontos = 0, time_ptr = 0, dt_entrada = os.date(), nome = zof.getName(infos.user_id), online = true,
         timeline = json.encode({
             { color = "orange", date = os.date(), title = "Entrou na **Corporação**", icon = "PartyPopper" }
         })
@@ -247,6 +262,8 @@ function addPlayerOrg(infos)
 
     cacheOrgs[infos.org].officers[sUser_id] = newInfosPlayer
     playersOrg[sUser_id] = infos.org
+
+    return infos.org
 end
 
 function removePlayerOrg(user_id)
@@ -432,7 +449,7 @@ function src.createWarningOrg(details)
     zof.execute("mdt/mdt_avisos/insert", {
         id_autor = user_id, autor = zof.getName(user_id),
         titulo = details.title, descricao = details.description,
-        data = os.time(), org = org
+        data = os.date(), org = org
     })
 
     return true
@@ -453,10 +470,13 @@ function src.deleteWarningOrg(id)
 end
 
 function src.getPlayersProximity()
-    local source  = source
+    local source = source
+    local user_id = zof.getUserId(source)
 
     local players = vCLIENT.getNearestPlayers(source, 10)
     local listPlayers = {}
+
+    table.insert(listPlayers, { id = user_id, label = zof.getName(user_id) })
 
     for s, v in pairs(players) do
         if s then
@@ -468,55 +488,49 @@ function src.getPlayersProximity()
     return listPlayers
 end
 
-function src.getPlayersOfficersProximity()
-    local source  = source
-    local user_id = zof.getUserId(source)
-    
-    local players = vCLIENT.getNearestPlayers(source, 10)
-    local listPlayers = {}
-
-    table.insert(listPlayers, { id = user_id, label = zof.getName(user_id) })
-
-    print(user_id, json.encode(listPlayers))
-
-    for s, v in pairs(players) do
-        if s then
-            local id = zof.getUserId(s)
-            local org = playersOrg[tostring(id)]
-
-            if org ~= nil then
-                table.insert(listPlayers, { id = id, label = zof.getName(id) })
-            end
-        end
-    end
-
-    return listPlayers
+function src.getPrisioners()
+    return zof.query("mdt/mdt_presos/getAll", {})
 end
 
 function src.getPrisions()
     return zof.query("mdt/mdt_historico_penal/getAll", {})
 end
 
+function src.unArrested(user_id)
+    local source = zof.getUserSource(user_id)
+    if source then
+        vCLIENT.unArrested(source)
+    else
+        src.updateTimeArrested(0, user_id)
+    end
+
+    return
+end
+
 function src.arrestBandit(details)
     local source = source
     local user_id = zof.getUserId(source)
 
-    if details.banditUserId then
-        local banditSource = zof.getUserSource(details.banditUserId)
-        if not banditSource then print("arrestBandit player offline") return end -- player offline
+    for i, v in pairs(details.bandits) do
+        if v.id then
+            details.banditUserId = v.id
 
-        local preso = zof.query("mdt/mdt_presos/getAll", { user_id = details.banditUserId })
-        if #preso > 0 then print("este player já está preso") return end
-
-        details.user_id = parseInt(details.banditUserId)
-        details.name = zof.getName(details.banditUserId)
-        details.nameCity = "Cidade Teste"
-        details.date = returnDateFormat()
-        details.id_officer = user_id
-        details.pedOfficer = tonumber(source)
-        details.banditSource = banditSource
-
-        vCLIENT.cutseneMugshot(banditSource, details)
+            local banditSource = zof.getUserSource(v.id)
+            if not banditSource then print("arrestBandit player offline") return end
+    
+            local preso = zof.query("mdt/mdt_presos/getAll", { user_id = v.id })
+            if #preso > 0 then print("este player já está preso") return end
+    
+            details.user_id = parseInt(v.id)
+            details.name = zof.getName(v.id)
+            details.nameCity = "Cidade Teste"
+            details.date = returnDateFormat()
+            details.id_officer = user_id
+            details.pedOfficer = tonumber(source)
+            details.banditSource = banditSource
+    
+            vCLIENT.cutseneMugshot(banditSource, details)
+        end
     end
 end
 
@@ -530,7 +544,7 @@ function src.registerArrestBandit(details)
     local codigosPenais = {}
 
     for i, v in pairs(details.codigos_penais) do
-        valorMulta = valorMulta + v.valor_multa
+        valorMulta = valorMulta + v.multa
         tempoTotal = tempoTotal + v.tempo
 
         table.insert(codigosPenais, v.id)
@@ -545,6 +559,7 @@ function src.registerArrestBandit(details)
         data = os.date(),
         descricao = details.descricao,
         oficiais = json.encode(details.oficiais),
+        mugshot = details.mugshot,
         imgs = json.encode(details.imgs),
         is_multa = false
     })
@@ -573,10 +588,11 @@ function src.registerArrestBandit(details)
     vCLIENT.createThreadIsArrested(details.banditSource, details.time)
 end
 
-function src.updateTimeArrested(time)
+function src.updateTimeArrested(time, pUser)
     local source = source
     local user_id = zof.getUserId(source)
 
+    if pUser and not user_id then user_id = pUser end
     if not user_id then return end
 
     if time > 0 then
@@ -607,6 +623,27 @@ end
 
 function src.getAllCodigoPenal()
     return mdtCodigoPenal
+end
+
+function src.getCrimesFromIds(ids)
+    local crimes = {}
+
+    for i, v in pairs(mdtCodigoPenal) do
+        if table.contains(ids, v.id) then
+            table.insert(crimes, v)
+        end
+    end
+
+    return crimes
+end
+
+function src.getHistoryOffencePlayer(id)
+    local historico = zof.query("mdt/mdt_historico_penal/get", { id = id })
+    if historico[1] then
+        return historico[1]
+    end
+
+    return false
 end
 
 function src.insertOrUpdateCodigoPenal(details)
@@ -643,7 +680,15 @@ function src.insertOrUpdateCodigoPenal(details)
 end
 
 function src.deleteCodigoPenal(id)
-    zof.execute("mdt/mdt_codigo_penal/getAll", { id = id })
+    zof.execute("mdt/mdt_codigo_penal/delete", { id = id })
+
+    for i, v in pairs(mdtCodigoPenal) do
+        if v.id == id then
+            mdtCodigoPenal[i] = nil
+        end
+    end
+
+    return true
 end
 
 Citizen.CreateThread(function()

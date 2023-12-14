@@ -76,7 +76,7 @@ export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorF
             <>
               {selectedItems?.map(item => (
                 <S.Item key={item.id}>
-                  {item.label}
+                  {item.id} - {item.label}
                   <button onClick={() => handleRemoveItem(item.id)}><X size={'1rem'} color='#FFF'/></button>
                 </S.Item>
               ))}
@@ -91,7 +91,7 @@ export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorF
                 <S.QueryItem 
                   disabled={selectedItems.find(el => el.id === item.id) ? true : false} 
                   key={item.id} onClick={() => handleSelectQueryItem(item)}>
-                    {item.label}
+                    {item.id} - {item.label}
                   </S.QueryItem>
               ))}
             </S.QueryList>

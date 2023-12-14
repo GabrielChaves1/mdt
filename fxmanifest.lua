@@ -23,6 +23,7 @@ server_scripts {
   
   "code/server/utils.lua",
   "code/server/main.lua",
+  "code/server/sShared.lua",
 }
 
 files {

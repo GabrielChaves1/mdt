@@ -6,3 +6,9 @@ export const Wrapper = styled.div`
   gap: 2rem;
   height: 100%;
 `
+
+export const LinkedButton = styled.div`
+  display: flex;
+  gap: 1rem;
+  height: 100%;
+`

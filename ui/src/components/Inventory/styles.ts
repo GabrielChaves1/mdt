@@ -94,5 +94,21 @@ export const Title = styled.p`
 `
 
 export const Actions = styled.div`
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, auto);
   align-self: flex-end;
+`
+
+export const Amount = styled.p`
+  font-size: 1.4rem;
+  font-weight: 400;
+  position: absolute;
+  right: 1rem;
+  top: .5rem;
+  width: 9rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: ${({theme}) => theme.text.title};
 `
