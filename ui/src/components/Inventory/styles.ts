@@ -70,11 +70,11 @@ export const Locked = styled.div`
 `
 
 export const Image = styled.img`
-  width: 6rem;
+  width: 5rem;
   position: absolute;
   transform: translate(-50%,-50%);
   left: 50%;
-  top: 40%;
+  top: 45%;
   object-fit: cover;
 ` 
 
@@ -105,8 +105,7 @@ export const Amount = styled.p`
   font-weight: 400;
   position: absolute;
   right: 1rem;
-  top: .5rem;
-  width: 9rem;
+  top: .3rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

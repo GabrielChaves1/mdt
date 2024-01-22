@@ -9,7 +9,7 @@ export const Content = styled.div`
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(4, 24rem);
   grid-template-rows: repeat(3, 17.2rem);
   gap: 2rem;
   flex: 1;

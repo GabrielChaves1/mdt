@@ -49,8 +49,8 @@ function Aside() {
       <S.NavigationArea>
         <S.NavigationAreaTitle>Navegação</S.NavigationAreaTitle>
         <S.NavigationAreaContent>
-          {paths.map(({ url, text, icon: Icon }) => (
-            <Link key={url} to={url}>
+          {paths.map(({ url, text, icon: Icon }, i) => (
+            <Link key={i} to={url}>
               <Button
                 variant={location.pathname.includes(url) ? 'primary' : 'secondary'} 
                 fill>

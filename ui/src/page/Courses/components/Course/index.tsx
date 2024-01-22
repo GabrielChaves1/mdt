@@ -3,18 +3,18 @@ import * as S from './styles';
 import ICourse from '@/types/Course';
 import { Link } from 'react-router-dom';
 
-export default function Course({ date, id, timeToComplete, title }: ICourse) {
-  const formattedDate = new Date(date);
+export default function Course({ date, org, id, timeToComplete, title }: ICourse) {
+  const formattedDate = new Date(date * 1000);
 
   const day = String(formattedDate.getDate()).padStart(2, '0');
   const month = String(formattedDate.getMonth() + 1).padStart(2, '0');
   const year = String(formattedDate.getFullYear());
 
   return (
-    
+
     <S.Wrapper>
       <S.Header>
-        <S.Title>Policia Militar</S.Title>
+        <S.Title>{org.name}</S.Title>
         <S.TimeBox>
           <Clock size={'1.6rem'} color="white" />
           {timeToComplete} min

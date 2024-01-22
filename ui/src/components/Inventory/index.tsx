@@ -46,7 +46,7 @@ const Inventory = forwardRef<ModalRootHandles, InventoryProps>(({ onUpdateItems,
 
   async function onOpen(data: { user_id: number }) {
     setUserId(data?.user_id)
-
+    
     const itens = await fetchNui<any[]>("getInventoryPlayer", data?.user_id)
     setItems(itens)
   }
@@ -62,7 +62,7 @@ const Inventory = forwardRef<ModalRootHandles, InventoryProps>(({ onUpdateItems,
       <Modal.Header title="Deter Itens" subtitle="Selecione os itens do inventário do player que deverão ser detidos"/>
       <S.Wrapper>
         <S.Inventory>
-          <S.InventoryTitle>Inventário de Droyen #1010</S.InventoryTitle>
+          <S.InventoryTitle>Inventário | {userId}</S.InventoryTitle>
           <S.Grid>
             {items.map((item, i) => (
               <S.Item selected={selectedItems.includes(item)} key={i} onClick={() => handleSelectItem(item)}>
@@ -70,7 +70,7 @@ const Inventory = forwardRef<ModalRootHandles, InventoryProps>(({ onUpdateItems,
                   <S.Locked><X size={'4rem'} color={colors.icon}/></S.Locked>
                 )}
                 <S.Title>{item.nameFormat}</S.Title>
-                <S.Image src={item.image}/>
+                <S.Image src={item.image} />
                 <S.Amount>{item.amount}x</S.Amount>
               </S.Item>
             ))}

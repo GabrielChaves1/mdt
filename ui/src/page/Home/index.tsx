@@ -141,8 +141,8 @@ export default function Home() {
           <Card.Separator />
           <Card.Content>
             <S.PostsArea>
-              {data?.notices?.map((notice) => (
-                <Notice key={notice.id} {...notice} />
+              {data?.notices?.map((notice, i) => (
+                <Notice key={i} {...notice} />
               ))}
             </S.PostsArea>
           </Card.Content>

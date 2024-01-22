@@ -81,7 +81,7 @@ export default function Articles() {
         ) : (
           <>
             {items.map((item, i) => (
-              <Table.Row key={item.id}>
+              <Table.Row key={i}>
                 <Table.Item>{item.nome_codigo}</Table.Item>
                 <Table.Item>{item.tempo} meses</Table.Item>
                 <Table.Item>R$ {formatNumber(item.multa)}</Table.Item>

@@ -6,41 +6,27 @@ import Pagination from '@/components/Pagination';
 import Banner from '@/components/Banner';
 import CourseIcon from '@/assets/book.webp';
 import Animator from '@/components/Animator';
+import { useQuery } from '@tanstack/react-query';
+import fetchNui from '@/utils/fetchNui';
+import Loading from '@/components/Loading';
+
+const itemsPerPage = 12
 
 export default function CourseList() {
-  const itemsPerPage = 12
-  const { amountOfPages, currentPage, items, totalOfItems, viewedItems, paginate } = usePaginate<ICourse>(itemsPerPage, 1, [
-    {
-      id: 1,
-      title: "Curso de Armamento",
-      date: Date.now(),
-      timeToComplete: 30
-    },
-    {
-      id: 2,
-      title: "Curso Tático",
-      date: Date.now(),
-      timeToComplete: 30
-    },
-    {
-      id: 3,
-      title: "Curso de Desce e Quebra",
-      date: Date.now(),
-      timeToComplete: 30
-    },
-    {
-      id: 4,
-      title: "Curso de Rolamento",
-      date: Date.now(),
-      timeToComplete: 30
-    },
-    {
-      id: 5,
-      title: "Curso de Investigação",
-      date: Date.now(),
-      timeToComplete: 30
-    },
-  ])
+  const { data: courses, isLoading } = useQuery<ICourse[]>(['courses'], () => fetchNui('getCourses'), {
+    initialData: [
+      {
+        org: {
+          name: "Policia Civil",
+        },
+        id: 1,
+        title: "teste",
+        date: 1610322102,
+        timeToComplete: 2
+      },
+    ]
+  })
+  const { amountOfPages, currentPage, items, totalOfItems, viewedItems, paginate } = usePaginate<ICourse>(itemsPerPage, 1, courses || [])
 
   return (
     <Animator>
@@ -51,20 +37,25 @@ export default function CourseList() {
           </Banner.Header>
         </Banner.Root>
 
-        <S.Grid>
-          {items?.map((course) => (
-            <Course key={course.id} {...course} />
-          ))}
+        {isLoading ? <Loading /> :
+          (
+            <>
+              <S.Grid>
+                {items?.map((course, i) => (
+                  <Course key={i} {...course} />
+                ))}
 
-          {[...new Array(itemsPerPage - items.length)].map((_, i) => <S.EmptySlot key={i}/>)}
-        </S.Grid>
-        <Pagination
-          amountOfPages={amountOfPages}
-          currentPage={currentPage}
-          itemsBeingViewed={viewedItems}
-          onPaginate={(page: number) => paginate(page)}
-          totalOfItems={totalOfItems}
-        />
+                {[...new Array(itemsPerPage - items.length)].map((_, i) => <S.EmptySlot key={i} />)}
+              </S.Grid>
+              <Pagination
+                amountOfPages={amountOfPages}
+                currentPage={currentPage}
+                itemsBeingViewed={viewedItems}
+                onPaginate={(page: number) => paginate(page)}
+                totalOfItems={totalOfItems}
+              />
+            </>
+          )}
       </S.Content>
     </Animator>
   )

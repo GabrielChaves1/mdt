@@ -5,11 +5,9 @@ import * as S from './styles';
 import { Banknote, Clock, Forward } from "lucide-react";
 import { useTheme } from "styled-components";
 import IPrision from "@/types/Prision";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import IPenalCode from "@/types/PenalCode";
 import fetchNui from "@/utils/fetchNui";
-import { useQuery } from "@tanstack/react-query";
-import Loading from "@/components/Loading";
 import IOfficer from "@/types/Prision";
 
 const ViewDetailsModal = forwardRef<ModalRootHandles>((_, ref) => {

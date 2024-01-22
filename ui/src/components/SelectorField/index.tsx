@@ -74,8 +74,8 @@ export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorF
             <p>Nada anexado...</p>
           ) : (
             <>
-              {selectedItems?.map(item => (
-                <S.Item key={item.id}>
+              {selectedItems?.map((item, i) => (
+                <S.Item key={i}>
                   {item.id} - {item.label}
                   <button onClick={() => handleRemoveItem(item.id)}><X size={'1rem'} color='#FFF'/></button>
                 </S.Item>
@@ -87,10 +87,10 @@ export default function SelectorField({ onUpdate, onQuery, ...props }: SelectorF
         {hasResults && (
           <S.QueryListContainer>
             <S.QueryList>
-              {results.map((item) => (
+              {results.map((item, i) => (
                 <S.QueryItem 
                   disabled={selectedItems.find(el => el.id === item.id) ? true : false} 
-                  key={item.id} onClick={() => handleSelectQueryItem(item)}>
+                  key={i} onClick={() => handleSelectQueryItem(item)}>
                     {item.id} - {item.label}
                   </S.QueryItem>
               ))}

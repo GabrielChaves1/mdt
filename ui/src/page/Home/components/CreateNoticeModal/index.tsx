@@ -10,6 +10,8 @@ import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup"
 import ErrorMessage from "@/components/ErrorMessage";
 import fetchNui from "@/utils/fetchNui";
+import { queryClient } from "@/main";
+import INotice from "@/types/Notice";
 
 const schema = yup.object({
   title: yup.string().required("O título é obrigatório!").max(60, "Máximo de 60 caracteres").nonNullable(),
@@ -31,9 +33,25 @@ const CreateNoticeModal = forwardRef<ModalRootHandles, ModalHostProps>(({ onClos
   }
 
   async function onSubmit(data: FormData) {
-    const res = await fetchNui("createNotice", data, true);
-    if(res)
-      if(onClose) onClose();
+    
+    const res = await fetchNui<INotice>("createNotice", data, {
+      id: 1,
+      autor: "Droyen Patrulheiro",
+      descricao: data.description,
+      titulo: data.title,
+      data: Date.now(),
+      id_autor: 1
+    });
+    if(!res) return;
+
+    queryClient.setQueryData(['getInitialData'], (prev: any) => ({
+      ...prev,
+      notices: [
+        ...prev.notices,
+        res
+      ]
+    }));
+    if(onClose) onClose();
   }
 
   return (

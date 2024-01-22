@@ -14,7 +14,7 @@ function Notice({ autor, id_autor, descricao, id, titulo, data }: INotice) {
   const year = date.getFullYear();
 
   async function handleDeleteNotice() {
-    const res = await fetchNui('deleteNotice', { id })
+    const res = await fetchNui('deleteNotice', { id }, true)
     if(!res) return;
 
     queryClient.setQueryData(['getInitialData'], (prev: any) => ({

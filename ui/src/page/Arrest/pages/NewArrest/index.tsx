@@ -221,34 +221,34 @@ export default function NewArrest() {
               <Card.Separator />
               <Card.Content>
                 <S.CrimeList>
-                {isLoading ? (
-                    <Loading />
-                  ) : (
-                    <>
-                      {offences.map((item, i) => (
-                        <S.Crime key={i}>
-                          <S.CrimeNameBox>
-                            <Checkbox 
-                              checked={item?.active}
-                              onCheckedChange={(checked: any) => handleManageOffences(checked, item)}
-                            />
-                            <p title={item?.nome_codigo}>{item?.nome_codigo}</p>
-                          </S.CrimeNameBox>
-                          <S.CrimeSpecsBox>
-                            <Action label="Ver detalhes" icon={Eye} size="sm" />
-                            <S.CrimeSpec>
-                              <Clock color={colors.icon} size={'1.4rem'} />
-                              {item?.tempo} meses
-                            </S.CrimeSpec>
-                            <S.CrimeSpec>
-                              <Banknote color={colors.icon} size={'1.6rem'} />
-                              R$ {formatNumber(item?.multa)}
-                            </S.CrimeSpec>
-                          </S.CrimeSpecsBox>
-                        </S.Crime>
-                      ))}
-                    </>
-                  )}
+                  {isLoading ? (
+                      <Loading />
+                    ) : (
+                      <>
+                        {offences.map((item, i) => (
+                          <S.Crime key={i}>
+                            <S.CrimeNameBox>
+                              <Checkbox 
+                                checked={item?.active}
+                                onCheckedChange={(checked: any) => handleManageOffences(checked, item)}
+                              />
+                              <p title={item?.nome_codigo}>{item?.nome_codigo}</p>
+                            </S.CrimeNameBox>
+                            <S.CrimeSpecsBox>
+                              <Action label="Ver detalhes" icon={Eye} size="sm" />
+                              <S.CrimeSpec>
+                                <Clock color={colors.icon} size={'1.4rem'} />
+                                {item?.tempo} meses
+                              </S.CrimeSpec>
+                              <S.CrimeSpec>
+                                <Banknote color={colors.icon} size={'1.6rem'} />
+                                R$ {formatNumber(item?.multa)}
+                              </S.CrimeSpec>
+                            </S.CrimeSpecsBox>
+                          </S.Crime>
+                        ))}
+                      </>
+                    )}
                 </S.CrimeList>
                 <S.CrimesCounterBox>
                   <p>Soma Total:</p>
